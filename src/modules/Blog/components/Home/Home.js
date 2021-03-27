@@ -15,6 +15,7 @@ import ByTagsList from "../Blog/ByTagsList";
 import Tags from "../Blog/Tags";
 import BlogHome from "../Blog";
 import Main from "../Main";
+import Login from "../Login";
 
 const Home = (props) => {
   return (
@@ -31,6 +32,7 @@ const Home = (props) => {
         <Route exact path="/tags/:tag" component={ByTagsList} />
         <Route exact path="/blog" component={BlogHome} />
         <Route exact path="/blog/:slug/:id" component={Blog} />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/" component={Main} />
         <Redirect to="/notfound" />
       </Switch>
