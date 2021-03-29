@@ -741,3 +741,20 @@ blockquote:nth-of-type(even) footer:after {
     transform: translateX(100%);
   }
 }
+
+/*Login Componenet*/
+.login-logo{
+  max-width: 70px;
+}
+
+.login-component{
+  margin-top: 5rem;
+}
+
+.login-button{
+  background-color: var(--lightGreen);
+}
+
+.login-link{
+  color: var(--lightGreen);
+}
