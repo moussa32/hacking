@@ -16,6 +16,12 @@ import Tags from "../Blog/Tags";
 import BlogHome from "../Blog";
 import Main from "../Main";
 import Login from "../Login";
+import SignUp from "../Registerition/SignUp";
+import EmailConfirmation from "../Registerition/EmailConfirmation";
+import PhoneConfirmation from "../Registerition/PhoneConfirmation";
+import SmsConfirmation from "../Registerition/SmsConfirmation";
+
+
 
 const Home = (props) => {
   return (
@@ -33,6 +39,10 @@ const Home = (props) => {
         <Route exact path="/blog" component={BlogHome} />
         <Route exact path="/blog/:slug/:id" component={Blog} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/sign-up" component={SignUp} />
+        <Route exact path="/email-confirmation" component={EmailConfirmation} />
+        <Route exact path="/mobile-confirmation" component={PhoneConfirmation} />
+        <Route exact path="/sms-confirmation" component={SmsConfirmation} />
         <Route exact path="/" component={Main} />
         <Redirect to="/notfound" />
       </Switch>
