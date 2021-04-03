@@ -77,6 +77,11 @@ const Navbar = ({ currentPathname }) => {
             </Link>
           </li>
         </ul>
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item" id="login">
+            <Link className="nav-link" to="/login">تسجيل الدخول</Link>
+          </li>
+        </ul>
       </div>
     </nav>
   );
