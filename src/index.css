@@ -759,14 +759,6 @@ blockquote:nth-of-type(even) footer:after {
   color: white;
 }
 
-.login-logo{
-  max-width: 70px;
-}
-
-.login-component{
-  margin-top: 5rem;
-}
-
 .text-lightgreen{
   color: var(--lightGreen);
 }
@@ -776,5 +768,10 @@ blockquote:nth-of-type(even) footer:after {
   background-color: var(--lightGreen);
   border-color: var(--lightGreen);
 }
+
+.login-logo{
+  max-width: 70px;
+}
+
 
 /*Sign up*/
