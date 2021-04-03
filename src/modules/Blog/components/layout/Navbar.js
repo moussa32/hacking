@@ -14,6 +14,8 @@ const Navbar = ({ currentPathname }) => {
       return setActiveTab("about-us");
     } else if (currentPathname === "/contact-us") {
       setActiveTab("contact-us");
+    } else if (currentPathname === "/login") {
+      setActiveTab("login");
     } else {
       return setActiveTab("home");
     }
@@ -78,8 +80,13 @@ const Navbar = ({ currentPathname }) => {
           </li>
         </ul>
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item" id="login">
-            <Link className="nav-link" to="/login">تسجيل الدخول</Link>
+          <li
+            className={`nav-item ${activeTab === "login" ? "active" : ""}`}
+            id="login"
+          >
+            <Link className="nav-link" to="/login">
+              تسجيل الدخول
+            </Link>
           </li>
         </ul>
       </div>
