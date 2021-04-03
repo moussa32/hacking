@@ -743,6 +743,22 @@ blockquote:nth-of-type(even) footer:after {
 }
 
 /*Login Componenet*/
+.component-wrapper{
+  padding-top: 2rem;
+  min-height: 120vh;
+}
+
+.custom-input{
+  padding: 0 .75rem;
+  background-color: #313131;
+  color:white;
+}
+
+.custom-input:focus, .custom-input:active{
+  background-color: #313131;
+  color: white;
+}
+
 .login-logo{
   max-width: 70px;
 }
@@ -751,10 +767,14 @@ blockquote:nth-of-type(even) footer:after {
   margin-top: 5rem;
 }
 
-.login-button{
-  background-color: var(--lightGreen);
-}
-
-.login-link{
+.text-lightgreen{
   color: var(--lightGreen);
 }
+
+.btn-lightgreen{
+  color:white;
+  background-color: var(--lightGreen);
+  border-color: var(--lightGreen);
+}
+
+/*Sign up*/
