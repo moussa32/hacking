@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { FaCheckCircle } from "react-icons/fa";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 
-const PhoneConfirmation = () =>{
-    return(
-        <main className="phone-confirmation">
-            <div className="container">
-                <div className="jumbotron text-center phone-confirmation-body">
+const PhoneConfirmation = () => {
+    return (
+        <main class="component-wrapper">
+            <div className="container home">
+                <div className="jumbotron text-center py-4 bg-second">
                     <nav aria-label="breadcrumb">
-                        <ol className="breadcrumb custom-breadcrumb">
-                            <li className="breadcrumb-item"><FaCheckCircle className="check-progress ml-2" size={'1.5em'}/> التحقق من البريد الإلكتروني</li>
+                        <ol className="breadcrumb bg-black">
+                            <li className="breadcrumb-item py-1"><FaCheckCircle className="check-progress ml-2" size={'1.5em'} /> التحقق من البريد الإلكتروني</li>
                         </ol>
                     </nav>
-                    <div className="jumbotron jumbotron-fluid phone-confirmation-form rounded">
+                    <div className="jumbotron jumbotron-fluid bg-black rounded pt-4">
                         <label className="d-block text-right box-title">التحقق من الموبيل</label>
                         <div className="container">
                             <div className="row">
