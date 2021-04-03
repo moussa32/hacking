@@ -773,5 +773,7 @@ blockquote:nth-of-type(even) footer:after {
   max-width: 70px;
 }
 
-
-/*Sign up*/
+/*Email confirmation*/
+.bg-second{
+  background-color: #313131;
+}
