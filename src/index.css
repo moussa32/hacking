@@ -795,3 +795,14 @@ blockquote:nth-of-type(even) footer:after {
   margin-right: 3.2rem;
   padding-bottom: 3rem;
 }
+
+/*Dashboard*/
+.dbmain{
+  margin-top: 4.5rem;
+}
+
+.hacker-image{
+  width: 12rem;
+  height: 11rem;
+  object-fit: cover;
+}
