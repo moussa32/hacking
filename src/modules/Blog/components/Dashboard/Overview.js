@@ -23,9 +23,9 @@ const Overview = (props) => {
             <ScrollToTop />
             <Switch>
                 <Route exact path="/notfound" component={NotFound} />
-                <Route exact path={`/dashboard/activity`} component={Activity} />
-                <Route exact path={`/dashboard/available-programs`} component={AvailablePrograms} />
-                <Route exact path={`/dashboard/leaderboard`} component={Leaderboard} />
+                <Route exact path={`${path}/activity`} component={Activity} />
+                <Route exact path={`${path}/available-programs`} component={AvailablePrograms} />
+                <Route exact path={`${path}/leaderboard`} component={Leaderboard} />
                 <Route exact path={`${path}`} component={Main} />
                 <Redirect to="/notfound" />
             </Switch>
