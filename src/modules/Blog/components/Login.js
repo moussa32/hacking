@@ -10,12 +10,14 @@ const Login = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        const credentials = {
+        const credentials = JSON.stringify({
             username: username,
             password: password
-        }
-
-        axios.post('http://bugbounty.pythonanywhere.com/api/v1/auth/hackers/login', credentials)
+        });
+        axios.post('http://bugbounty.pythonanywhere.com/api/v1/auth/hackers/login/',
+            credentials,
+            { headers: { "Content-Type": "application/json" } }
+        )
             .then(res => {
                 console.log(res);
             })
