@@ -8,10 +8,10 @@ import { Link } from "react-router-dom";
 
 const SignUp = () => {
     return (
-        <main className="component-wrapper">
-            <div className="container home">
+        <main className="component-wrapper sign-up-wrapper">
+            <div className="container-fluid home pt-4">
                 <div className="row">
-                    <div className="col-md-6 signup-form-section">
+                    <div className="col-md-6 signup-form-section bg-black">
                         <h2 className="py-2 text-center">إنشاء حساب جديد</h2>
                         <form>
                             <div className="form-row">
@@ -102,8 +102,8 @@ const SignUp = () => {
                             <small className="text-center my-3 d-block">هل لديك حساب؟ <Link to='/login' className="text-lightgreen">تسجيل الدخول</Link></small>
                         </form>
                     </div>
-                    <div className="col-md-6 align-items-center signup-left-side pt-4">
-                        <img src={Logo} alt="" className="signup-logo" />
+                    <div className="col-md-6 align-items-center signup-left-side">
+                        <img src={Logo} alt="" className="signup-logo d-block mx-auto" />
                         <div className="signup-info jumbotron jumbotron-fluid text-center">
                             <h2>العالم يحتاج لك</h2>
                             <p className="lead">هناك الكثير من الشركات تتعرض للأختراق كل دقيقة ونحن نهدف للحد من هذه الظاهرة ولذلك نحتاج إلى مساعدتك لنمكن هذه الشركات من اكتشاف الثغرات الموجودة في أنظمتها مبكرا لحمايتها من الإختراقات السوداء المتكررة ..</p>
