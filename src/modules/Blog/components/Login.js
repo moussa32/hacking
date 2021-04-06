@@ -1,23 +1,52 @@
 import React, { useState } from 'react';
-import Logo from '../../../assets/images/green-logo.svg';
-import { Link } from 'react-router-dom'
+import { WhiteLogo } from '../../../assets/index';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        const credentials = {
+            username: username,
+            password: password
+        }
+
+        axios.post('http://bugbounty.pythonanywhere.com/api/v1/auth/hackers/login', credentials)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(e => {
+                console.error(e);
+            })
+    }
+
+    const handleUsername = e => {
+        setUsername(e.target.value);
+    }
+
+    const handlePassword = e => {
+        setPassword(e.target.value);
+    }
+
     return (
-        <main class="component-wrapper">
+        <main class="component-wrapper login-wrapper">
             <div className="container home">
                 <div className="row">
-                    <div className="col-md-5 mx-auto">
-                        <img className="login-logo d-block mx-auto" src={Logo} alt="Logo" />
-                        <h2 className="text-center py-2">تسجيل الدخول</h2>
-                        <form>
+                    <div className="col-md-6 mx-auto p-4 bg-black rounded">
+                        <img className="login-logo d-block mx-auto" src={WhiteLogo} alt="Logo" />
+                        <h3 className="text-center py-4">تسجيل الدخول</h3>
+                        <form onSubmit={handleSubmit}>
                             <div className="form-group">
-                                <label for="exampleInputEmail1">إسم المستخدم</label>
-                                <input type="text" className="form-control custom-input" id="emailInput" aria-describedby="emailHelp" />
+                                <label for="usernameOrEmail">إسم المستخدم أو البريد الإلكتروني</label>
+                                <input type="text" onChange={handleUsername} className="form-control custom-input" id="usernameOrEmail" aria-describedby="emailHelp" required />
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">كلمة المرور</label>
-                                <input type="password" className="form-control custom-input" id="passwordInput" />
+                                <input type="password" onChange={handlePassword} className="form-control custom-input" id="passwordInput" required />
                             </div>
                             <div class="form-group py-1">
                                 <a className="text-lightgreen" href="#">نسيت كلمة المرور</a>
