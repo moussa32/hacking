@@ -87,3 +87,17 @@ export function handleGetBlogAd() {
       .then((ad) => dispatch(getBlogAd(ad)));
   };
 }
+
+export function handleSetUserToken(userToken) {
+  localStorage.setItem('token', JSON.stringify(userToken));
+}
+
+export function handleGetUserToken() {
+  const tokenString = localStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  return userToken
+}
+
+export function handleRemoveUserToken() {
+  localStorage.removeItem('token');
+}
