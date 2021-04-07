@@ -12,6 +12,7 @@ import {
 } from '../../../api/BlogsApi';
 import { getAllHomeAds, getSharedAd } from '../../../api/AdsApi';
 // import { showLoading, hideLoading } from "react-redux-loading";
+import { getHackerInfo } from '../../../api/HackerInfoApi';
 
 export function getCategories(categories) {
   return {
@@ -100,4 +101,13 @@ export function handleGetUserToken() {
 
 export function handleRemoveUserToken() {
   localStorage.removeItem('token');
+}
+
+export function handleGetHackerInfo() {
+  return getHackerInfo()
+    .then((res) => res.data)
+    .then((data) => {
+      const userInfo = data.json();
+      return userInfo;
+    });
 }

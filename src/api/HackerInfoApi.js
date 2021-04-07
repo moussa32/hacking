@@ -1,4 +1,4 @@
 import axios from 'axios';
-import { apiUrl } from './Constants';
+import { dvApiUrl } from './Constants';
 
-export const getHackerInfo = () => axios.get(`${apiUrl}/hackers/dashboard/user-info`);
+export const getHackerInfo = () => axios.get(`${dvApiUrl}/hackers/dashboard/user-info`);

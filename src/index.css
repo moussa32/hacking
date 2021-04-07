@@ -830,10 +830,29 @@ blockquote:nth-of-type(even) footer:after {
 }
 
 /*Dashboard*/
+.hacker-avatar{
+  width: 55px;
+  height: 51px;
+}
+.hacker-options{
+  margin: 0.5rem 0;
+}
+.sub-hacker-list{
+  margin-left: 4rem;
+}
+
+.nav-icon{
+  line-height: 2.6;
+  margin: 0 0.8rem;
+}
+
+#hacker-profile::after{
+  border:none;
+}
 
 .dbsidebar{
   position: fixed;
-  top: 0;
+  top: 56px;
   bottom: 0;
   z-index: 99999;
   padding-right: 0;
@@ -880,7 +899,7 @@ blockquote:nth-of-type(even) footer:after {
 }
 
 .dbmain{
-  margin-top: 4.5rem;
+  margin-top: 6rem;
 }
 
 .hacker-image{
@@ -896,4 +915,48 @@ blockquote:nth-of-type(even) footer:after {
 .hacker-stat-numbers{
   font-size: 1.8rem;
   font-weight: bold;
+}
+
+.badge-img{
+  width: 170px;
+  height: 130px;
+  border-radius: 10px;
+}
+
+.badge-name{
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.badge-description{
+  font-style: normal;
+}
+
+.section-container{
+  padding: 0 3rem;
+}
+
+/*Progress bar*/
+.skill-container{
+  direction: ltr;
+}
+
+.skill-progress{
+  height: 2rem;
+  background: linear-gradient(280deg, #0e5398,#0e5398a6 ,#0e539812,#161616);
+  border: 2px #085baf solid;
+  border-left: 0;
+  border-radius: 0;
+}
+
+.skill-body{
+  border: 1px rgb(219 219 219 / 56%) solid;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.skill-percent{
+  margin:auto;
+  font-weight: bold;
+  letter-spacing: 1px;
 }

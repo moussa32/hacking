@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { WhiteLogo } from '../../../assets/index';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { handleSetUserToken, handleGetUserToken } from '../actions/index';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const history = useHistory();
+    const token = handleGetUserToken();
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -20,6 +23,8 @@ const Login = () => {
         )
             .then(res => {
                 console.log(res);
+                handleSetUserToken(res.data.access);
+                history.push("/dashboard");
             })
             .catch(e => {
                 console.error(e);
@@ -32,6 +37,10 @@ const Login = () => {
 
     const handlePassword = e => {
         setPassword(e.target.value);
+    }
+
+    if (token) {
+        history.push("/dashboard");
     }
 
     return (

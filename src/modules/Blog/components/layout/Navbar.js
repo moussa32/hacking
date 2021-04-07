@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { handleGetUserToken } from '../../actions/index';
 
 import { WhiteLogo } from "../../../../assets/index";
 
 const Navbar = ({ currentPathname }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
+  let token = handleGetUserToken();
 
   useEffect(() => {
     if (currentPathname.includes("/blog")) {
@@ -85,7 +87,7 @@ const Navbar = ({ currentPathname }) => {
             id="login"
           >
             <Link className="nav-link" to="/login">
-              تسجيل الدخول
+              {token ? 'لوحة التحكم' : 'تسجيل الدخول'}
             </Link>
           </li>
         </ul>

@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import { handleGetHackerInfo, handleRemoveUserToken } from '../../../actions/index';
 import { MdEmail } from "react-icons/md";
-import { BsBellFill } from "react-icons/bs";
+import { BsBellFill, BsFillGearFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
+import { FaUserAlt, FaSignOutAlt } from "react-icons/fa";
+
+
 import { HackerImage } from "../../../../../assets/index";
-
-
-
-
 import { WhiteLogo } from "../../../../../assets/index";
 
 const HackerNavbar = ({ currentPathname }) => {
-    let { path } = useRouteMatch();
-
+    let match = useRouteMatch();
+    const history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
     const [isDropDown, setIsDropDown] = useState(false);
     const [activeTab, setActiveTab] = useState("main");
+    const userInfo = handleGetHackerInfo();
+    console.log(userInfo);
 
     useEffect(() => {
-        if (currentPathname.includes(`${path}/activity`)) {
+        if (currentPathname.includes(`${match.path}/activity`)) {
             return setActiveTab("activity");
-        } else if (currentPathname === `${path}/available-programs`) {
+        } else if (currentPathname === `${match.path}/available-programs`) {
             return setActiveTab("available-programs");
         } else if (currentPathname === "/leaderboard") {
-            setActiveTab(`${path}/leaderboard`);
+            setActiveTab(`${match.path}/leaderboard`);
         } else {
             return setActiveTab("main");
         }
@@ -31,6 +33,11 @@ const HackerNavbar = ({ currentPathname }) => {
 
     const toggle = () => setIsOpen(!isOpen);
     const toggleDropDown = () => setIsDropDown(!isDropDown);
+
+    let handleLogout = () => {
+        handleRemoveUserToken();
+        history.push("/login");
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark blog-nav">
@@ -59,7 +66,7 @@ const HackerNavbar = ({ currentPathname }) => {
                         className={`nav-item ${activeTab === "activity" ? "active" : ""}`}
                         id="activity"
                     >
-                        <Link className="nav-link" to={`${path}/activity`}>
+                        <Link className="nav-link" to={`${match.path}/activity`}>
                             النشاط <span className="sr-only">(current)</span>
                         </Link>
                     </li>
@@ -67,7 +74,7 @@ const HackerNavbar = ({ currentPathname }) => {
                         className={`nav-item ${activeTab === "available-programs" ? "active" : ""}`}
                         id="available-programs"
                     >
-                        <Link className="nav-link" to={`${path}/available-programs`}>
+                        <Link className="nav-link" to={`${match.path}/available-programs`}>
                             البرامج المتاحة
             </Link>
                     </li>
@@ -75,7 +82,7 @@ const HackerNavbar = ({ currentPathname }) => {
                         className={`nav-item ${activeTab === "main" ? "active" : ""}`}
                         id="main"
                     >
-                        <Link className="nav-link" to={`${path}`}>
+                        <Link className="nav-link" to={`${match.path}`}>
                             لوحة التحكم
             </Link>
                     </li>
@@ -83,34 +90,31 @@ const HackerNavbar = ({ currentPathname }) => {
                         className={`nav-item ${activeTab === "leaderboard" ? "active" : ""}`}
                         id="leaderboard"
                     >
-                        <Link className="nav-link" to={`${path}/leaderboard`}>
+                        <Link className="nav-link" to={`${match.path}/leaderboard`}>
                             لوحة القادة
             </Link>
                     </li>
                 </ul>
                 <ul className="navbar-nav mr-auto sub-hacker-list">
                     <li className='nav-item nav-icon' id="messages">
-                        <Link className="nav-link" to={`${path}/leaderboard`}>
+                        <Link className="nav-link" to={`${match.path}/leaderboard`}>
                             <MdEmail className="text-lightgreen" size={'1.8rem'} />
                         </Link>
                     </li>
                     <li className='nav-item nav-icon' id="alerts">
-                        <Link className="nav-link" to={`${path}/leaderboard`}>
+                        <Link className="nav-link" to={`${match.path}/leaderboard`}>
                             <BsBellFill className="text-lightgreen" size={'1.5rem'} />
                         </Link>
                     </li>
                     <li className="nav-item dropdown" onClick={toggleDropDown}>
-                        <button className="nav-link dropdown-toggle d-none d-sm-inline-block border-0 bg-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
+                        <button className="nav-link dropdown-toggle d-none d-sm-inline-block border-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
                             <img src={HackerImage} className="hacker-avatar img-fluid rounded-circle mr-1" alt="Chris Wood" />
                             <IoIosArrowDown className="text-lightgreen mr-2" size={'1.3rem'} />
                         </button>
-                        <div className={`dropdown-menu ${isDropDown ? "show" : ""}`}>
-                            <a className="dropdown-item" href="pages-profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user align-middle mr-1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Profile</a>
-                            <a className="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart align-middle mr-1"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg> Analytics</a>
-                            <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="pages-settings.html">Settings &amp; Privacy</a>
-                            <a className="dropdown-item" href="#">Help</a>
-                            <a className="dropdown-item" href="#">تسجيل الخروج</a>
+                        <div className={`dropdown-menu ${isDropDown ? "show" : ""} text-right ml-3`}>
+                            <a className="dropdown-item hacker-options" href="pages-profile.html"><FaUserAlt className="ml-2" /> الصفحة الشخصية</a>
+                            <a className="dropdown-item hacker-options" href="pages-profile.html"><BsFillGearFill className="ml-2" /> الإعدادات</a>
+                            <button onClick={handleLogout} className="dropdown-item hacker-options border-0 bg-transparent" href="#"><FaSignOutAlt className="ml-2" />تسجيل الخروج</button>
                         </div>
                     </li>
                 </ul>

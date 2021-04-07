@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import { HackerImage } from "../../../../assets/index";
-import { VscLocation } from "react-icons/vsc";
-import { FaCogs, FaFacebookSquare, FaLinkedin, FaTwitterSquare } from "react-icons/fa";
+import { FaCogs } from "react-icons/fa";
 import { HiOutlineClipboardList } from "react-icons/hi";
 import { BiTask, BiCrown } from "react-icons/bi";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { MdStars } from "react-icons/md";
-
-
+import HackerInfo from './layout/HackerInfo';
+import HackerReports from './layout/HackerReports';
+import HackerBadges from './layout/HackerBadges';
+import HackerSkills from './layout/HackerSkills';
+import HackerWASP from './layout/HackerWASP';
+import { handleGetHackerInfo } from '../../actions/index';
 
 
 const Main = () => {
@@ -30,25 +32,7 @@ const Main = () => {
                     </div>
                     <div class="jumbotron jumbotron-fluid text-center col-10 py-4 bg-second dbmain rounded">
                         <div class="container-fluid">
-                            <div class="jumbotron jumbotron-fluid bg-black rounded">
-                                <div class="container">
-                                    <div className="row">
-                                        <div className="col-md-7 mx-auto">
-                                            <img src={HackerImage} class="rounded-circle hacker-image rounded mx-auto d-block mb-3" alt="..." />
-                                            <h2 className="hackerName text-white my-4">هاكر</h2>
-                                            <p className="hackerLocation text-white lead"><VscLocation /> مصر</p>
-                                            <p className="hackerBio text-white lead">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                            <div className="row mx-auto">
-                                                <div className="col-md-12">
-                                                    <a href="#" className="text-lightgreen hacker-social-icons"><FaTwitterSquare size='2.5rem' /></a>
-                                                    <a href="#" className="text-lightgreen hacker-social-icons"><FaLinkedin size='2.5rem' /></a>
-                                                    <a href="#" className="text-lightgreen hacker-social-icons"><FaFacebookSquare size='2.5rem' /></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <HackerInfo />
                             <section className="row">
                                 <div className="col-md-4 p-3 rounded">
                                     <div className="card bg-black">
@@ -84,6 +68,10 @@ const Main = () => {
                                     </div>
                                 </div>
                             </section>
+                            <HackerReports />
+                            <HackerBadges />
+                            <HackerSkills />
+                            <HackerWASP />
                         </div>
                     </div>
                     <div className="col-1 bg-black">
