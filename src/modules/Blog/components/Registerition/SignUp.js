@@ -1,32 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '../../../../assets/images/green-logo.svg';
+import { dvApiUrl } from '../../../../api/Constants';
 
 import ReCAPTCHA from 'react-google-recaptcha';
 import { BLOG_APP_CAPTCHA_KEY } from '../../../../shared/constants/constants';
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 
 
 const SignUp = () => {
+    const [signUpData, setSignUpData] = useState({
+        firstName: '',
+        lastName: '',
+        username: '',
+        email: '',
+        gender: 'male',
+        birthday: '',
+        country: '',
+        password: '',
+        accept_rules: true
+    });
+    console.log(signUpData);
+
+    const onTyping = (e) => {
+        e.persist();
+        debugger;
+        setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
+    }
+
+    const Registration = (e) => {
+        e.preventDefault();
+        const fields = {
+            "username": signUpData.username,
+            "password": signUpData.password,
+            "email": signUpData.email,
+            "gender": signUpData.gender,
+            "accept_rules": signUpData.accept_rules
+        }
+        console.log(fields)
+        const sendData = axios.post(`${dvApiUrl}/auth/hackers/signup/`, fields);
+        return sendData;
+    }
+
     return (
         <main className="component-wrapper sign-up-wrapper">
             <div className="container-fluid home pt-4">
                 <div className="row">
                     <div className="col-md-6 signup-form-section bg-black">
                         <h2 className="py-2 text-center">إنشاء حساب جديد</h2>
-                        <form>
+                        <form onSubmit={Registration}>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label for="firstName">الاسم الأول</label>
-                                    <input type="text" className="form-control custom-input" id="firstName" required />
+                                    <input type="text" className="form-control custom-input" value={signUpData.firstName} name="firstName" id="firstName" required onChange={onTyping} />
                                 </div>
                                 <div className="form-group col-md-6">
                                     <label for="secondName">الاسم الثاني</label>
-                                    <input type="text" className="form-control custom-input" id="secondName" required />
+                                    <input type="text" className="form-control custom-input" name="lastName" id="lastName" required onChange={onTyping} />
                                 </div>
                             </div>
                             <div className="form-group">
+                                <label for="username">اسم المستخدم</label>
+                                <input type="text" className="form-control custom-input" name="username" id="username" required onChange={onTyping} />
+                            </div>
+                            <div className="form-group">
                                 <label for="email">البريد الإلكتروني</label>
-                                <input type="email" className="form-control custom-input" id="email" required />
+                                <input type="email" className="form-control custom-input" name="email" id="email" required onChange={onTyping} />
                             </div>
                             <fieldset className="form-group row">
                                 <legend className="col-form-label col-sm-2 float-sm-left pt-0">الجنس</legend>
@@ -35,13 +75,13 @@ const SignUp = () => {
                                         <label className="form-check-label mr-4" for="femaleGender">
                                             أنثى
                                     </label>
-                                        <input className="form-check-input custom-input" type="radio" name="female" id="femaleChose" value="female" />
+                                        <input className="form-check-input custom-input" type="radio" name="gender" id="femaleChose" value="female" onChange={onTyping} />
                                     </div>
                                     <div className="form-check">
                                         <label className="form-check-label mr-4" for="maleChose">
                                             ذكر
                                     </label>
-                                        <input className="form-check-input custom-input" type="radio" name="male" id="maleChose" value="male" />
+                                        <input className="form-check-input custom-input" type="radio" name="gender" id="maleChose" value="male" onChange={onTyping} />
                                     </div>
                                 </div>
                             </fieldset>
@@ -50,18 +90,18 @@ const SignUp = () => {
                                     <label for="inputCity">تاريخ الميلاد</label>
                                 </div>
                                 <div className="form-group col-md-2">
-                                    <input type="number" min="1" max="31" placeholder="يوم" className="form-control custom-input" id="inputCity" required />
+                                    <input type="number" min="1" max="31" placeholder="يوم" className="form-control custom-input" id="dat" required />
                                 </div>
                                 <div className="form-group col-md-2">
-                                    <input type="number" min="1" max="12" placeholder="شهر" className="form-control custom-input" id="inputZip" required />
+                                    <input type="number" min="1" max="12" placeholder="شهر" className="form-control custom-input" id="month" required />
                                 </div>
                                 <div className="form-group col-md-3">
-                                    <input type="number" min="1921" placeholder="سنة" className="form-control custom-input" id="inputZip" required />
+                                    <input type="number" min="1921" placeholder="سنة" className="form-control custom-input" id="year" required />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label for="exampleFormControlSelect1">الدولة</label>
-                                <select className="form-control custom-input" id="exampleFormControlSelect1">
+                                <select className="form-control custom-input" id="exampleFormControlSelect1" name="country" onChange={onTyping}>
                                     <option></option>
                                     <option className="text-white">مصر</option>
                                     <option className="text-white">العراق</option>
@@ -71,7 +111,7 @@ const SignUp = () => {
                             </div>
                             <div className="form-group">
                                 <label for="password">كلمة المرور</label>
-                                <input type="password" className="form-control custom-input" id="password" required />
+                                <input type="password" className="form-control custom-input" name="password" id="password" required onChange={onTyping} />
                             </div>
                             <div className="form-group">
                                 <label for="re-password">تأكيد كلمة المرور</label>
@@ -88,7 +128,7 @@ const SignUp = () => {
                             <div className="form-group">
                                 <input className="form-check-input signup-checkbox bg-dark" type="checkbox" id="gridCheck1" />
                                 <label className="form-check-label signup-checkbox-label" for="gridCheck1">
-                                    موافق على <Link to='/terms-of-use' className="text-lightgreen">اتفاقية المستخدم</Link> و<Link to='/privacy-policy' className="text-lightgreen">شروط الاستخدام</Link>
+                                    موافق على <Link to='/terms-of-use' className="text-lightgreen">اتفاقية المستخدم</Link> و <Link to='/privacy-policy' className="text-lightgreen">شروط الاستخدام</Link>
                                 </label>
                             </div>
                             <div className="form-row w-100">

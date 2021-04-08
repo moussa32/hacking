@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
-import { handleGetHackerInfo, handleRemoveUserToken } from '../../../actions/index';
+import { handleRemoveUserToken } from '../../../actions/index';
 import { MdEmail } from "react-icons/md";
 import { BsBellFill, BsFillGearFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
@@ -16,8 +16,6 @@ const HackerNavbar = ({ currentPathname }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDropDown, setIsDropDown] = useState(false);
     const [activeTab, setActiveTab] = useState("main");
-    const userInfo = handleGetHackerInfo();
-    console.log(userInfo);
 
     useEffect(() => {
         if (currentPathname.includes(`${match.path}/activity`)) {

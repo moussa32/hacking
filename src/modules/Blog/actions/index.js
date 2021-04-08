@@ -13,6 +13,9 @@ import {
 import { getAllHomeAds, getSharedAd } from '../../../api/AdsApi';
 // import { showLoading, hideLoading } from "react-redux-loading";
 import { getHackerInfo } from '../../../api/HackerInfoApi';
+import { postNewUser } from '../../../api/SignUpApi';
+
+
 
 export function getCategories(categories) {
   return {

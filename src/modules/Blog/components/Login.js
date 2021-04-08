@@ -24,7 +24,7 @@ const Login = () => {
             .then(res => {
                 console.log(res);
                 handleSetUserToken(res.data.access);
-                history.push("/dashboard");
+                setTimeout(() => history.push("/dashboard"), 1000);
             })
             .catch(e => {
                 console.error(e);

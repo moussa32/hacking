@@ -10,7 +10,6 @@ import HackerReports from './layout/HackerReports';
 import HackerBadges from './layout/HackerBadges';
 import HackerSkills from './layout/HackerSkills';
 import HackerWASP from './layout/HackerWASP';
-import { handleGetHackerInfo } from '../../actions/index';
 
 
 const Main = () => {

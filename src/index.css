@@ -807,6 +807,16 @@ blockquote:nth-of-type(even) footer:after {
   margin-top: .4rem;
 }
 
+.signup-checkbox{
+  width: 19px;
+  height: 20px;
+}
+
+.signup-checkbox-label{
+  margin-right: 1.5rem;
+  line-height: 1.6;
+}
+
 /*Email Confirmation*/
 .bg-second{
   background-color: #313131;
