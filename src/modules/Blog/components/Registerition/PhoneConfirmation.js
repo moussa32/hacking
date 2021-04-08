@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { FaCheckCircle } from "react-icons/fa";
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import './PhoneConfirmation.css';
+import ar from 'react-phone-input-2/lang/es.json';
+
 
 const PhoneConfirmation = () => {
     return (
@@ -18,7 +21,7 @@ const PhoneConfirmation = () => {
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-6 mx-auto">
-                                    <PhoneInput />
+                                    <PhoneInput country={'kw'} localization={ar} enableSearch={true} />
                                 </div>
                             </div>
                             <button className="btn btn-lightgreen my-4 d-block mx-auto">التحقق</button>
