@@ -3,7 +3,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import './PhoneConfirmation.css';
-import ar from 'react-phone-input-2/lang/es.json';
+import ar from 'react-phone-input-2/lang/ar.json';
 
 
 const PhoneConfirmation = () => {
