@@ -21,7 +21,7 @@ const Overview = (props) => {
             <ScrollToTop />
             <Switch>
                 {token ?
-                    (<Route path={`${match.path}`} component={Main} />)
+                    (<Route exact path={`${match.path}`} component={Main} />)
                     : (<Redirect to="/login" />)
                 }
                 <Route exact path="/notfound" component={NotFound} />

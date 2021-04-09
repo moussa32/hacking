@@ -11,10 +11,6 @@ import youTubeLogo from "./images/youtube-logo.svg";
 import page404 from "./images/404-page.svg";
 import mainIllust from "./images/main-illustration.svg";
 import hackerImage from "./images/hackerImage.jpeg";
-import patient from "./badges/patient.svg";
-import greybeard from "./badges/greybeard.svg";
-import streaker from "./badges/streaker.svg";
-import insecticide from "./badges/insecticide.svg";
 
 
 
@@ -32,10 +28,6 @@ export const YouTubeLogo = youTubeLogo;
 export const Page404 = page404;
 export const MainIllust = mainIllust;
 export const HackerImage = hackerImage;
-export const Patient = patient;
-export const Greybeard = greybeard;
-export const Streaker = streaker;
-export const Insecticide = insecticide;
 
 
 

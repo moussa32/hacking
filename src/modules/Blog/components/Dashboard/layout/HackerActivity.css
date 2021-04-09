@@ -1,0 +1,61 @@
+.report-container{
+  border-top: 3px solid #6b6b6b;
+}
+
+.company-info{
+  line-height: 3;
+  display: flex;
+  font-size: 1.3rem;
+  align-items: center;
+}
+
+.report-company-logo{
+  margin-left: 1rem;
+  width: 50px;
+  height: 49px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.report-alert{
+  width: 26px;
+  height: 11px;
+  display: inline-block;
+  margin-left: 0.8rem;
+}
+
+.badge:empty{
+  display: inline-block;
+}
+
+.report-status {
+  margin-right: 3.2rem;
+  margin-left: 3.2rem;
+}
+
+.sovle-date{
+  margin: 0 auto;
+}
+
+@media (max-width: 775.98px){
+  .report-status{
+    margin: 0 auto;
+  }
+
+  .sovle-date{
+    margin-top: 2.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px){
+  .report-status{
+    font-size:0.9rem
+  }
+}
+
+@media (min-width: 776px) and (max-width: 820px) { 
+  .report-status {
+    margin-left: 0;
+}
+}
