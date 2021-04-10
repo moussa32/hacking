@@ -16,7 +16,7 @@ const HackerSkills = ({ userSkills }) => {
                     </div>
                     <div className="col-md-8">
                       <div style={{ width: `${skill.rating * 10}%` }} className="progress skill-progress">
-                        <p className="skill-percent">${skill.rating * 10}%</p>
+                        <p className="skill-percent">{skill.rating * 10}%</p>
                         <div className="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100"></div>
                       </div>
                     </div>

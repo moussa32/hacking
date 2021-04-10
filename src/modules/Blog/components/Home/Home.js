@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Switch, Route, withRouter, Redirect } from "react-router-dom";
 
 import Navbar from "../layout/Navbar";
@@ -18,12 +18,16 @@ import Main from "../Main";
 import Login from "../Login";
 import SignUp from "../Registerition/SignUp";
 import EmailConfirmation from "../Registerition/EmailConfirmation";
-import PhoneConfirmation from "../Registerition/PhoneConfirmation";
+import MobileConfirmation from "../Registerition/MobileConfirmation";
 import SmsConfirmation from "../Registerition/SmsConfirmation";
+import EmailVerify from "../Registerition/EmailVerify";
+
 
 
 
 const Home = (props) => {
+  const [parentData, setParentData] = useState({});
+
   return (
     <div>
       <Navbar currentPathname={props.location.pathname} />
@@ -39,10 +43,17 @@ const Home = (props) => {
         <Route exact path="/blog" component={BlogHome} />
         <Route exact path="/blog/:slug/:id" component={Blog} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/sign-up" component={SignUp} />
-        <Route exact path="/email-confirmation" component={EmailConfirmation} />
-        <Route exact path="/mobile-confirmation" component={PhoneConfirmation} />
+        <Route exact path="/sign-up" >
+          <SignUp setParentData={setParentData} />
+        </Route>
+        <Route exact path="/email-confirmation">
+          <EmailConfirmation emailData={parentData} />
+        </Route>
+        <Route exact path="/mobile-confirmation" component={MobileConfirmation} />
         <Route exact path="/sms-confirmation" component={SmsConfirmation} />
+        <Route exact path="/verify-email" >
+          <EmailVerify userToken={parentData} />
+        </Route>
         <Route exact path="/" component={Main} />
         <Redirect to="/notfound" />
       </Switch>

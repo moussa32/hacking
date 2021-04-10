@@ -91,18 +91,18 @@ export function handleGetBlogAd() {
   };
 }
 
-export function handleSetUserToken(userToken) {
-  localStorage.setItem('token', JSON.stringify(userToken));
+export function handleSetUserToken(tableName, userToken) {
+  localStorage.setItem(tableName, JSON.stringify(userToken));
 }
 
-export function handleGetUserToken() {
-  const tokenString = localStorage.getItem('token');
+export function handleGetUserToken(tableName) {
+  const tokenString = localStorage.getItem(tableName);
   const userToken = JSON.parse(tokenString);
   return userToken
 }
 
-export function handleRemoveUserToken() {
-  localStorage.removeItem('token');
+export function handleRemoveUserToken(tableName) {
+  localStorage.removeItem(tableName);
 }
 
 export function handleGetHackerInfo() {

@@ -7,7 +7,6 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FaUserAlt, FaSignOutAlt } from "react-icons/fa";
 
 
-import { HackerImage } from "../../../../../assets/index";
 import { WhiteLogo } from "../../../../../assets/index";
 
 const HackerNavbar = ({ currentPathname }) => {
@@ -106,7 +105,7 @@ const HackerNavbar = ({ currentPathname }) => {
                     </li>
                     <li className="nav-item dropdown" onClick={toggleDropDown}>
                         <button className="nav-link dropdown-toggle d-none d-sm-inline-block border-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
-                            <img src={HackerImage} className="hacker-avatar img-fluid rounded-circle mr-1" alt="Chris Wood" />
+                            <img src='' className="hacker-avatar img-fluid rounded-circle mr-1" alt="Chris Wood" />
                             <IoIosArrowDown className="text-lightgreen mr-2" size={'1.3rem'} />
                         </button>
                         <div className={`dropdown-menu ${isDropDown ? "show" : ""} text-right ml-3`}>

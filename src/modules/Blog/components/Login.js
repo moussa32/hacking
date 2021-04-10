@@ -5,6 +5,9 @@ import axios from 'axios';
 import { handleSetUserToken, handleGetUserToken } from '../actions/index';
 
 const Login = () => {
+  const history = useHistory();
+  const token = handleGetUserToken('token');
+
   if (token) {
     history.push("/dashboard");
   }
@@ -15,10 +18,6 @@ const Login = () => {
     formIsValid: false,
     errors: { message: '' }
   });
-
-  const history = useHistory();
-  const token = handleGetUserToken();
-
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -36,7 +35,7 @@ const Login = () => {
       )
         .then(res => {
           console.log(res);
-          handleSetUserToken(res.data.access);
+          handleSetUserToken('token', res.data.access);
           setTimeout(() => history.push("/dashboard"), 1000);
         })
         .catch(function (error) {

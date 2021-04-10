@@ -10,7 +10,8 @@ import linkedInLogo from "./images/linkedin-logo.svg";
 import youTubeLogo from "./images/youtube-logo.svg";
 import page404 from "./images/404-page.svg";
 import mainIllust from "./images/main-illustration.svg";
-import hackerImage from "./images/hackerImage.jpeg";
+import emailConfirmation from "./images/email-confirmationIcon.jpg";
+
 
 
 
@@ -27,7 +28,8 @@ export const LinkedInLogo = linkedInLogo;
 export const YouTubeLogo = youTubeLogo;
 export const Page404 = page404;
 export const MainIllust = mainIllust;
-export const HackerImage = hackerImage;
+export const EmailConfirmationImage = emailConfirmation;
+
 
 
 

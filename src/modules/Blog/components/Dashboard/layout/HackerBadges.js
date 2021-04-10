@@ -13,9 +13,9 @@ const HackerBadges = ({ userInfo }) => {
           <div class="row section-container">
             {userInfo.hacker.badges.map(badge => {
               return (
-                <div className="col-md-3 p-3 rounded">
+                <div className="col-md-4 p-3 rounded">
                   <div className="card bg-transparent border-0">
-                    <img className="card-img-top badge-img p-4 bg-white d-block mx-auto" src={`${dvbaseUrl}/${badge.image}`} alt="Card image cap" />
+                    <img className="card-img-top badge-img p-0 d-block mx-auto" src={`${dvbaseUrl}/${badge.image}`} alt="Card image cap" />
                     <div className="card-body p-2">
                       <h3 className="card-title badge-name my-3">{badge.name}</h3>
                       <p className="card-text badge-description">{badge.description}</p>

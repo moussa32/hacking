@@ -12,16 +12,17 @@ import { handleGetUserToken } from '../../actions/index';
 
 
 const Overview = (props) => {
+    const [parentData, setParentData] = useState({});
     let match = useRouteMatch();
-    let token = handleGetUserToken();
+    let token = handleGetUserToken('token');
 
     return (
         <div>
-            <HackerNavbar currentPathname={props.location.pathname} />
+            <HackerNavbar hackerInfo={parentData} currentPathname={props.location.pathname} />
             <ScrollToTop />
             <Switch>
                 {token ?
-                    (<Route exact path={`${match.path}`} component={Main} />)
+                    (<Route exact path={`${match.path}`}><Main setParentData={setParentData} /></Route>)
                     : (<Redirect to="/login" />)
                 }
                 <Route exact path="/notfound" component={NotFound} />

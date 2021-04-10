@@ -1,18 +1,18 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import { FaEnvelopeOpen } from "react-icons/fa";
+import { EmailConfirmationImage } from '../../../../assets/index';
 
 
-const Confirmation = () => {
+const Confirmation = ({ emailData }) => {
+    const hackerEmail = emailData.hacker_data.email
     return (
         <main class="component-wrapper">
             <div className="container home">
                 <div class="jumbotron text-center bg-second">
-                    <p className="lead">لقد أرسلنا بريدًا إلكترونيًا إلى <Link to='mailto:moussaebrahem32@gmail.com' className="text-lightgreen">moussaebrahem@gmail.com</Link></p>
+                    <p className="lead">لقد أرسلنا بريدًا إلكترونيًا إلى <a href={`mailto:${hackerEmail}`} target="_blank" rel="nofollow" className="text-lightgreen">{hackerEmail}</a></p>
                     <p>يرجى التحقق من بريدك الإلكتروني والتحقق من حسابك, للمتابعة.</p>
-                    <FaEnvelopeOpen size={'10em'} className="d-block mx-auto py-3" />
+                    <img src={EmailConfirmationImage} className="d-block mx-auto py-3 email-confirmation-icon" />
                     <small>لم تتلق البريد الإلكتروني؟</small>
-                    <small><a className="text-lightgreen d-block mx-auto pt-3">إعادة إرسال البريد الإلكتروني</a></small>
+                    <small><button className="text-lightgreen d-block mx-auto pt-3 bg-transparent border-0">إعادة إرسال البريد الإلكتروني</button></small>
                 </div>
             </div>
         </main>

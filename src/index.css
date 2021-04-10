@@ -789,6 +789,19 @@ blockquote:nth-of-type(even) footer:after {
   padding:3rem;
 }
 
+.birthdate-input::-webkit-calendar-picker-indicator{
+  filter: invert(1);
+}
+
+.country-input::-webkit-scrollbar{
+  background-color: #313131;
+}
+
+.country-input::-webkit-scrollbar-thumb{
+  background-color: var(--lightGreen);
+  border-radius:15px;
+}
+
 .signup-logo{
   width: 140px;
   height: 140px;
@@ -818,6 +831,10 @@ blockquote:nth-of-type(even) footer:after {
 }
 
 /*Email Confirmation*/
+.email-confirmation-icon{
+  width: 15rem;
+    border-radius: 18px;
+}
 .bg-second{
   background-color: #313131;
 }
