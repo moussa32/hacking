@@ -1,6 +1,7 @@
 import React from 'react';
+import { dvbaseUrl } from "../../../../../api/Constants";
 
-const HackerThanks = () => {
+const HackerThanks = ({ userThankers }) => {
   return (
     <>
       <div className="jumbotron jumbotron-fluid bg-black rounded py-4">
@@ -15,14 +16,14 @@ const HackerThanks = () => {
                 </tr>
               </thead>
               <tbody className="vulbody">
-                <tr>
-                  <th scope="row" className="vulname text-right"><img className="companyLogo" src="https://www.futurelab.net/sites/default/files/toyota-logo.jpg" /> Toyota</th>
-                  <td>47</td>
-                </tr>
-                <tr>
-                  <th scope="row" className="vulname text-right"><img className="companyLogo" src="https://gfx4arab.com/wp-content/uploads/2020/07/olx-group-1.svg" /> OLX</th>
-                  <td>40</td>
-                </tr>
+                {userThankers.map(thanker => {
+                  return (
+                    <tr key={thanker.id}>
+                      <th scope="row" className="vulname text-right"><img className="companyLogo" src={`${dvbaseUrl}/${thanker.logo}`} /> {thanker.name}</th>
+                      <td>47</td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>

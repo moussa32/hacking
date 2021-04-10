@@ -12,28 +12,28 @@ import { handleGetUserToken } from '../../actions/index';
 
 
 const Overview = (props) => {
-    const [parentData, setParentData] = useState({});
-    let match = useRouteMatch();
-    let token = handleGetUserToken('token');
+  const [parentData, setParentData] = useState({});
+  let match = useRouteMatch();
+  let token = handleGetUserToken('token');
 
-    return (
-        <div>
-            <HackerNavbar hackerInfo={parentData} currentPathname={props.location.pathname} />
-            <ScrollToTop />
-            <Switch>
-                {token ?
-                    (<Route exact path={`${match.path}`}><Main setParentData={setParentData} /></Route>)
-                    : (<Redirect to="/login" />)
-                }
-                <Route exact path="/notfound" component={NotFound} />
-                <Route exact path={`${match.path}/activity`} component={Activity} />
-                <Route exact path={`${match.path}/available-programs`} component={AvailablePrograms} />
-                <Route exact path={`${match.path}/leaderboard`} component={Leaderboard} />
-                <Route exact path={`${match.path}`} component={Main} />
-                <Redirect to="/notfound" />
-            </Switch>
-        </div>
-    );
+  return (
+    <div>
+      <HackerNavbar currentPathname={props.location.pathname} />
+      <ScrollToTop />
+      <Switch>
+        {token ?
+          (<Route exact path={`${match.path}`}><Main setParentData={setParentData} /></Route>)
+          : (<Redirect to="/login" />)
+        }
+        <Route exact path="/notfound" component={NotFound} />
+        <Route exact path={`${match.path}/activity`} component={Activity} />
+        <Route exact path={`${match.path}/available-programs`} component={AvailablePrograms} />
+        <Route exact path={`${match.path}/leaderboard`} component={Leaderboard} />
+        <Route exact path={`${match.path}`} component={Main} />
+        <Redirect to="/notfound" />
+      </Switch>
+    </div>
+  );
 };
 
 export default withRouter(Overview);

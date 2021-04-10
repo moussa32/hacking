@@ -5,9 +5,42 @@ import 'react-phone-input-2/lib/style.css';
 import './MobileConfirmation.css';
 import ar from 'react-phone-input-2/lang/ar.json';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 
 const MobileConfirmation = () => {
+  const history = useHistory();
+
+  const [phoneNumber, setPhoneNumber] = useState({ phone_number: '' })
+  const [status, setStatus] = useState({
+    error: '',
+    success: ''
+  })
+
+  const handlePhoneNumber = (e) => {
+    setPhoneNumber({ phone_number: `+${e}` })
+    console.log(phoneNumber);
+  }
+
+  const sendPhoneNumber = () => {
+    axios.post('https://bugbounty.pythonanywhere.com/api/v1/auth/hackers/verify-phone/', phoneNumber)
+      .then((res) => {
+        console.log(res);
+
+      }).catch(function (error) {
+
+        if (error.response) {
+
+          console.log(error.response);
+          if (error.response.status == 500) {
+            setStatus({ error: 'هناك مشكلة في الخادم فى الوقت الحالي' })
+          } else if (error.response.status == 400) {
+            setStatus({ error: 'أدخل رقم هاتف صالح' })
+          }
+        }
+      });
+  }
+
   return (
     <main class="component-wrapper">
       <div className="container home">
@@ -27,10 +60,17 @@ const MobileConfirmation = () => {
                     name="phone_number"
                     localization={ar}
                     enableSearch={true}
+                    onChange={handlePhoneNumber}
                   />
+                  {status.error ? (<div class="alert alert-danger mt-4 text-center" role="alert">
+                    {status.error}
+                  </div>) : ''}
+                  {status.success ? (<div class="alert alert-success mt-4 text-center" role="alert">
+                    {status.success}
+                  </div>) : ''}
                 </div>
               </div>
-              <button className="btn btn-lightgreen my-4 d-block mx-auto">التحقق</button>
+              <button onClick={sendPhoneNumber} className="btn btn-lightgreen my-4 d-block mx-auto">التحقق</button>
               <small className="d-block">سيصلك رسالة sms برمز التحقق الخاص بك</small>
             </div>
           </div>

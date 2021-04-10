@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { handleSetUserToken, handleGetUserToken } from '../../actions';
+import { useHistory } from 'react-router-dom';
 
 const EmailVerify = () => {
+
   const [valid, setValid] = useState({
     token: '',
     error: '',
@@ -10,6 +12,7 @@ const EmailVerify = () => {
     isValid: false,
     isLoadding: true
   });
+
   const history = useHistory();
 
   const verifyUserToken = () => {
@@ -20,22 +23,26 @@ const EmailVerify = () => {
   }
 
   useEffect(() => {
-    axios.get('http://bugbounty.pythonanywhere.com/api/v1/auth/hackers/verify-email/')
+    verifyUserToken();
+
+    const getUnAuth = handleGetUserToken('token');
+
+    axios.get(`http://bugbounty.pythonanywhere.com/api/v1/auth/hackers/verify-email/?token=${getUnAuth}`)
       .then((res) => {
 
-        verifyUserToken();
+        setValid({ ...valid, error: '', success: 'تم تفعيل بريدك الإلكتروني بنجاح جاري تحويلك' });
+        setTimeout(() => {
+          history.push("/mobile-confirmation");
+        }, 5000);
 
-        if (res.data.token == unAuth) {
-          setValid({ ...valid, error: '', success: 'تم تفعيل بريدك الإلكتروني بنجاح جاري تحويلك' });
-          setTimeout(() => {
-            history.push("/mobile-confirmation");
-          }, 2000);
-        }
       }).catch(function (error) {
         if (error.response) {
-          console.log(error.response)
           if (error.response.status == 400) {
             setValid({ ...valid, error: 'لا يوجد بريد إلكتروني مرتبط بهذا الرمز' });
+
+            setTimeout(() => {
+              history.push("/email-confirmation");
+            }, 3000);
           }
         }
       });
@@ -54,7 +61,7 @@ const EmailVerify = () => {
                   {valid.error ? (<div class="alert alert-danger mt-4 text-center" role="alert">
                     {valid.error}
                   </div>) : ''}
-                  {valid.success ? (<div class="alert alert-danger mt-4 text-center" role="alert">
+                  {valid.success ? (<div class="alert alert-success mt-4 text-center" role="alert">
                     {valid.success}
                   </div>) : ''}
                 </div>

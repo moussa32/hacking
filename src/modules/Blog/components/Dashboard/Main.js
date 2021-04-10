@@ -15,24 +15,23 @@ import StandrdVulnerabilities from './layout/StandrdVulnerabilities';
 import HackerThanks from './layout/HackerThanks';
 import HackerActivity from './layout/HackerActivity';
 import Spinner from "../../../../shared/components/Spinner";
+import { getHackerInfo } from '../../../../api/DashboardApi';
 
 
 
 const Main = () => {
   const [userInfo, setUserInfo] = useState(null);
-  const [loadded, setLoadded] = useState(false)
+  const [loadded, setLoadded] = useState(false);
 
-  const getHackerInfo = async () => {
-    const res = await axios.get('http://bugbounty.pythonanywhere.com/api/v1/hackers/dashboard/user-info')
-    return res
-  }
+  const hackerData = getHackerInfo();
 
   useEffect(() => {
-    getHackerInfo()
+    hackerData
       .then(item => {
         setUserInfo(item.data);
         setLoadded(true);
-        console.log(item.data);
+      }).catch(function (error) {
+        console.log(error);
       })
   }, [])
 
@@ -95,7 +94,7 @@ const Main = () => {
               <HackerSkills userSkills={userInfo.hacker.skills} />
               <HackerWASP />
               <StandrdVulnerabilities />
-              <HackerThanks />
+              <HackerThanks userThankers={userInfo.hacker.thankers} />
               <HackerActivity />
             </div>
           </div>
