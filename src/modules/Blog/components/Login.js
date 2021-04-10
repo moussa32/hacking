@@ -40,7 +40,9 @@ const Login = () => {
         })
         .catch(function (error) {
           if (error.response) {
-            setCredentials({ ...credentials, errors: { message: error.response.data.detail } })
+            if (error.staute == 401) {
+              setCredentials({ ...credentials, errors: { message: 'برجاء كتابة بيانات الدخول بشكل صحيح' } })
+            }
           }
         });
     }
