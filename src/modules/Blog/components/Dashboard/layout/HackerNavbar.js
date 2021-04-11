@@ -41,7 +41,6 @@ const HackerNavbar = ({ currentPathname }) => {
       .then(item => {
         setHackerInfo(item.data);
         setIsLoadded(true);
-        console.log(item);
       }).catch((erorr) => {
         if (erorr.response.status == 401) {
           getNewTokens(reFreshtoken);

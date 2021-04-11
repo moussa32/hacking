@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { handleGetUserToken, handleSetUserToken } from '../../../actions/index';
 import { getHackerWASP } from '../../../../../api/WaspApi';
@@ -17,26 +17,28 @@ const HackerSkills = () => {
   });
   const [isDataDone, setIsDataDone] = useState(false);
 
-  const token = handleGetUserToken('accessToken');
-  const reFreshtoken = handleGetUserToken('refreshToken');
-  const owaspRequest = getHackerWASP(token);
+  useEffect(() => {
+    const token = handleGetUserToken('accessToken');
+    const reFreshtoken = handleGetUserToken('refreshToken');
+    const owaspRequest = getHackerWASP(token);
 
-  owaspRequest.then((res) => {
-    const reportsData = res.data;
-    const pushWASPLabels = wasp.labels;
-    const pushWASPData = wasp.datasets[0].data;
+    owaspRequest.then((res) => {
+      const reportsData = res.data;
+      const pushWASPLabels = wasp.labels;
+      const pushWASPData = wasp.datasets[0].data;
 
-    reportsData.forEach(element => {
-      pushWASPLabels.push(element.name);
-      pushWASPData.push(element.reports_count);
-    });
+      reportsData.forEach(element => {
+        pushWASPLabels.push(element.name);
+        pushWASPData.push(element.reports_count);
+      });
 
-    setIsDataDone(true);
-  }).catch((erorr) => {
-    if (erorr.response.status == 401) {
-      getNewTokens(reFreshtoken);
-    }
-  })
+      setIsDataDone(true);
+    }).catch((erorr) => {
+      if (erorr.response.status == 401) {
+        getNewTokens(reFreshtoken);
+      }
+    })
+  }, []);
 
   const options = {
     responsive: true,

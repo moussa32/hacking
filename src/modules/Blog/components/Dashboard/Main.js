@@ -11,7 +11,7 @@ import HackerReports from './layout/HackerReports';
 import HackerBadges from './layout/HackerBadges';
 import HackerSkills from './layout/HackerSkills';
 import HackerWASP from './layout/HackerWASP';
-import StandrdVulnerabilities from './layout/StandrdVulnerabilities';
+import HackerReportsWeak from './layout/HackerReportsWeak';
 import HackerThanks from './layout/HackerThanks';
 import HackerActivity from './layout/HackerActivity';
 import Spinner from "../../../../shared/components/Spinner";
@@ -101,7 +101,7 @@ const Main = () => {
               <HackerBadges userInfo={userInfo} />
               <HackerSkills userSkills={userInfo.hacker.skills} />
               <HackerWASP />
-              <StandrdVulnerabilities />
+              <HackerReportsWeak />
               <HackerThanks userThankers={userInfo.hacker.thankers} />
               <HackerActivity />
             </div>

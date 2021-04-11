@@ -1,31 +1,89 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar, Doughnut, Chart } from 'react-chartjs-2';
-import { fake_Doughnut_data, fake_sDoughnut_data } from '../../../../../shared/constants/fakedata';
-import axios from 'axios';
 import { handleGetUserToken } from '../../../actions/index';
 import { getHackerReports } from '../../../../../api/HackerReportsApi';
+import { getNewTokens } from '../../../../../api/RefreshTokenApi';
 
 const HackerReports = () => {
   const [isDataDone, setIsDataDone] = useState(false);
-  const [reportChartData, setReportChartData] = useState({
-    labels: ['ضروري', 'عالي', 'متوسط', 'منخفض'],
+  const [barChartData, setBarChartData] = useState({
+    labels: [],
     datasets: [{
-      data: [50, 90, 60, 20, 100, 0],
+      data: [],
       backgroundColor: '#0f572226',
       borderColor: '#08cc96',
-      borderWidth: 2
+      borderWidth: 2,
+      color: '#fff'
+    }]
+  });
+  const [doughnutChartData, setDoughnutChartData] = useState({
+    labels: [
+      'مفتوح',
+      'مغلق',
+    ],
+    datasets: [{
+      data: [],
+      backgroundColor: [
+        '#0e5296',
+        '#4d1055',
+      ],
+      hoverOffset: 4
     }]
   });
 
-  const token = handleGetUserToken('accessToken');
-  const reFreshtoken = handleGetUserToken('refreshToken');
-  const hackerReportsRequest = getHackerReports(token);
+  useEffect(() => {
+    const token = handleGetUserToken('accessToken');
+    const reFreshtoken = handleGetUserToken('refreshToken');
+    const hackerReportsRequest = getHackerReports(token);
 
-  console.log(getHackerReports);
+    hackerReportsRequest.then((res) => {
+      Chart.defaults.global.legend.display = false;
+      Chart.defaults.global.defaultFontColor = "#fff";
 
-  const data = () => {
-    Chart.defaults.global.legend.display = false;
-    return reportChartData;
+      const reportsByLevel = res.data.reports_by_level;
+      const pushReportsLabels = barChartData.labels;
+      const pushReportsValue = barChartData.datasets[0].data;
+
+      reportsByLevel.forEach((report) => {
+        pushReportsLabels.push(report.name);
+        pushReportsValue.push(report.reports_count);
+      })
+
+      const reportsByState = res.data.reports_by_state;
+      const pushStateReportsValue = doughnutChartData.datasets[0].data;
+
+      for (const [key, value] of Object.entries(reportsByState)) {
+        pushStateReportsValue.push(value);
+      }
+
+      setIsDataDone(true);
+
+    }).catch((error) => {
+      if (error.response.status == 401) {
+        getNewTokens(reFreshtoken);
+      }
+    })
+  }, []);
+
+
+  const optionsForBars = {
+    responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        },
+        gridLines: {
+          display: false
+        },
+      }],
+      xAxes: [{
+        gridLines: {
+          display: true,
+          color: '#ffffff63'
+        },
+      }]
+    }
   }
 
   const options = {
@@ -43,22 +101,17 @@ const HackerReports = () => {
         <h2 className="text-right mr-4 mb-4">التقارير</h2>
         <div className="container">
           <div className="row px-2">
-            <div className="col-md-5 bg-second p-3">
-              <Bar data={reportChartData} options={options} />
-            </div>
-            <div className="col-md-7">
-              <h4 className="w-100 pb-3">مجموع التقارير {fake_sDoughnut_data.datasets[0].data[0] + fake_sDoughnut_data.datasets[0].data[1]}</h4>
-              <div className="row">
-                <div className="col-md-6">
-                  <Doughnut data={fake_Doughnut_data} options={options} />
-                  <small className="d-block mt-3">{fake_sDoughnut_data.datasets[0].data[0]} تقرير مغلق</small>
+            {isDataDone ? (
+              <>
+                <div className="col-md-7 bg-second p-3">
+                  <Bar data={barChartData} options={optionsForBars} />
                 </div>
-                <div className="col-md-6">
-                  <Doughnut data={fake_sDoughnut_data} options={options} />
-                  <small className="d-block mt-3">{fake_sDoughnut_data.datasets[0].data[1]} تقرير مفتوح</small>
+                <div className="col-md-5">
+                  <h4 className="w-100 pb-3">مجموع التقارير {doughnutChartData.datasets[0].data[0] + doughnutChartData.datasets[0].data[1]}</h4>
+                  <Doughnut data={doughnutChartData} options={options} />
                 </div>
-              </div>
-            </div>
+              </>
+            ) : ''}
           </div>
         </div>
       </div>
