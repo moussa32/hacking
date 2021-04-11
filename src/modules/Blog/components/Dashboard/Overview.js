@@ -14,7 +14,7 @@ import { handleGetUserToken } from '../../actions/index';
 const Overview = (props) => {
   const [parentData, setParentData] = useState({});
   let match = useRouteMatch();
-  let token = handleGetUserToken('token');
+  let token = handleGetUserToken('accessToken');
 
   return (
     <div>

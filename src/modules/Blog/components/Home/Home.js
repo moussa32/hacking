@@ -27,6 +27,7 @@ import EmailVerify from "../Registerition/EmailVerify";
 
 const Home = (props) => {
   const [parentData, setParentData] = useState({});
+  const [userPhoneNumber, setUserPhoneNumber] = useState({});
 
   return (
     <div>
@@ -49,8 +50,12 @@ const Home = (props) => {
         <Route exact path="/email-confirmation">
           <EmailConfirmation emailData={parentData} />
         </Route>
-        <Route exact path="/mobile-confirmation" component={MobileConfirmation} />
-        <Route exact path="/sms-confirmation" component={SmsConfirmation} />
+        <Route exact path="/mobile-confirmation">
+          <MobileConfirmation setUserPhoneNumber={setUserPhoneNumber} />
+        </Route>
+        <Route exact path="/sms-confirmation">
+          <SmsConfirmation phoneNumberFromComponent={userPhoneNumber} />
+        </Route>
         <Route exact path="/verify-email" >
           <EmailVerify userToken={parentData} />
         </Route>

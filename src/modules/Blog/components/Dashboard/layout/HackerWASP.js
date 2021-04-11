@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Bar, Chart } from 'react-chartjs-2';
-import { dvApiUrl } from '../../../../../api/Constants';
-import axios from 'axios';
+import { Bar } from 'react-chartjs-2';
+import { handleGetUserToken, handleSetUserToken } from '../../../actions/index';
+import { getHackerWASP } from '../../../../../api/WaspApi';
+import { getNewTokens } from '../../../../../api/RefreshTokenApi';
 
 
 const HackerSkills = () => {
@@ -16,24 +17,26 @@ const HackerSkills = () => {
   });
   const [isDataDone, setIsDataDone] = useState(false);
 
-  axios.get(`${dvApiUrl}/hackers/dashboard/reports-10OWASP`)
-    .then((res) => {
-      const reportsData = res.data;
-      const pushWASPLabels = wasp.labels;
-      const pushWASPData = wasp.datasets[0].data;
+  const token = handleGetUserToken('accessToken');
+  const reFreshtoken = handleGetUserToken('refreshToken');
+  const owaspRequest = getHackerWASP(token);
 
-      reportsData.forEach(element => {
-        pushWASPLabels.push(element.name);
-        pushWASPData.push(element.reports_count);
-      });
+  owaspRequest.then((res) => {
+    const reportsData = res.data;
+    const pushWASPLabels = wasp.labels;
+    const pushWASPData = wasp.datasets[0].data;
 
-      setIsDataDone(true);
-    })
+    reportsData.forEach(element => {
+      pushWASPLabels.push(element.name);
+      pushWASPData.push(element.reports_count);
+    });
 
-  const data = () => {
-    Chart.defaults.global.legend.display = false;
-    return wasp;
-  }
+    setIsDataDone(true);
+  }).catch((erorr) => {
+    if (erorr.response.status == 401) {
+      getNewTokens(reFreshtoken);
+    }
+  })
 
   const options = {
     responsive: true,

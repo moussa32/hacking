@@ -6,8 +6,9 @@ import { BsBellFill, BsFillGearFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaUserAlt, FaSignOutAlt, FaBuromobelexperte } from "react-icons/fa";
 import { getHackerInfo } from '../../../../../api/DashboardApi';
+import { getNewTokens } from '../../../../../api/RefreshTokenApi';
 import { dvbaseUrl } from '../../../../../api/Constants';
-
+import { handleGetUserToken } from '../../../actions/index';
 
 import { WhiteLogo } from "../../../../../assets/index";
 
@@ -19,7 +20,9 @@ const HackerNavbar = ({ currentPathname }) => {
   const [isLoadded, setIsLoadded] = useState(false);
   const [activeTab, setActiveTab] = useState("main");
   const [hackerInfo, setHackerInfo] = useState({});
-  const hackerInformation = getHackerInfo();
+  const token = handleGetUserToken('accessToken');
+  const reFreshtoken = handleGetUserToken('refreshToken');
+  const hackerInformation = getHackerInfo(token);
 
   useEffect(() => {
     if (currentPathname.includes(`${match.path}/activity`)) {
@@ -39,6 +42,10 @@ const HackerNavbar = ({ currentPathname }) => {
         setHackerInfo(item.data);
         setIsLoadded(true);
         console.log(item);
+      }).catch((erorr) => {
+        if (erorr.response.status == 401) {
+          getNewTokens(reFreshtoken);
+        }
       })
   }, [])
 
@@ -46,7 +53,7 @@ const HackerNavbar = ({ currentPathname }) => {
   const toggleDropDown = () => setIsDropDown(!isDropDown);
 
   let handleLogout = () => {
-    handleRemoveUserToken();
+    handleRemoveUserToken('accessToken');
     history.push("/login");
   }
 

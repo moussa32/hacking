@@ -3,17 +3,24 @@ import { FaCheckCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import './SmsConfirmation.css';
 import axios from 'axios';
+import { dvApiUrl } from '../../../../api/Constants';
+import { handleGetUserToken } from '../../actions/index';
+import { useHistory } from 'react-router-dom';
+
 
 const SmsConfirmation = () => {
     const [smsCode, setSmsCode] = useState({
         code: '',
         error: '',
-        validCode: false
+        validCode: false,
     });
+    const userPhoneNumber = handleGetUserToken('phoneNumber');
+    const history = useHistory();
+
+    const accessToken = handleGetUserToken('accessToken');
 
     const handleSmscode = (e) => {
         setSmsCode({ ...smsCode, code: e.target.value });
-        console.log(smsCode);
     }
 
     const validationCode = () => {
@@ -36,25 +43,36 @@ const SmsConfirmation = () => {
     }
 
     const sendCode = async () => {
-        const res = await axios.post('http://bugbounty.pythonanywhere.com/api/v1/auth/hackers/verify-phone-code/', smsCode)
+        const res = await axios.post(`${dvApiUrl}/auth/hackers/verify-phone-code/`, smsCode, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        })
         return res
     }
 
     const reSendCode = async () => {
-        const reSendRequest = await axios.post('http://bugbounty.pythonanywhere.com/api/v1/auth/hackers/resend-code/')
+        const reSendRequest = await axios.post(`${dvApiUrl}/auth/hackers/resend-code/`, userPhoneNumber, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        })
         return reSendRequest
     }
 
     const onSend = () => {
         const isValid = validationCode();
-        console.log(smsCode);
 
         if (isValid) {
             sendCode()
                 .then(message => {
-                    setSmsCode({ ...smsCode, error: '', success: 'تم التأكد من رقم الهاتف' })
+                    setSmsCode({ ...smsCode, error: '', success: 'تم التأكد من رقم الهاتف' });
+                    setTimeout(() => {
+                        history.push("/dashboard");
+                    }, 3000);
                 })
                 .catch(function (error) {
+                    console.log(error.response);
                     if (error.response.status == 406) {
                         setSmsCode({ ...smsCode, success: '', error: 'الكود غير صحيح' });
                     }
@@ -62,20 +80,20 @@ const SmsConfirmation = () => {
         }
     }
     const onReSend = () => {
-        const isValid = validationCode();
-        console.log(smsCode);
-
-        if (isValid) {
-            reSendCode()
-                .then(message => {
-                    setSmsCode({ ...smsCode, error: '', success: 'تم إعادة إرسال الكود' })
-                })
-                .catch(function (error) {
-                    if (error.response) {
-                        setSmsCode({ ...smsCode, success: '', error: 'هناك مشكلة ما' });
+        reSendCode()
+            .then(message => {
+                console.log(message);
+                setSmsCode({ ...smsCode, error: '', success: 'تم إعادة إرسال الكود' })
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response);
+                    setSmsCode({ ...smsCode, success: '', error: 'هناك مشكلة ما' });
+                    if (error.response.status == 429) {
+                        setSmsCode({ ...smsCode, success: '', error: 'يجب عليك ان تنظر لدقيقتين حتى تستطيع إرسال كود جديد' });
                     }
-                });
-        }
+                }
+            });
     }
 
     return (
@@ -92,7 +110,7 @@ const SmsConfirmation = () => {
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-6 mx-auto px-4">
-                                    <p className="lead main-message">الرجاء إدخال رمز التحقق الذي أرسلناه إلي <span className="message-phone">+201095122777</span></p>
+                                    <p className="lead main-message">الرجاء إدخال رمز التحقق الذي أرسلناه إلي <span className="message-phone">{userPhoneNumber}</span></p>
                                     <input type="text" className="form-control bg-white text-dark w-50 mx-auto text-center message-code" onChange={handleSmscode} maxlength='6' placeholder="كود التحقق" />
                                     {smsCode.error ? (<div class="alert alert-danger mt-4 text-center" role="alert">
                                         {smsCode.error}

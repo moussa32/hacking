@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { handleSetUserToken, handleGetUserToken } from '../../actions';
 import { useHistory } from 'react-router-dom';
+import { dvApiUrl } from '../../../../api/Constants';
 
 const EmailVerify = () => {
-
   const [valid, setValid] = useState({
     token: '',
     error: '',
@@ -12,22 +12,27 @@ const EmailVerify = () => {
     isValid: false,
     isLoadding: true
   });
-
+  {/*Manage routing in ture conditions*/ }
   const history = useHistory();
 
+  {/* Function that get access token from email url then store it in localstorage*/ }
   const verifyUserToken = () => {
     const location = window.location.href;
     const tokenFromURL = location.split('=')[1];
 
-    handleSetUserToken('token', tokenFromURL);
+    handleSetUserToken('accessToken', tokenFromURL);
   }
 
   useEffect(() => {
     verifyUserToken();
 
-    const getUnAuth = handleGetUserToken('token');
+    const getUnAuth = handleGetUserToken('accessToken');
 
-    axios.get(`http://bugbounty.pythonanywhere.com/api/v1/auth/hackers/verify-email/?token=${getUnAuth}`)
+    axios.get(`${dvApiUrl}/auth/hackers/verify-email/?token=${getUnAuth}`, {
+      headers: {
+        'Authorization': `Bearer ${getUnAuth}`
+      }
+    })
       .then((res) => {
 
         setValid({ ...valid, error: '', success: 'تم تفعيل بريدك الإلكتروني بنجاح جاري تحويلك' });
@@ -36,6 +41,7 @@ const EmailVerify = () => {
         }, 5000);
 
       }).catch(function (error) {
+
         if (error.response) {
           if (error.response.status == 400) {
             setValid({ ...valid, error: 'لا يوجد بريد إلكتروني مرتبط بهذا الرمز' });
@@ -45,6 +51,7 @@ const EmailVerify = () => {
             }, 3000);
           }
         }
+
       });
   }, [])
 

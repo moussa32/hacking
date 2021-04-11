@@ -29,11 +29,3 @@ export const fake_sDoughnut_data = {
     hoverOffset: 4
   }]
 };
-
-export const wasp_fake_data = {
-  labels: ['day', 'day', 'day', 'day', 'day', 'day', 'day', 'day', 'day', 'day', 'day'],
-  datasets: [{
-    data: [50, 40, 60, 80, 20, 15, 60, 35],
-    backgroundColor: '#4d1055',
-  }]
-}

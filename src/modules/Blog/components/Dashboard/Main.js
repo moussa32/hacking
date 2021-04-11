@@ -16,6 +16,9 @@ import HackerThanks from './layout/HackerThanks';
 import HackerActivity from './layout/HackerActivity';
 import Spinner from "../../../../shared/components/Spinner";
 import { getHackerInfo } from '../../../../api/DashboardApi';
+import { getNewTokens } from '../../../../api/RefreshTokenApi';
+import { handleGetUserToken } from '../../actions/index';
+
 
 
 
@@ -23,7 +26,9 @@ const Main = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [loadded, setLoadded] = useState(false);
 
-  const hackerData = getHackerInfo();
+  const token = handleGetUserToken('accessToken');
+  const reFreshtoken = handleGetUserToken('refreshToken');
+  const hackerData = getHackerInfo(token);
 
   useEffect(() => {
     hackerData
@@ -31,7 +36,10 @@ const Main = () => {
         setUserInfo(item.data);
         setLoadded(true);
       }).catch(function (error) {
-        console.log(error);
+        console.log(error.response);
+        if (error.response.status == 401) {
+          getNewTokens(reFreshtoken);
+        }
       })
   }, [])
 

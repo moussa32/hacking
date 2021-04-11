@@ -6,10 +6,14 @@ import './MobileConfirmation.css';
 import ar from 'react-phone-input-2/lang/ar.json';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { dvApiUrl } from '../../../../api/Constants';
+import { handleGetUserToken, handleSetUserToken } from '../../actions/index';
 
 
 const MobileConfirmation = () => {
   const history = useHistory();
+  const token = handleGetUserToken('accessToken');
+  const reFreshtoken = handleGetUserToken('refreshToken');
 
   const [phoneNumber, setPhoneNumber] = useState({ phone_number: '' })
   const [status, setStatus] = useState({
@@ -19,23 +23,44 @@ const MobileConfirmation = () => {
 
   const handlePhoneNumber = (e) => {
     setPhoneNumber({ phone_number: `+${e}` })
-    console.log(phoneNumber);
   }
 
   const sendPhoneNumber = () => {
-    axios.post('https://bugbounty.pythonanywhere.com/api/v1/auth/hackers/verify-phone/', phoneNumber)
+    axios.post(`${dvApiUrl}/auth/hackers/verify-phone/`, phoneNumber, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then((res) => {
-        console.log(res);
-
+        setStatus({ ...status, success: 'تم إرسال الكود بنجاح برجاء التحقق من هاتفك' })
+        handleSetUserToken('phoneNumber', phoneNumber.phone_number);
+        setTimeout(() => {
+          history.push("/sms-confirmation");
+        }, 1000);
       }).catch(function (error) {
-
         if (error.response) {
 
-          console.log(error.response);
+          console.log(error.response.data);
           if (error.response.status == 500) {
             setStatus({ error: 'هناك مشكلة في الخادم فى الوقت الحالي' })
-          } else if (error.response.status == 400) {
-            setStatus({ error: 'أدخل رقم هاتف صالح' })
+          } else if (error.response.status == 406) {
+            setStatus({ error: 'هذا الرقم مسجل بالفعل' })
+          } else if (error.response.status == 401) {
+            setStatus({ error: 'لقد انتهت جلستك برجاء إعادة تحميل الصفحة' })
+
+            axios.post(`${dvApiUrl}/auth/hackers/refresh/`, { refresh: reFreshtoken }, {
+              headers: {
+                'Authorization': `Bearer ${reFreshtoken}`
+              }
+            })
+              .then((res) => {
+                handleSetUserToken('accessToken', res.data.access);
+                handleSetUserToken('refreshToken', res.data.refresh);
+              }).catch(function (error) {
+                if (error.response.status == 401) {
+                  setStatus({ error: error.response.data.detail })
+                }
+              })
           }
         }
       });
@@ -60,7 +85,7 @@ const MobileConfirmation = () => {
                     name="phone_number"
                     localization={ar}
                     enableSearch={true}
-                    onChange={handlePhoneNumber}
+                    onChange={e => { handlePhoneNumber(e) }}
                   />
                   {status.error ? (<div class="alert alert-danger mt-4 text-center" role="alert">
                     {status.error}

@@ -6,6 +6,7 @@ import { postNewUser } from '../../../../api/SignUpApi';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { BLOG_APP_CAPTCHA_KEY } from '../../../../shared/constants/constants';
 import { Link, useHistory } from "react-router-dom";
+import { handleGetUserToken, handleSetUserToken } from '../../actions/index';
 
 
 const SignUp = ({ setParentData }) => {
@@ -196,6 +197,8 @@ const SignUp = ({ setParentData }) => {
       sendData.then((res) => {
         console.log(res.data);
         setParentData(res.data);
+        handleSetUserToken('refreshToken', res.data.tokens.refresh_token);
+        handleSetUserToken('accessToken', res.data.tokens.access_token);
         history.push("/email-confirmation");
       }).catch(function (error) {
         if (error.response) {

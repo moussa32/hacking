@@ -3,10 +3,11 @@ import { WhiteLogo } from '../../../assets/index';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { handleSetUserToken, handleGetUserToken } from '../actions/index';
+import { dvApiUrl } from '../../../api/Constants';
 
 const Login = () => {
   const history = useHistory();
-  const token = handleGetUserToken('token');
+  const token = handleGetUserToken('accessToken');
 
   if (token) {
     history.push("/dashboard");
@@ -29,25 +30,25 @@ const Login = () => {
     } else {
       setCredentials({ ...credentials, errors: { message: '' } });
 
-      axios.post('https://bugbounty.pythonanywhere.com/api/v1/auth/hackers/login/',
-        credentials,
-        { headers: { "Content-Type": "application/json" } }
+      axios.post(`${dvApiUrl}/auth/hackers/login/`,
+        credentials
       )
         .then(res => {
-          console.log(res);
-          handleSetUserToken('token', res.data.access);
-          setTimeout(() => history.push("/dashboard"), 1000);
+          handleSetUserToken('accessToken', res.data.access);
+          handleSetUserToken('refreshToken', res.data.refresh);
         })
         .catch(function (error) {
           if (error.response) {
-            if (error.staute == 401) {
-              setCredentials({ ...credentials, errors: { message: 'برجاء كتابة بيانات الدخول بشكل صحيح' } })
+            if (error.response.status == 401) {
+              setCredentials({ ...credentials, errors: { message: 'لا يوجد حساب بهذا الاسم' } })
+            } else if (error.response.status == 404) {
+              setCredentials({ ...credentials, errors: { message: 'تحقق من البيانات المدخلة' } })
+            } else if (error.response.status == 429) {
+              setCredentials({ ...credentials, errors: { message: ' لقد سجلت بيانات الدخول بشكل خاطئ العديد من المرات أنتظر دقيقة' } })
             }
           }
         });
     }
-
-
   }
 
   const handleUserLoginInputs = e => {
@@ -55,7 +56,6 @@ const Login = () => {
     const password = e.target.value;
     setCredentials({ ...credentials, [username]: password });
   }
-
 
   return (
     <main class="component-wrapper login-wrapper">

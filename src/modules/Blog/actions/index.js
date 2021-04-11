@@ -91,12 +91,12 @@ export function handleGetBlogAd() {
 }
 
 export function handleSetUserToken(tableName, userToken) {
-  localStorage.setItem(tableName, JSON.stringify(userToken));
+  localStorage.setItem(tableName, userToken);
 }
 
 export function handleGetUserToken(tableName) {
   const tokenString = localStorage.getItem(tableName);
-  const userToken = JSON.parse(tokenString);
+  const userToken = tokenString;
   return userToken
 }
 
