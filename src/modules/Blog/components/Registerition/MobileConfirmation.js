@@ -44,6 +44,8 @@ const MobileConfirmation = () => {
           if (error.response.status == 500) {
             setStatus({ error: 'هناك مشكلة في الخادم فى الوقت الحالي' })
           } else if (error.response.status == 406) {
+            setStatus({ error: 'الرقم غير صالح' })
+          } else if (error.response.status == 400) {
             setStatus({ error: 'هذا الرقم مسجل بالفعل' })
           } else if (error.response.status == 401) {
             setStatus({ error: 'لقد انتهت جلستك برجاء إعادة تحميل الصفحة' })

@@ -14,7 +14,6 @@ const StandrdVulnerabilities = () => {
   useEffect(() => {
     weaknessRequest.then((res) => {
       setReports(res.data);
-      console.log(reports);
 
       setIsLoadded(true);
     }).catch((erorr) => {

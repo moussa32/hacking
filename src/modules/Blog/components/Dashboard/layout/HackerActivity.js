@@ -6,18 +6,20 @@ import { handleGetUserToken } from '../../../actions/index';
 
 
 const HackerActivity = () => {
-  const [activityReport, setActivityReport] = useState([]);
+  const [activity, setActivity] = useState([]);
   const [isLoadded, setIsLoadded] = useState(false);
   const token = handleGetUserToken('accessToken');
   const reFreshtoken = handleGetUserToken('refreshToken');
 
-  useEffect(() => {
-    const HackerActivityRequest = getHackerActivity(token);
 
-    HackerActivityRequest.then((res) => {
-      setActivityReport(res.data);
+  const activityRequest = getHackerActivity(token);
+  useEffect(() => {
+    activityRequest.then((res) => {
       console.log(res.data);
-      console.log(activityReport);
+      setActivity(res.data);
+
+      console.log(activity);
+
       setIsLoadded(true);
     }).catch((erorr) => {
       if (erorr.response.status == 401) {
