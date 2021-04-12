@@ -1006,6 +1006,10 @@ blockquote:nth-of-type(even) footer:after {
     flex: 0 0 100%;
     max-width: 100%;
   }
+  .badge-img {
+    width: 85%;
+    height: 200px;
+  }
 }
 
 .section-container{
