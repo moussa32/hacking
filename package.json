@@ -28,6 +28,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-select": "^4.1.0",
+    "react-time-ago": "^6.2.2",
     "react-transition-group": "^4.4.1",
     "react-typist": "^2.0.5",
     "redux": "^4.0.5",

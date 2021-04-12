@@ -32,7 +32,8 @@ const MobileConfirmation = () => {
       }
     })
       .then((res) => {
-        setStatus({ ...status, success: 'تم إرسال الكود بنجاح برجاء التحقق من هاتفك' })
+        setStatus({ ...status })
+        setStatus({ success: 'تم إرسال الكود بنجاح برجاء التحقق من هاتفك' })
         handleSetUserToken('phoneNumber', phoneNumber.phone_number);
         setTimeout(() => {
           history.push("/sms-confirmation");

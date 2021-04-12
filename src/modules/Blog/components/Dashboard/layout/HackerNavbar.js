@@ -9,6 +9,7 @@ import { getHackerInfo } from '../../../../../api/DashboardApi';
 import { getNewTokens } from '../../../../../api/RefreshTokenApi';
 import { dvbaseUrl } from '../../../../../api/Constants';
 import { handleGetUserToken } from '../../../actions/index';
+import { DefaultAvatar } from '../../../../../assets/index';
 
 import { WhiteLogo } from "../../../../../assets/index";
 
@@ -127,7 +128,7 @@ const HackerNavbar = ({ currentPathname }) => {
               </li>
               <li className="nav-item dropdown" onClick={toggleDropDown}>
                 <button className="nav-link dropdown-toggle d-none d-sm-inline-block border-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
-                  <img src={`${dvbaseUrl}/${hackerInfo.hacker.avater}`} className="hacker-avatar img-fluid rounded-circle mr-1" alt="Chris Wood" />
+                  <img src={hackerInfo.hacker.avater ? (`${dvbaseUrl}/${hackerInfo.hacker.avater}`) : (`${DefaultAvatar}`)} className="hacker-avatar img-fluid rounded-circle mr-1" alt={hackerInfo.first_name} />
                   <IoIosArrowDown className="text-lightgreen mr-2" size={'1.3rem'} />
                 </button>
                 <div className={`dropdown-menu ${isDropDown ? "show" : ""} text-right ml-3`}>

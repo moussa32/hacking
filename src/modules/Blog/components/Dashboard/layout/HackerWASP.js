@@ -3,6 +3,8 @@ import { Bar } from 'react-chartjs-2';
 import { handleGetUserToken, handleSetUserToken } from '../../../actions/index';
 import { getHackerWASP } from '../../../../../api/WaspApi';
 import { getNewTokens } from '../../../../../api/RefreshTokenApi';
+import { VscBeaker } from 'react-icons/vsc';
+
 
 
 const HackerSkills = () => {
@@ -15,6 +17,7 @@ const HackerSkills = () => {
       borderWidth: 2
     }]
   });
+  const [isData, setIsData] = useState(false);
   const [isDataDone, setIsDataDone] = useState(false);
 
   useEffect(() => {
@@ -26,6 +29,11 @@ const HackerSkills = () => {
       const reportsData = res.data;
       const pushWASPLabels = wasp.labels;
       const pushWASPData = wasp.datasets[0].data;
+
+      //Is there any data return from the server hide default icon
+      if (reportsData.length !== 0) {
+        setIsData(true);
+      }
 
       reportsData.forEach(element => {
         pushWASPLabels.push(element.name);
@@ -58,10 +66,15 @@ const HackerSkills = () => {
     <>
       <div className="jumbotron jumbotron-fluid bg-black rounded py-4">
         <div className="container px-4">
-          <h2 className="section-title text-right">WASP 10</h2>
-          <div className="section-container mt-4">
-            {isDataDone ? <Bar data={wasp} options={options} /> : ''}
-          </div>
+          <h2 className="section-title text-right">{isData ? (<VscBeaker className="section-icon" size={"2rem"} />) : ('')}10-OWASP</h2>
+          {isData ? (
+            <div className="section-container mt-4">
+              {isDataDone ? <Bar data={wasp} options={options} /> : ''}
+            </div>
+          ) : (<>
+            <VscBeaker size={"3rem"} />
+            <p className="mt-4 lead mb-0">لا يوجد اي تقارير مسلمة</p>
+          </>)}
         </div>
       </div>
     </>

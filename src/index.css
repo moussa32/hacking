@@ -860,7 +860,14 @@ blockquote:nth-of-type(even) footer:after {
 .hacker-avatar{
   width: 55px;
   height: 51px;
+  object-fit: cover;
 }
+
+.section-icon{
+  color: var(--lightGreen);
+  margin-bottom: 10px;
+}
+
 .hacker-options{
   margin: 0.5rem 0;
 }
@@ -958,6 +965,47 @@ blockquote:nth-of-type(even) footer:after {
 
 .badge-description{
   font-style: normal;
+}
+
+@media (max-width:778px){
+  .vulbody {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width:600px){
+  .section-container{
+    padding:0 !important;
+  }
+  .vulbody {
+    font-size: 1rem !important;
+  }
+  .hacker-skill-name.text-left.pl-2 {
+    margin-bottom: 5px !important;
+  }
+  .left-dbsidebar{
+    left: 50px;
+  }
+  .settings-button {
+    padding: 15px!important;
+  }
+  table td, table th{
+    padding: 13px !important;
+  }
+  .table td, .table th{
+    letter-spacing: 0 !important;
+  }
+  .report-container{
+    padding: 0 22px;
+  }
+  .dbsidebar{
+    display: none !important;
+  }
+  .dbmain{
+    -webkit-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }
 
 .section-container{

@@ -3,9 +3,12 @@ import { Bar, Doughnut, Chart } from 'react-chartjs-2';
 import { handleGetUserToken } from '../../../actions/index';
 import { getHackerReports } from '../../../../../api/HackerReportsApi';
 import { getNewTokens } from '../../../../../api/RefreshTokenApi';
+import { BsInboxesFill } from 'react-icons/bs';
 
 const HackerReports = () => {
   const [isDataDone, setIsDataDone] = useState(false);
+  const [isData, setIsData] = useState(false);
+
   const [barChartData, setBarChartData] = useState({
     labels: [],
     datasets: [{
@@ -39,6 +42,12 @@ const HackerReports = () => {
     hackerReportsRequest.then((res) => {
       Chart.defaults.global.legend.display = false;
       Chart.defaults.global.defaultFontColor = "#fff";
+
+      console.log(res.data);
+      //Is there any data return from the server hide default icon
+      if (res.data.reports_by_level.length !== 0) {
+        setIsData(true);
+      }
 
       const reportsByLevel = res.data.reports_by_level;
       const pushReportsLabels = barChartData.labels;
@@ -98,21 +107,28 @@ const HackerReports = () => {
   return (
     <>
       <div className="jumbotron jumbotron-fluid bg-black rounded pt-4">
-        <h2 className="text-right mr-4 mb-4">التقارير</h2>
+        <h2 className="text-right mr-4 mb-4">{isData ? (<BsInboxesFill className="section-icon" size={"2rem"} />) : ''} التقارير</h2>
         <div className="container">
-          <div className="row px-2">
-            {isDataDone ? (
-              <>
-                <div className="col-md-7 bg-second p-3">
-                  <Bar data={barChartData} options={optionsForBars} />
-                </div>
-                <div className="col-md-5">
-                  <h4 className="w-100 pb-3">مجموع التقارير {doughnutChartData.datasets[0].data[0] + doughnutChartData.datasets[0].data[1]}</h4>
-                  <Doughnut data={doughnutChartData} options={options} />
-                </div>
-              </>
-            ) : ''}
-          </div>
+          {isData ? (
+            <div className="row px-2">
+              {isDataDone ? (
+                <>
+                  <div className="col-md-7 bg-second p-3">
+                    <Bar data={barChartData} options={optionsForBars} />
+                  </div>
+                  <div className="col-md-5">
+                    <h4 className="w-100 pb-3">مجموع التقارير {doughnutChartData.datasets[0].data[0] + doughnutChartData.datasets[0].data[1]}</h4>
+                    <Doughnut data={doughnutChartData} options={options} />
+                  </div>
+                </>
+              ) : ''}
+            </div>
+          ) : (
+            <>
+              <BsInboxesFill size={"3rem"} />
+              <p className="mt-4 lead mb-0">لا يوجد اي تقارير مسلمة</p>
+            </>
+          )}
         </div>
       </div>
     </>

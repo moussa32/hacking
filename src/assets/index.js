@@ -11,7 +11,7 @@ import youTubeLogo from "./images/youtube-logo.svg";
 import page404 from "./images/404-page.svg";
 import mainIllust from "./images/main-illustration.svg";
 import emailConfirmation from "./images/email-confirmationIcon.jpg";
-
+import defaultAvatar from "./images/defaultAvatar.jpeg";
 
 
 
@@ -29,8 +29,4 @@ export const YouTubeLogo = youTubeLogo;
 export const Page404 = page404;
 export const MainIllust = mainIllust;
 export const EmailConfirmationImage = emailConfirmation;
-
-
-
-
-
+export const DefaultAvatar = defaultAvatar;

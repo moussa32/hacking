@@ -3,24 +3,36 @@ import './HackerActivity.css';
 import { getHackerActivity } from '../../../../../api/HackerActivity';
 import { getNewTokens } from '../../../../../api/RefreshTokenApi';
 import { handleGetUserToken } from '../../../actions/index';
+import { dvbaseUrl } from '../../../../../api/Constants';
+import TimeAgo from 'javascript-time-ago'
+import ReactTimeAgo from 'react-time-ago'
+import ar from 'javascript-time-ago/locale/ar'
+import { FiActivity } from 'react-icons/fi';
 
 
 const HackerActivity = () => {
   const [activity, setActivity] = useState([]);
+  const [isData, setIsData] = useState(false);
   const [isLoadded, setIsLoadded] = useState(false);
   const token = handleGetUserToken('accessToken');
   const reFreshtoken = handleGetUserToken('refreshToken');
 
+  // Russian.  
+  TimeAgo.addLocale(ar)
+
+  const timeAgo = new TimeAgo('ar')
 
   const activityRequest = getHackerActivity(token);
   useEffect(() => {
     activityRequest.then((res) => {
-      console.log(res.data);
-      setActivity(res.data);
+      if (res.data.length !== 0) {
+        setIsData(true);
+      }
 
-      console.log(activity);
-
+      activity.push(res.data);
       setIsLoadded(true);
+      console.log(activity[0]);
+
     }).catch((erorr) => {
       if (erorr.response.status == 401) {
         getNewTokens(reFreshtoken);
@@ -28,65 +40,79 @@ const HackerActivity = () => {
     })
   }, [])
 
+  const checkUserLevel = (level) => {
+    if (level === 'منخفض') {
+      return (<div className="report-status d-flex align-items-center">
+        <span className="badge badge-pill badge-warning report-alert" style={{ background: '#16a085' }}></span>
+        <span>{level}</span>
+      </div>)
+    } else if (level === 'متوسط') {
+      return (
+        <div className="report-status d-flex align-items-center">
+          <span className="badge badge-pill badge-warning report-alert" style={{ background: '#d35400' }}></span>
+          <span>{level}</span>
+        </div>
+      )
+    } else if (level === 'عالي') {
+      return (
+        <div className="report-status d-flex align-items-center">
+          <span className="badge badge-pill badge-warning report-alert" style={{ background: '#c0392b' }}></span>
+          <span>{level}</span>
+        </div>
+      )
+    } else if (level === 'ضروري') {
+      return (
+        <div className="report-status d-flex align-items-center">
+          <span className="badge badge-pill badge-danger report-alert" style={{ background: '#8e44ad' }}></span>
+          <span>{level}</span>
+        </div>
+      )
+    }
+  }
+
   return (
     <>
       {isLoadded ? (
         <div className="jumbotron jumbotron-fluid bg-black rounded py-4">
-          <div className="container px-4">
-            <h2 className="section-title text-right">النشاط</h2>
-            <div className="section-container bg-second m-4 rounded vulcontainer">
+          <div className="container">
+            <h2 className="section-title text-right">{isData ? (<FiActivity className="section-icon ml-3 mb-2" size={"2rem"} />) : ('')}النشاط</h2>
+            {isData ? (<div className="section-container bg-second m-4 rounded vulcontainer">
               <h3 className="text-lightgreen text-right">اسم الشركة</h3>
               <div className="row">
-                <div className="col-md-12 mt-4 report-container">
-                  <div className="row py-2">
-                    <div className="col-md-8">
-                      <div className="company-info">
-                        <img class="report-company-logo" src="https://gfx4arab.com/wp-content/uploads/2020/07/olx-group-1.svg" />OLX
-                  </div>
-                      <div className="report-info d-flex mt-3">
-                        <div className="report-status d-flex align-items-center">
-                          <span className="badge badge-pill badge-danger report-alert"></span>
-                          <span>عالي</span>
+                {activity[0].map((report) => {
+                  return (
+                    <div className="col-md-12 mt-4 report-container">
+                      <div className="row py-2">
+                        <div className="col-md-8">
+                          <div className="company-info">
+                            <img class="report-company-logo" src={`${dvbaseUrl}${report.reported_to.logo}`} alt={report.reported_to.name} />{report.title}
+                          </div>
+                          <div className="report-info d-flex mt-3">
+                            {report.close_state ? (<div className="report-status d-flex align-items-center">
+                              <span className="badge badge-pill badge-primary report-alert"></span>
+                              <span>مفتوح</span>
+                            </div>) : (<div className="report-status d-flex align-items-center">
+                              <span className="badge badge-pill badge-success report-alert"></span>
+                              <span>محلول</span></div>
+                            )}
+                            {checkUserLevel(report.level.name)}
+                          </div>
                         </div>
-                        <div className="report-status d-flex align-items-center">
-                          <span className="badge badge-pill badge-success report-alert"></span>
-                          <span>محلول</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 my-auto pl-0">
-                      <p className="sovle-date">
-                        تم الكشف عنها قبل يومين
-                  </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-12 mt-4 report-container">
-                  <div className="row py-2">
-                    <div className="col-md-8">
-                      <div className="company-info">
-                        <img class="report-company-logo" src="https://www.futurelab.net/sites/default/files/toyota-logo.jpg" />Toyota
-                  </div>
-                      <div className="report-info d-flex mt-3">
-                        <div className="report-status d-flex align-items-center">
-                          <span className="badge badge-pill badge-warning report-alert"></span>
-                          <span>منخفض</span>
-                        </div>
-                        <div className="report-status d-flex align-items-center">
-                          <span className="badge badge-pill badge-primary report-alert"></span>
-                          <span>مزيد من المعلومات</span>
+                        <div className="col-md-4 my-auto pl-0">
+                          <p className="sovle-date">
+                            {console.log(timeAgo.format(Date.now() - 60 * 1000))}
+                            تم الكشف عنها قبل يومين
+                        </p>
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-4 my-auto pl-0">
-                      <p className="sovle-date">
-                        تم الكشف عنها قبل يومين
-                  </p>
-                    </div>
-                  </div>
-                </div>
+                  )
+                })}
               </div>
-            </div>
+            </div>) : (<>
+              <FiActivity size={"3rem"} />
+              <p className="mt-4 lead mb-0">لم تقم باي نشاط بعد</p>
+            </>)}
           </div>
         </div>
       ) : ''}

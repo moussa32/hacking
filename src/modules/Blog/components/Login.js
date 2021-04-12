@@ -40,7 +40,7 @@ const Login = () => {
         .catch(function (error) {
           if (error.response) {
             if (error.response.status == 401) {
-              setCredentials({ ...credentials, errors: { message: 'لا يوجد حساب بهذا الاسم' } })
+              setCredentials({ ...credentials, errors: { message: 'برجاء التأكد من اسم أو كلمة المرور' } })
             } else if (error.response.status == 404) {
               setCredentials({ ...credentials, errors: { message: 'تحقق من البيانات المدخلة' } })
             } else if (error.response.status == 429) {

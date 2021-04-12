@@ -12,7 +12,6 @@ export const getNewTokens = async (oldRefreshToken) => {
       handleSetUserToken('accessToken', res.data.access);
       handleSetUserToken('refreshToken', res.data.refresh);
 
-      // location.reload();
     })
   return res
 }

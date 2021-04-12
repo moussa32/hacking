@@ -70,7 +70,7 @@ const Main = () => {
                         <div className="col-md-6 text-right"><h4>الأرباح</h4></div>
                         <div className="col-md-6 text-left"><h4><AiFillDollarCircle size={'2rem'} /></h4></div>
                       </div>
-                      <p className="hacker-stat-numbers mt-2 mb-1">{userInfo && userInfo.hacker.earnings}</p>
+                      <p className="hacker-stat-numbers mt-2 mb-1">{userInfo.hacker.earnings ? (userInfo.hacker.earnings) : '00.00'}</p>
                     </div>
                   </div>
                 </div>
@@ -81,7 +81,7 @@ const Main = () => {
                         <div className="col-md-6 text-right"><h4>النقاط</h4></div>
                         <div className="col-md-6 text-left"><h4><MdStars size={'2rem'} /></h4></div>
                       </div>
-                      <p className="hacker-stat-numbers mt-2 mb-1">{userInfo && userInfo.hacker.points}</p>
+                      <p className="hacker-stat-numbers mt-2 mb-1">{userInfo.hacker.points ? (userInfo.hacker.points) : '0'}</p>
                     </div>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ const Main = () => {
                         <div className="col-md-6 text-right"><h4>ترتيبك</h4></div>
                         <div className="col-md-6 text-left"><h4><BiCrown size={'2rem'} /></h4></div>
                       </div>
-                      <p className="hacker-stat-numbers mt-2 mb-1">{userInfo && userInfo.hacker.rank}</p>
+                      <p className="hacker-stat-numbers mt-2 mb-1">{userInfo.hacker.rank ? (userInfo.hacker.rank) : '0'}</p>
                     </div>
                   </div>
                 </div>
