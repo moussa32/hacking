@@ -12,7 +12,7 @@ const HackerSkills = () => {
     labels: [],
     datasets: [{
       data: [],
-      backgroundColor: '#4f0f5726',
+      backgroundColor: '#4f0f5759',
       borderColor: '#52105a',
       borderWidth: 2
     }]
@@ -55,11 +55,22 @@ const HackerSkills = () => {
         stacked: true,
         ticks: {
           beginAtZero: true
+        },
+        gridLines: {
+          display: true,
+          color: '#ffffff38'
         }
       }],
       xAxes: [{
         stacked: true,
+        gridLines: {
+          display: true,
+          color: '#ffffff38'
+        }
       }]
+    },
+    legend: {
+      display: false
     }
   }
   return (

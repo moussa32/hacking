@@ -22,8 +22,8 @@ const HackerThanks = ({ userThankers }) => {
                   {userThankers.map(thanker => {
                     return (
                       <tr key={thanker.id}>
-                        <th scope="row" className="vulname text-right"><img className="companyLogo" src={`${dvbaseUrl}/${thanker.logo}`} /> {thanker.name}</th>
-                        <td>47</td>
+                        <th scope="row" className="vulname text-right"><img className="companyLogo" src={`${thanker.logo}`} /> {thanker.name}</th>
+                        <td>{thanker.reports_count}</td>
                       </tr>
                     )
                   })}

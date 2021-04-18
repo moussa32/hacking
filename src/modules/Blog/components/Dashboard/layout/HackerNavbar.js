@@ -54,6 +54,7 @@ const HackerNavbar = ({ currentPathname }) => {
 
   let handleLogout = () => {
     handleRemoveUserToken('accessToken');
+    handleRemoveUserToken('refreshToken');
     history.push("/login");
   }
 

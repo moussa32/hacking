@@ -40,10 +40,8 @@ const HackerReports = () => {
     const hackerReportsRequest = getHackerReports(token);
 
     hackerReportsRequest.then((res) => {
-      Chart.defaults.global.legend.display = false;
       Chart.defaults.global.defaultFontColor = "#fff";
 
-      console.log(res.data);
       //Is there any data return from the server hide default icon
       if (res.data.reports_by_level.length !== 0) {
         setIsData(true);
@@ -92,46 +90,45 @@ const HackerReports = () => {
           color: '#ffffff63'
         },
       }]
+    },
+    legend: {
+      display: false
     }
   }
 
   const options = {
     responsive: true,
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    },
+
   }
 
   return (
-    <>
-      <div className="jumbotron jumbotron-fluid bg-black rounded pt-4">
-        <h2 className="text-right mr-4 mb-4">{isData ? (<BsInboxesFill className="section-icon" size={"2rem"} />) : ''} التقارير</h2>
-        <div className="container">
-          {isData ? (
-            <div className="row px-2">
-              {isDataDone ? (
-                <>
+    <div className="jumbotron jumbotron-fluid bg-black rounded pt-4">
+      <h2 className="text-right mr-4 mb-4">{isData ? (<BsInboxesFill className="section-icon" size={"2rem"} />) : ''} التقارير</h2>
+      <div className="container">
+        {isData ? (
+          <>
+            {isDataDone ? (
+              <>
+                <h3 className="w-100 pb-4">مجموع التقارير {doughnutChartData.datasets[0].data[0] + doughnutChartData.datasets[0].data[1]}</h3>
+                <div className="row px-2">
                   <div className="col-md-7 bg-second p-3">
                     <Bar data={barChartData} options={optionsForBars} />
                   </div>
-                  <div className="col-md-5">
-                    <h4 className="w-100 pb-3">مجموع التقارير {doughnutChartData.datasets[0].data[0] + doughnutChartData.datasets[0].data[1]}</h4>
+                  <div className="col-md-5 px-0">
                     <Doughnut data={doughnutChartData} options={options} />
                   </div>
-                </>
-              ) : ''}
-            </div>
-          ) : (
-            <>
-              <BsInboxesFill size={"3rem"} />
-              <p className="mt-4 lead mb-0">لا يوجد اي تقارير مسلمة</p>
-            </>
-          )}
-        </div>
+                </div>
+              </>
+            ) : ''}
+          </>
+        ) : (
+          <>
+            <BsInboxesFill size={"3rem"} />
+            <p className="mt-4 lead mb-0">لا يوجد اي تقارير مسلمة</p>
+          </>
+        )}
       </div>
-    </>
+    </div >
   );
 }
 

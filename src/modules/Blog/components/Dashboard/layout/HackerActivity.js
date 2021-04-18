@@ -31,7 +31,6 @@ const HackerActivity = () => {
 
       activity.push(res.data);
       setIsLoadded(true);
-      console.log(activity[0]);
 
     }).catch((erorr) => {
       if (erorr.response.status == 401) {
@@ -100,9 +99,8 @@ const HackerActivity = () => {
                         </div>
                         <div className="col-md-4 my-auto pl-0">
                           <p className="sovle-date">
-                            {console.log(timeAgo.format(Date.now() - 60 * 1000))}
-                            تم الكشف عنها قبل يومين
-                        </p>
+                            تم الكشف عنها <ReactTimeAgo date={report.closed_at} locale="ar-AR" />
+                          </p>
                         </div>
                       </div>
                     </div>

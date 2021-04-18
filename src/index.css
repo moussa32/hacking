@@ -1052,6 +1052,7 @@ table td, table th{
 
 .vulname{
   border-left: 3.4px solid #6b6b6b;
+  width: 100%;
 }
 
 .table thead th{

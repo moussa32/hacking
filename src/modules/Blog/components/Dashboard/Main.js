@@ -36,7 +36,6 @@ const Main = () => {
         setUserInfo(item.data);
         setLoadded(true);
       }).catch(function (error) {
-        console.log(error.response);
         if (error.response.status == 401) {
           getNewTokens(reFreshtoken);
         }
@@ -102,7 +101,7 @@ const Main = () => {
               <HackerSkills userSkills={userInfo.hacker.skills} />
               <HackerWASP />
               <HackerReportsWeak />
-              <HackerThanks userThankers={userInfo.hacker.thankers} />
+              <HackerThanks userThankers={userInfo.thankers} />
               <HackerActivity />
             </div>
           </div>

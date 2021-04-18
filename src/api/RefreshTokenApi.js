@@ -11,7 +11,8 @@ export const getNewTokens = async (oldRefreshToken) => {
     .then((res) => {
       handleSetUserToken('accessToken', res.data.access);
       handleSetUserToken('refreshToken', res.data.refresh);
-
     })
+  console.log('تم تحديث الاكسس توكن');
+  window.location.reload();
   return res
 }
