@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { FaCogs } from "react-icons/fa";
 import { HiOutlineClipboardList } from "react-icons/hi";
 import { BiTask, BiCrown } from "react-icons/bi";
