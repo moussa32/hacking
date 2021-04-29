@@ -1,14 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaCogs } from "react-icons/fa";
 import { HiOutlineClipboardList } from "react-icons/hi";
 import { BiTask } from "react-icons/bi";
 import Spinner from "../../../../shared/components/Spinner";
 import './AvailablePrograms.css';
+import { getAvailablePrograms } from '../../../../api/AvailableProgramsApi';
+import { getNewTokens } from '../../../../api/RefreshTokenApi';
+import { handleGetUserToken } from '../../actions/index';
 
 
 const AvailablePrograms = () => {
-  const [loadded, setLoadded] = useState(true);
+  const [programs, setPrograms] = useState(null);
+  const [loadded, setLoadded] = useState(false);
+
+  const token = handleGetUserToken('accessToken');
+  const reFreshtoken = handleGetUserToken('refreshToken');
+  const allAvailablePrograms = getAvailablePrograms(token);
+
+  const convertDate = (ISODate) => {
+    let newDate = new Date(`${ISODate}`);
+    let convertedDate = `${newDate.getFullYear()}/${(newDate.getMonth() + 1)}`;
+    return convertedDate;
+  }
+
+  useEffect(() => {
+    allAvailablePrograms
+      .then(item => {
+        setPrograms(item.data);
+        console.log(item.data);
+        setLoadded(true);
+      }).catch(function (error) {
+        if (error.response.status == 401) {
+          getNewTokens(reFreshtoken);
+        }
+      })
+  }, [])
 
   return (
     <mian className="component-wrapper">
@@ -29,7 +57,7 @@ const AvailablePrograms = () => {
           <div className="jumbotron jumbotron-fluid text-center col-10 py-4 bg-second dbmain rounded">
             <div className="container-fluid">
               <div className="bg-black">
-                <div id="programs-slider" className="carousel slide mt-4" data-ride="carousel">
+                <div id="programs-slider" className="carousel slide my-4" data-ride="carousel">
                   <div className="carousel-inner">
                     <div className="carousel-item active">
                       <img src="https://cdn1.techhq.com/wp-content/uploads/2020/10/shutterstock_1096975310-861x484.png" class="d-block w-100" alt="..." />
@@ -58,6 +86,50 @@ const AvailablePrograms = () => {
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="sr-only">Next</span>
                   </a>
+                </div>
+                <div className="row m-4 p-4 justify-content-around">
+                  <div className="col-md-4">
+                    <label className="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+                    <select className="form-control mr-sm-2 bg-second text-white rounded-0 border-0" id="inlineFormCustomSelect">
+                      <option selected>نوع البرنامج</option>
+                      <option value="opened">مفتوح</option>
+                      <option value="closed">مغلق</option>
+                      <option value="payed">مدفوع</option>
+                    </select>
+                  </div>
+                  <div className="col-md-4">
+                    <label className="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+                    <select className="form-control mr-sm-2 bg-second text-white rounded-0 border-0" id="inlineFormCustomSelect">
+                      <option selected>نوع البرنامج</option>
+                      <option value="opened">مفتوح</option>
+                      <option value="closed">مغلق</option>
+                      <option value="payed">مدفوع</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="jumbotron jumbotron-fluid bg-black rounded py-4">
+                  <div className="container px-4">
+                    {programs.length === 0 ? (<><p className="mt-4 lead mb-0">ليس لديك اي شعارات بعد</p></>) : (
+                      <div className="row section-container">{
+                        programs.map(program => {
+                          return (
+                            <div key={program.id} className="col-xl-4 col-md-6 p-3 rounded">
+                              <a href={program.url} className="card bg-second border-0 text-white text-decoration-none">
+                                <img className="card-img-top program-logo p-0 d-block mx-auto" src={`${program.logo}`} alt={program.name} />
+                                <div className="card-body py-2">
+                                  <h3 className="card-title badge-name my-3 text-left text-capitalize">{program.name}</h3>
+                                </div>
+                                <div class="card-body d-flex flex-row-reverse justify-content-between program-text">
+                                  <p className="text-lightgreen card-text">${program.min_bounty} - ${program.max_bounty}</p>
+                                  <p className="card-text">{convertDate(program.launch_date)}</p>
+                                </div>
+                              </a>
+                            </div>
+                          )
+                        })
+                      }
+                      </div>)}
+                  </div>
                 </div>
               </div>
             </div>

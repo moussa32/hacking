@@ -87,7 +87,7 @@ const Navbar = ({ currentPathname }) => {
             id="login"
           >
             <Link className="nav-link" to="/login">
-              {token ? 'لوحة التحكم' : 'تسجيل الدخول'}
+              {token ? 'تسجيل الدخول' : 'لوحة التحكم'}
             </Link>
           </li>
         </ul>
