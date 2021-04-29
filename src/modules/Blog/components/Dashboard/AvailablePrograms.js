@@ -9,6 +9,7 @@ import './AvailablePrograms.css';
 import { getAvailablePrograms } from '../../../../api/AvailableProgramsApi';
 import { getNewTokens } from '../../../../api/RefreshTokenApi';
 import { handleGetUserToken } from '../../actions/index';
+import CustomSelect from '../../../../shared/components/FormFields/CustomSelect';
 
 
 const AvailablePrograms = () => {
@@ -87,24 +88,34 @@ const AvailablePrograms = () => {
                     <span className="sr-only">Next</span>
                   </a>
                 </div>
-                <div className="row m-4 p-4 justify-content-around">
-                  <div className="col-md-4">
-                    <label className="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-                    <select className="form-control mr-sm-2 bg-second text-white rounded-0 border-0" id="inlineFormCustomSelect">
-                      <option selected>نوع البرنامج</option>
-                      <option value="opened">مفتوح</option>
-                      <option value="closed">مغلق</option>
-                      <option value="payed">مدفوع</option>
-                    </select>
+                <div className="row justify-content-around">
+                  <div className="col-md-4 pr-2">
+                    <CustomSelect
+                      id="program-type"
+                      options={[
+                        { value: 'مفتوحة', label: 'مفتوحة' },
+                        { value: 'مغلقة', label: 'مغلقة' },
+                        { value: 'مدفوعة', label: 'مدفوعة' }]}
+                      isClearable={true}
+                      isSearchable={true}
+                      placeholder="نوع البرنامج"
+                      classNames="form-group w-100 categories-filters"
+                    />
                   </div>
-                  <div className="col-md-4">
-                    <label className="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-                    <select className="form-control mr-sm-2 bg-second text-white rounded-0 border-0" id="inlineFormCustomSelect">
-                      <option selected>نوع البرنامج</option>
-                      <option value="opened">مفتوح</option>
-                      <option value="closed">مغلق</option>
-                      <option value="payed">مدفوع</option>
-                    </select>
+                  <div className="col-md-4 pl-2">
+                    <CustomSelect
+                      id="product-type"
+                      options={[
+                        { value: 'Any', label: 'Any' },
+                        { value: 'CIDR', label: 'CIDR' },
+                        { value: 'Domain', label: 'Domain' },
+                        { value: 'IOS: App Store', label: 'IOS: App Store' },
+                        { value: 'IOS: Testflight', label: 'IOS: Testflight' }]}
+                      isClearable={true}
+                      isSearchable={true}
+                      placeholder="نوع المنتج / الأصل"
+                      classNames="form-group w-100 categories-filters"
+                    />
                   </div>
                 </div>
                 <div className="jumbotron jumbotron-fluid bg-black rounded py-4">
