@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { FaCogs } from "react-icons/fa";
 import { HiOutlineClipboardList } from "react-icons/hi";
 import { BiTask, BiCrown } from "react-icons/bi";
@@ -28,11 +28,13 @@ const Main = () => {
   const token = handleGetUserToken('accessToken');
   const reFreshtoken = handleGetUserToken('refreshToken');
   const hackerData = getHackerInfo(token);
+  const match = useRouteMatch();
 
   useEffect(() => {
     hackerData
       .then(item => {
         setUserInfo(item.data);
+
         setLoadded(true);
       }).catch(function (error) {
         if (error.response.status == 401) {
@@ -108,7 +110,7 @@ const Main = () => {
             <nav className="col dbsidebar left-dbsidebar">
               <ul class="nav flex-column vertical-nav left-vertical-nav">
                 <li class="nav-item settings-button rounded bg-second">
-                  <Link to='/'><FaCogs size='2rem' className="text-lightgreen" /></Link>
+                  <Link to={`${match.path}/settings`}><FaCogs size='2rem' className="text-lightgreen" /></Link>
                 </li>
               </ul>
             </nav>

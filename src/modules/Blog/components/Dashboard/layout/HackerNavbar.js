@@ -115,6 +115,14 @@ const HackerNavbar = ({ currentPathname }) => {
                   لوحة القادة
             </Link>
               </li>
+              <li
+                className={`nav-item ${activeTab === "" ? "active" : ""}`}
+                id=""
+              >
+                <Link className="nav-link" to={`${match.path}/`}>
+                  التسليمات
+            </Link>
+              </li>
             </ul>
             <ul className="navbar-nav mr-auto sub-hacker-list">
               <li className='nav-item nav-icon' id="messages">

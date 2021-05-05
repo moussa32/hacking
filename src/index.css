@@ -761,6 +761,7 @@ blockquote:nth-of-type(even) footer:after {
 .custom-input:focus, .custom-input:active{
   background-color: #313131;
   color: white;
+  border-color: var(--lightGreen);
 }
 
 .text-lightgreen{
@@ -909,6 +910,10 @@ blockquote:nth-of-type(even) footer:after {
 .settings-button{
   padding: 15px 42px !important;
   padding-right: 23px !important;
+}
+
+.settings-button:hover > a > svg{
+  color:#fff;
 }
 
 .dbsidebar .nav-item:hover{

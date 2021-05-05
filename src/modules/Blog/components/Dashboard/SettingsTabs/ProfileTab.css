@@ -1,0 +1,12 @@
+.profile-settings{
+  padding-bottom: 4rem;
+}
+
+.profile-image{
+  border-radius: 50%;
+  max-width: 170px;
+  height: 150px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 14px;
+}
