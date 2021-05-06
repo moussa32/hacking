@@ -3,6 +3,8 @@ import './ProfileTab.css';
 import { CountryDropdown } from 'react-country-region-selector';
 import { updateUserProfile } from '../../../../../api/ProfileApi';
 import { handleGetUserToken } from '../../../actions/index';
+import ReactStars from "react-rating-stars-component";
+import { BsCircleFill } from 'react-icons/bs';
 
 
 const ProfileTab = () => {
@@ -12,7 +14,7 @@ const ProfileTab = () => {
     bio: "",
     country: "",
     hacker: {
-      avater: "",
+      avater: "https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg",
       linkedin: "",
       github: "",
       twitter: "",
@@ -24,7 +26,7 @@ const ProfileTab = () => {
     }
   })
 
-  const token = handleGetUserToken();
+  const token = handleGetUserToken("accessToken");
 
   const handleInput = (e) => {
     let event = e.target;
@@ -38,6 +40,10 @@ const ProfileTab = () => {
 
   const handleCountryInput = (e) => {
     setProfile({ ...profile, country: e });
+  }
+
+  const handleRating = (newRating) => {
+    console.log(newRating);
   }
 
   const avatarSelectedHandler = e => {
@@ -97,9 +103,42 @@ const ProfileTab = () => {
               <label for="twitter">twitter</label>
               <input type="text" className="form-control custom-input border-0" id="twitter" name="twitter" onChange={handleInput} />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <label for="bio">مقدمة</label>
               <textarea class="form-control custom-input border-0" id="bio" rows="5" name="bio" onChange={handleInput}></textarea>
+            </div>
+            <h3 className="my-4">المهارات:</h3>
+            <div className="jumbotron jumbotron-fluid bg-second py-4 mb-1">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="row pb-4">
+                      <div className="col-md-12">
+                        <div className="card bg-black border-0 mx-4">
+                          <div className="card-body d-flex">
+                            <p className="m-0 mr-3">0/5</p>
+                            <div className="form-check form-check-inline">
+                              <ReactStars
+                                count={5}
+                                size={24}
+                                isHalf={false}
+                                emptyIcon={<BsCircleFill className="mx-2" />}
+                                filledIcon={<BsCircleFill className="mx-2" />}
+                                activeColor="#08cc96"
+                                color={'white'}
+                                onChange={handleRating}
+                              />
+                            </div>
+                            <div className="form-check form-check-inline mr-auto">
+                              <label className="form-check-label mr-2 text-lightgreen">HTML</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <button type="submit" className="btn btn-settings d-block mr-auto settings-submit-button">تعديل البيانات الشخصية</button>
           </form>
