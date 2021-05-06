@@ -1,29 +1,68 @@
 import React from 'react';
+import "./AccountPreferencesTab.css";
 
 const AccountPreferencesTab = () => {
   return (
     <>
       <div className="row mx-2">
+        <h4 class="mr-3 mb-3">أظهر الارباح</h4>
         <div className="col-md-12">
-          <div class="alert alert-danger settings-alert" role="alert">
-            <h4 class="alert-heading">تنبيه</h4>
-            <p>في حالة تغييرك البريد الالكتروني سيتوقف العمل بالبريد القديم والحديث لمدة 24 ساعة تبدا من تاريخ اثبات ملكية البريد الجديد.</p>
+          <div className="jumbotron jumbotron-fluid bg-second py-4 mb-1">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="form-check mb-3">
+                    <input className="custom-checkbox" type="checkbox" value="Show" id="show-profit" />
+                    <span class="checkmark"></span>
+                    <label className="form-check-label" for="show-profit">
+                      أظهر
+                  </label>
+                  </div>
+                  <div className="form-check">
+                    <input className="custom-checkbox" type="checkbox" value="hide" id="hide-profit" />
+                    <span class="checkmark"></span>
+                    <label className="form-check-label" for="hide-profit">
+                      أخفي
+                  </label>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div className="row mx-2">
+        <h4 class="mr-3 my-3">المظهر:</h4>
         <div className="col-md-12">
-          <form className="profile-settings">
-            <div className="form-group">
-              <label for="oldPassword">كلمة المرور الحالية</label>
-              <input type="passowrd" className="form-control custom-input border-0" id="oldPassword" aria-describedby="oldPassword" />
+          <div className="jumbotron jumbotron-fluid bg-second py-4 mb-4">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="form-check mb-3">
+                    <input className="custom-checkbox" type="checkbox" value="light" id="theme-light" />
+                    <span class="checkmark"></span>
+                    <label className="form-check-label" for="theme-light">
+                      أبيض
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input className="custom-checkbox" type="checkbox" value="dark" id="theme-dark" />
+                    <span class="checkmark"></span>
+                    <label className="form-check-label" for="theme-dark">
+                      غامق
+                  </label>
+                  </div>
+                  <div className="form-check">
+                    <input className="custom-checkbox" type="checkbox" value="auto" id="theme-auto" />
+                    <span class="checkmark"></span>
+                    <label className="form-check-label" for="theme-auto">
+                      تلقائي
+                  </label>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="form-group">
-              <label for="newEmail">البريد الإلكتروني الجديد</label>
-              <input type="email" placeholder="example@gmail.com" className="form-control custom-input border-0" id="newEmail" />
-            </div>
-            <button type="submit" className="btn btn-settings d-block mx-auto settings-submit-button">تغيير البريد الالكتروني</button>
-          </form>
+          </div>
         </div>
       </div>
     </>

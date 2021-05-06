@@ -9,6 +9,7 @@ import DeactivateTab from './SettingsTabs/DeactivateTab';
 import AuthenticationTab from './SettingsTabs/AuthenticationTab';
 import AccountPreferencesTab from './SettingsTabs/AccountPreferencesTab.js';
 import InvitationPreferencesTab from './SettingsTabs/InvitationPreferencesTab.js';
+import SessionTab from './SettingsTabs/SessionTab.js';
 
 
 import './Settings.css';
@@ -86,6 +87,10 @@ const Settings = () => {
             <div className="tab-pane fade bg-black" id="v-pills-invitation-preferences" role="tabpanel" aria-labelledby="v-pills-invitation-preferences-tab">
               <h2 className="text-center py-4">{pills[9].lable}</h2>
               <InvitationPreferencesTab />
+            </div>
+            <div className="tab-pane fade bg-black" id="v-pills-session" role="tabpanel" aria-labelledby="v-pills-session-tab">
+              <h2 className="text-center py-4">{pills[10].lable}</h2>
+              <SessionTab />
             </div>
           </div>
         </div>
