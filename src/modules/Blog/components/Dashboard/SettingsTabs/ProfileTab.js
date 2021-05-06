@@ -20,8 +20,8 @@ const ProfileTab = () => {
       twitter: "",
       skills: {
         id: 1,
-        name: "dasda",
-        rating: 4
+        name: "html",
+        rating: 0
       }
     }
   })
@@ -43,6 +43,13 @@ const ProfileTab = () => {
   }
 
   const handleRating = (newRating) => {
+    setProfile({
+      ...profile, hacker: {
+        ...profile.hacker, skills: {
+          ...profile.hacker.skills, rating: newRating
+        }
+      }
+    });
     console.log(newRating);
   }
 
@@ -116,7 +123,7 @@ const ProfileTab = () => {
                       <div className="col-md-12">
                         <div className="card bg-black border-0 mx-4">
                           <div className="card-body d-flex">
-                            <p className="m-0 mr-3">0/5</p>
+                            <p className="my-auto">{profile.hacker.skills.rating}/5</p>
                             <div className="form-check form-check-inline">
                               <ReactStars
                                 count={5}
