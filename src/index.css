@@ -73,6 +73,13 @@ p {
   }
 }
 
+.blog-container .body img {
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
+
 .media svg {
   width: calc(1rem + 1vw);
   height: calc(1rem + 1vw);
