@@ -1,6 +1,6 @@
 import React from 'react';
 import "./SessionTab.css";
-import { RiComputerLine } from 'react-icons/Ri';
+import { RiComputerLine } from 'react-icons/ri';
 
 const SessionTab = () => {
   return (
