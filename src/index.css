@@ -365,6 +365,11 @@ li.media:hover {
   margin: auto;
 }
 
+.blog-container .body{
+  background: rgb(8 204 150 / 13%);
+  padding: 2rem;
+}
+
 pre {
   text-align: left;
   direction: ltr;
