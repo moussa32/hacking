@@ -62,7 +62,7 @@ export function handleGetBlogs() {
   return (dispatch) => {
     return getBlogsList()
       .then((res) => res.data)
-      .then((blogs) => dispatch(getBlogs(blogs)));
+      .then((blogs) => dispatch(getBlogs(blogs.results)));
   };
 }
 
