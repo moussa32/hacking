@@ -3,6 +3,7 @@ import BlogCard from './BlogCard';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { apiUrl } from '../../../../api/Constants';
 
 const ByTagsList = ({ categories }) => {
   const { tag } = useParams();
@@ -10,7 +11,7 @@ const ByTagsList = ({ categories }) => {
 
   useEffect(() => {
     axios
-      .get(`http://osos.pythonanywhere.com/api/v1/blogs/search/tags?tag=${tag}`)
+      .get(`${apiUrl}/blogs/search/tags?tag=${tag}`)
       .then((res) => res.data)
       .then((data) => setBlogList(data));
   }, [tag]);
