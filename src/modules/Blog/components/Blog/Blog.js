@@ -96,7 +96,7 @@ const Blog = ({ blog, similarBlogs, categories, blogAd, dispatch, match }) => {
               />
             </div>
             <div className="body mb-4">
-              <Markup content={blog.body} />
+              <Markup allowElements={"iframe"} content={blog.body} />
             </div>
             <div className="blog-tags my-4">
               {blog.tags.map((tag) => (
