@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import BlogCard from "./BlogCard";
 import AdsBanner from "./AdBanner";
 import SocialIcon from "../../../../shared/components/SocialIcon";
+import { FaRegEye } from "react-icons/fa";
 
 import { handleGetBlog, handleGetBlogAd } from "../../actions/index";
 import { formatDate } from "../../../../shared/utils/helpers";
@@ -53,7 +54,7 @@ const Blog = ({ blog, similarBlogs, categories, blogAd, dispatch, match }) => {
   }, [blog]);
 
   const SocialIconsGroup = ({ classNames }) => (
-    <div className={`share mb-4 ${classNames ? classNames : ""}`}>
+    <div className={`share ${classNames ? classNames : ""}`}>
       <p className="social-icon-group">
         <span className="mx-2">مشاركة في:</span>
         <SocialIcon
@@ -87,6 +88,11 @@ const Blog = ({ blog, similarBlogs, categories, blogAd, dispatch, match }) => {
               <p>{formatDate(blog.publish)}</p>
             </div>
             <SocialIconsGroup classNames="text-center" />
+            <div className="text-center mb-4" title="عدد الزيارات">
+              <p className="d-flex justify-content-center align-items-center">
+                <FaRegEye className="ml-2" size={"1.5rem"} /> {blog.views_count}
+              </p>
+            </div>
             <div className="blog-cover-container my-4 p-4">
               <img
                 src={blog.cover ? blog.cover : ""}
