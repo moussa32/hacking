@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { apiUrl } from '../../../../api/Constants';
+import { BiSearchAlt } from "react-icons/bi";
 
 import CustomSelect from '../../../../shared/components/FormFields/CustomSelect';
 import BlogCard from './BlogCard';
@@ -125,11 +126,11 @@ const BlogsList = ({ categories, blogsList }) => {
         <div className="main p-0 col-md-9">
           <form className="mb-4" onSubmit={onSearchForm}>
             <div className="form-row">
-              <div className="col-md-9 col-sm-8">
+              <div className="col-md-10">
                 <input type="text" className="form-control custom-input" placeholder="أبحث عن تدوينة معينة بالعنوان" onChange={onSearchInput} />
               </div>
-              <div className="col-md-3 col-sm-4">
-                <button type="submit" className="btn btn-lightgreen w-100">البحث</button>
+              <div className="col-md-2">
+                <button type="submit" className="btn btn-lightgreen d-block w-100"><BiSearchAlt /></button>
               </div>
             </div>
           </form>
