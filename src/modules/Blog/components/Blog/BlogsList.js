@@ -126,10 +126,10 @@ const BlogsList = ({ categories, blogsList }) => {
         <div className="main p-0 col-md-9">
           <form className="mb-4" onSubmit={onSearchForm}>
             <div className="form-row">
-              <div className="col-md-10">
+              <div className="col-md-10 col-sm-10">
                 <input type="text" className="form-control custom-input" placeholder="أبحث عن تدوينة معينة بالعنوان" onChange={onSearchInput} />
               </div>
-              <div className="col-md-2">
+              <div className="col-md-2 col-sm-2">
                 <button type="submit" className="btn btn-lightgreen d-block w-100"><BiSearchAlt /></button>
               </div>
             </div>
