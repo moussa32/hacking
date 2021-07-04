@@ -672,6 +672,16 @@ blockquote:nth-of-type(even) footer:after {
   .swiper-button-prev::after {
     font-size: 0;
   }
+  .swiper-container-rtl .swiper-button-next{
+    left: -18px !important;
+  }
+  .swiper-container-rtl .swiper-button-prev {
+    right: -18px !important;
+  }
+  .swiper-button-prev, .swiper-button-next{
+    width: calc(24px / 10 * 27) !important;
+    height: 34px !important;
+  }
 }
 
 /** Blog **/
