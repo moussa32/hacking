@@ -5,7 +5,7 @@ const blogsURL = apiUrl + '/blogs';
 
 export const getCategoriesList = () => axios.get(`${blogsURL}/categories/`);
 
-export const getBlogsList = () => axios.get(`${blogsURL}?page=1`);
+export const getBlogsList = (pageNumber) => axios.get(`${blogsURL}?page=${pageNumber}`);
 
 export const getBlogDetails = (id) => axios.get(`${blogsURL}/${id}/`);
 

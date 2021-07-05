@@ -5,21 +5,24 @@ import AdsBanner from "../../Blog/components/Home/AdsBanner";
 import BlogsList from "../components/Blog/BlogsList";
 
 
-
 import {
   handleGetCategories,
   handleGetBlogs,
   handleGetHomeAds,
+  handleGetPagination,
 } from "../actions/index";
 
 const BlogHome = (props) => {
   const { dispatch, homeAds, featuredBlogs } = props;
 
+  let pageNumberFromURL = (new URLSearchParams(window.location.search)).get("page") || 1;
+
   useEffect(() => {
     dispatch(handleGetCategories());
-    dispatch(handleGetBlogs());
+    dispatch(handleGetPagination(pageNumberFromURL));
+    dispatch(handleGetBlogs(pageNumberFromURL));
     dispatch(handleGetHomeAds());
-  }, [dispatch]);
+  }, [dispatch, pageNumberFromURL]);
 
   return (
     <div className="home blog-wrapper">

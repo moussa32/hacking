@@ -1,6 +1,7 @@
 import {
   GET_CATEGORIES,
   GET_BLOGS,
+  GET_PAGINATION,
   GET_BLOG,
   GET_HOME_ADS,
   GET_BLOG_AD,
@@ -26,6 +27,13 @@ export function getBlogs(blogs) {
   return {
     type: GET_BLOGS,
     blogs: [...blogs],
+  };
+}
+
+export function getPagination(info) {
+  return {
+    type: GET_PAGINATION,
+    pagination: { ...info },
   };
 }
 
@@ -58,9 +66,9 @@ export function handleGetCategories() {
   };
 }
 
-export function handleGetBlogs() {
+export function handleGetBlogs(fetchPageNumber) {
   return (dispatch) => {
-    return getBlogsList()
+    return getBlogsList(fetchPageNumber)
       .then((res) => res.data)
       .then((blogs) => dispatch(getBlogs(blogs.results)));
   };
@@ -79,6 +87,16 @@ export function handleGetHomeAds() {
     return getAllHomeAds()
       .then((res) => res.data)
       .then((ads) => dispatch(getHomeAds(ads)));
+  };
+}
+
+export function handleGetPagination(currentPageNumber) {
+  return (dispatch) => {
+    return getBlogsList(currentPageNumber)
+      .then((res) => res.data)
+      .then((pag) => {
+        dispatch(getPagination({ 'currentPage': currentPageNumber, 'count': pag.count, 'next': pag.next, 'prev': pag.previous }))
+      });
   };
 }
 
