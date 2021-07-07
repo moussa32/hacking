@@ -11,7 +11,7 @@ const Pagination = ({ pageCount, handlePageClick }) => {
       marginPagesDisplayed={2}
       pageRangeDisplayed={5}
       onPageChange={handlePageClick}
-      containerClassName={"pagination justify-content-center"}
+      containerClassName={"pagination d-flex justify-content-center flex-wrap"}
       subContainerClassName={"pages pagination"}
       activeClassName={"active"}
     />
