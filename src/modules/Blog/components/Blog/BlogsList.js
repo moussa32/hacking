@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import { apiUrl } from '../../../../api/Constants';
-import { useParams, useHistory } from "react-router-dom";
+import { connect, useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
 import { BiSearchAlt } from "react-icons/bi";
+import { getBlogsBySearch } from "../../../../api/BlogsApi";
+import { getPagination } from "../../actions/index";
 
 import CustomSelect from '../../../../shared/components/FormFields/CustomSelect';
 import BlogCard from './BlogCard';
@@ -21,6 +21,7 @@ const BlogsList = ({ categories, blogsList, pagination }) => {
   const [sortedBlogs, setSortedBlogs] = useState([]);
   const [query, setQuery] = useState([]);
   const [currentPageBlogs, setCurrentPageBlogs] = useState([]);
+  const [currentPageNum, setCurrentPageNum] = useState(1);
   const [currentFilter, setCurrentFilter] = useState(null);
   const [currentSearch, setCurrentSearch] = useState(null);
   const [currentSort, setCurrentSort] = useState({
@@ -30,7 +31,6 @@ const BlogsList = ({ categories, blogsList, pagination }) => {
   });
 
   useEffect(() => {
-    console.log(pagination);
     let sortedBlogs = [...blogsList];
     let blogsCount = pagination.count;
 
@@ -41,8 +41,8 @@ const BlogsList = ({ categories, blogsList, pagination }) => {
       blogsCount = sortedBlogs.length;
 
     } else if (currentSearch) {
-      sortedBlogs = currentSearch;
-      blogsCount = sortedBlogs.length;
+      sortedBlogs = currentSearch.results;
+      blogsCount = currentSearch.count;
     }
 
     if (currentSort.id === 0) {
@@ -53,8 +53,9 @@ const BlogsList = ({ categories, blogsList, pagination }) => {
 
     setSortedBlogs([...sortedBlogs]);
     setCurrentPageBlogs([...sortedBlogs.slice(0, perPage)]);
-    setPageCount(pagination.count / perPage);
+    setPageCount(blogsCount / perPage);
   }, [blogsList, currentFilter, currentSort, currentSearch]);
+
 
   useEffect(() => {
     const filters = [];
@@ -78,10 +79,11 @@ const BlogsList = ({ categories, blogsList, pagination }) => {
   const onSearchForm = (e) => {
     e.preventDefault();
 
-    axios.get(`${apiUrl}/blogs?search=${query}`)
+    getBlogsBySearch(currentPageNum, query)
       .then(res => {
         console.log(res.data);
-        setCurrentSearch(res.data.results);
+        setCurrentSearch(res.data);
+        setPageCount(res.data.count);
       })
   };
 
@@ -95,8 +97,23 @@ const BlogsList = ({ categories, blogsList, pagination }) => {
 
   const handlePageClick = (data) => {
     const selected = data.selected + 1;
+
+    setCurrentPageNum(selected);
+
     history.push(`/blog?page=${selected}`);
+
     setCurrentPageBlogs([...sortedBlogs]);
+
+    getBlogsBySearch(currentPageNum, query)
+      .then(res => {
+        setCurrentSearch(res.data);
+        setPageCount(res.data.count);
+      })
+      .catch(function (error) {
+        if (error.response.status == 404) {
+          setSortedBlogs([]);
+        }
+      })
   };
 
   return (
@@ -134,7 +151,7 @@ const BlogsList = ({ categories, blogsList, pagination }) => {
                 <input type="text" className="form-control custom-input" placeholder="أبحث عن تدوينة معينة بالعنوان" onChange={onSearchInput} />
               </div>
               <div className="col-md-2 col-sm-2">
-                <button type="submit" className="btn btn-lightgreen d-block w-100"><BiSearchAlt /></button>
+                <button type="submit" className="btn btn-lightgreen d-block w-100 blog-search-button"><BiSearchAlt /></button>
               </div>
             </div>
           </form>
@@ -159,7 +176,7 @@ const BlogsList = ({ categories, blogsList, pagination }) => {
           )}
         </div>
       </div>
-      {sortedBlogs.length >= perPage ? (
+      {sortedBlogs.length >= perPage || sortedBlogs.length >= 1 ? (
         <Pagination pageCount={pageCount} handlePageClick={handlePageClick} />
       ) : null}
     </div>

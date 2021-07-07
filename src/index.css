@@ -700,6 +700,10 @@ blockquote:nth-of-type(even) footer:after {
   width: 100% !important;
 }
 
+.blog-search-button{
+  padding: 0.375rem 0.75rem !important;
+}
+
 .featured-blogs .back-btn {
   right: 0vw;
 }
