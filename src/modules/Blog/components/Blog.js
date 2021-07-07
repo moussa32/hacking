@@ -36,7 +36,6 @@ const BlogHome = (props) => {
 };
 
 const mapStateToProps = ({ blogs }) => {
-  console.log(blogs);
   return {
     homeAds: blogs.homeAds,
     featuredBlogs: blogs.blogsList.filter((blog) => blog.important === true),

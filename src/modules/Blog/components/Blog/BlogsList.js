@@ -79,12 +79,30 @@ const BlogsList = ({ categories, blogsList, pagination }) => {
   const onSearchForm = (e) => {
     e.preventDefault();
 
-    getBlogsBySearch(currentPageNum, query)
-      .then(res => {
-        console.log(res.data);
-        setCurrentSearch(res.data);
-        setPageCount(res.data.count);
-      })
+    console.log(query.length);
+    if (query.length == 0) {
+      setCurrentPageBlogs([...sortedBlogs]);
+      setCurrentPageNum(1);
+      history.push(`/blog?page=1`);
+      getBlogsBySearch(currentPageNum, query)
+        .then(res => {
+          setCurrentSearch(res.data);
+          setPageCount(res.data.count);
+        })
+    } else {
+      setCurrentPageNum(1);
+      history.push(`/blog?page=1&search=${query}`);
+      getBlogsBySearch(currentPageNum, query)
+        .then(res => {
+          setCurrentSearch(res.data);
+          setPageCount(res.data.count);
+        })
+        .catch(function (error) {
+          if (error.response.status == 404) {
+            setSortedBlogs([]);
+          }
+        })
+    }
   };
 
   const onSearchInput = (e) => {
@@ -98,22 +116,21 @@ const BlogsList = ({ categories, blogsList, pagination }) => {
   const handlePageClick = (data) => {
     const selected = data.selected + 1;
 
-    setCurrentPageNum(selected);
+    if (query.length > 0) {
+      history.push(`/blog?page=${selected}&search=${query}`);
+      getBlogsBySearch(selected, query)
+        .then(res => {
+          setCurrentSearch(res.data);
+          setPageCount(res.data.count);
+        })
+    } else {
 
-    history.push(`/blog?page=${selected}`);
+      setCurrentPageNum(selected);
 
-    setCurrentPageBlogs([...sortedBlogs]);
+      history.push(`/blog?page=${selected}`);
 
-    getBlogsBySearch(currentPageNum, query)
-      .then(res => {
-        setCurrentSearch(res.data);
-        setPageCount(res.data.count);
-      })
-      .catch(function (error) {
-        if (error.response.status == 404) {
-          setSortedBlogs([]);
-        }
-      })
+      setCurrentPageBlogs([...sortedBlogs]);
+    }
   };
 
   return (

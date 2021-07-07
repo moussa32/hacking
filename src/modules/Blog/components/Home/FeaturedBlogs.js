@@ -3,8 +3,20 @@ import { connect } from "react-redux";
 import BlogCard from "../Blog/BlogCard";
 import Swiper from "react-id-swiper";
 import "swiper/css/swiper.css";
+import { useEffect } from "react";
+import { getFeaturedBlogs } from "../../../../api/BlogsApi";
+import { useState } from "react";
 
-const FeaturedBlogs = ({ categories, featuredBlogs }) => {
+const FeaturedBlogs = ({ categories }) => {
+  const [featuredBlogs, setFeaturedBlogs] = useState([]);
+
+  useEffect(() => {
+    getFeaturedBlogs()
+      .then(res => {
+        setFeaturedBlogs(res.data);
+      })
+  }, [featuredBlogs])
+
   const params = {
     spaceBetween: 10,
     centeredSlides: true,
@@ -50,7 +62,6 @@ const FeaturedBlogs = ({ categories, featuredBlogs }) => {
 const mapStateToProps = ({ blogs }) => {
   return {
     categories: blogs.categories,
-    featuredBlogs: blogs.blogsList.filter((blog) => blog.important === true),
   };
 };
 
