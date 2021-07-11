@@ -15,10 +15,6 @@ const EmailTab = () => {
         <div className="col-md-12">
           <form className="profile-settings">
             <div className="form-group">
-              <label for="oldPassword">كلمة المرور الحالية</label>
-              <input type="passowrd" className="form-control custom-input border-0" id="oldPassword" aria-describedby="oldPassword" />
-            </div>
-            <div className="form-group">
               <label for="newEmail">البريد الإلكتروني الجديد</label>
               <input type="email" placeholder="example@gmail.com" className="form-control custom-input border-0" id="newEmail" />
             </div>
