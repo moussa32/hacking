@@ -42,13 +42,13 @@ const MobileConfirmation = () => {
         if (error.response) {
 
           console.log(error.response.data);
-          if (error.response.status == 500) {
+          if (error.response.status === 500) {
             setStatus({ error: 'هناك مشكلة في الخادم فى الوقت الحالي' })
-          } else if (error.response.status == 406) {
+          } else if (error.response.status === 406) {
             setStatus({ error: 'الرقم غير صالح' })
-          } else if (error.response.status == 400) {
+          } else if (error.response.status === 400) {
             setStatus({ error: 'هذا الرقم مسجل بالفعل' })
-          } else if (error.response.status == 401) {
+          } else if (error.response.status === 401) {
             setStatus({ error: 'لقد انتهت جلستك برجاء إعادة تحميل الصفحة' })
 
             axios.post(`${dvApiUrl}/auth/hackers/refresh/`, { refresh: reFreshtoken }, {
@@ -60,7 +60,7 @@ const MobileConfirmation = () => {
                 handleSetUserToken('accessToken', res.data.access);
                 handleSetUserToken('refreshToken', res.data.refresh);
               }).catch(function (error) {
-                if (error.response.status == 401) {
+                if (error.response.status === 401) {
                   setStatus({ error: error.response.data.detail })
                 }
               })

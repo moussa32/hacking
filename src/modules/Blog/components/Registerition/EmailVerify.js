@@ -43,7 +43,7 @@ const EmailVerify = () => {
       }).catch(function (error) {
 
         if (error.response) {
-          if (error.response.status == 400) {
+          if (error.response.status === 400) {
             setValid({ ...valid, error: 'لا يوجد بريد إلكتروني مرتبط بهذا الرمز' });
 
             setTimeout(() => {

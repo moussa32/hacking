@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaCogs } from "react-icons/fa";
 import { HiOutlineClipboardList } from "react-icons/hi";
@@ -30,10 +29,9 @@ const AvailablePrograms = () => {
     allAvailablePrograms
       .then(item => {
         setPrograms(item.data);
-        console.log(item.data);
         setLoadded(true);
       }).catch(function (error) {
-        if (error.response.status == 401) {
+        if (error.response.status === 401) {
           getNewTokens(reFreshtoken);
         }
       })

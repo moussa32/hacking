@@ -39,11 +39,11 @@ const Login = () => {
         })
         .catch(function (error) {
           if (error.response) {
-            if (error.response.status == 401) {
+            if (error.response.status === 401) {
               setCredentials({ ...credentials, errors: { message: 'برجاء التأكد من اسم أو كلمة المرور' } })
-            } else if (error.response.status == 404) {
+            } else if (error.response.status === 404) {
               setCredentials({ ...credentials, errors: { message: 'تحقق من البيانات المدخلة' } })
-            } else if (error.response.status == 429) {
+            } else if (error.response.status === 429) {
               setCredentials({ ...credentials, errors: { message: ' لقد سجلت بيانات الدخول بشكل خاطئ العديد من المرات أنتظر دقيقة' } })
             }
           }

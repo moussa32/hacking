@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Logo from '../../../../assets/images/green-logo.svg';
-import { CountryDropdown, CountryRegionData } from 'react-country-region-selector';
+import { CountryDropdown } from 'react-country-region-selector';
 import { sendUserInfo } from '../../../../api/SignUpApi';
 import './SignUp.css';
 
 import ReCAPTCHA from 'react-google-recaptcha';
 import { BLOG_APP_CAPTCHA_KEY } from '../../../../shared/constants/constants';
 import { Link, useHistory } from "react-router-dom";
-import { handleGetUserToken, handleSetUserToken } from '../../actions/index';
+import { handleSetUserToken } from '../../actions/index';
 
 
 const SignUp = ({ setParentData }) => {
@@ -266,13 +266,13 @@ const SignUp = ({ setParentData }) => {
                   <div className="form-check">
                     <label className="form-check-label mr-4" for="femaleGender">
                       أنثى
-                                    </label>
+                    </label>
                     <input className="form-check-input custom-input" type="radio" name="gender" id="femaleChose" value="female" onChange={onTyping} />
                   </div>
                   <div className="form-check">
                     <label className="form-check-label mr-4" for="maleChose">
                       ذكر
-                                    </label>
+                    </label>
                     <input className="form-check-input custom-input" type="radio" name="gender" id="maleChose" value="male" onChange={onTyping} />
                   </div>
                 </div>

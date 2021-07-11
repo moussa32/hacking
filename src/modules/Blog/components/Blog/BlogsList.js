@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { BiSearchAlt } from "react-icons/bi";
 import { getBlogsBySearch } from "../../../../api/BlogsApi";
-import { getPagination } from "../../actions/index";
 
 import CustomSelect from '../../../../shared/components/FormFields/CustomSelect';
 import BlogCard from './BlogCard';

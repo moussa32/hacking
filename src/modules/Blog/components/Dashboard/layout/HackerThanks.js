@@ -1,5 +1,4 @@
 import React from 'react';
-import { dvbaseUrl } from "../../../../../api/Constants";
 import { GiPrayer } from 'react-icons/gi';
 
 

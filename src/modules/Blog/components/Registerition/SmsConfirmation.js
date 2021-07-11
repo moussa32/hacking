@@ -152,12 +152,12 @@ const SmsConfirmation = () => {
                 }, 3000);
             }).catch((error) => {
                 console.log(error.response);
-                if (error.response.status == 401) {
+                if (error.response.status === 401) {
                     setStatus({ error: 'لقد انتهت جلستك برجاء إعادة تحميل الصفحة' })
                     getNewTokens(reFreshtoken);
-                } else if (error.response.status == 406) {
+                } else if (error.response.status === 406) {
                     setStatus({ error: 'برجاء التحقق من الرمز' })
-                } else if (error.response.status == 429) {
+                } else if (error.response.status === 429) {
                     setStatus({ error: 'برجاء انتظار دقيقة لاعادة ارسال الرمز' })
                 }
             })
@@ -183,12 +183,12 @@ const SmsConfirmation = () => {
                 setStatus({ error: '', success: 'تم إعادة إرسال الكود بنجاح' })
             }).catch((error) => {
                 console.log(error.response);
-                if (error.response.status == 401) {
+                if (error.response.status === 401) {
                     setStatus({ error: 'لقد انتهت جلستك برجاء إعادة تحميل الصفحة' })
                     getNewTokens(reFreshtoken);
-                } else if (error.response.status == 400) {
+                } else if (error.response.status === 400) {
                     setStatus({ error: 'برجاء التأكد من كتابة الرمز المرسل' })
-                } else if (error.response.status == 429) {
+                } else if (error.response.status === 429) {
                     setStatus({ error: 'برجاء انتظار دقيقة لإعادة ارسال الرمز' })
                 }
             })
