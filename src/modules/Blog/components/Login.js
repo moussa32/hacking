@@ -74,7 +74,7 @@ const Login = () => {
                 <input name="password" type="password" value={credentials.password} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input" id="passwordInput" required />
               </div>
               <div class="form-group py-1">
-                <a className="text-lightgreen" href="#">نسيت كلمة المرور</a>
+                <Link className="text-lightgreen" to="/forget-password">نسيت كلمة المرور</Link>
               </div>
               <button type="submit" className="btn btn-lightgreen mx-auto d-block btn-lg">تسجيل الدخول</button>
               {credentials.errors.message ? (<div class="alert alert-danger mt-4 text-center" role="alert">

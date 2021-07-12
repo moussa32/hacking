@@ -21,7 +21,9 @@ import EmailConfirmation from "../Registerition/EmailConfirmation";
 import MobileConfirmation from "../Registerition/MobileConfirmation";
 import SmsConfirmation from "../Registerition/SmsConfirmation";
 import EmailVerify from "../Registerition/EmailVerify";
-import resetPassword from "../Reset/ResetPassword";
+import ResetPassword from "../Reset/ResetPassword";
+import ForgetPassword from "../ForgetPassword";
+
 
 
 
@@ -45,7 +47,8 @@ const Home = (props) => {
         <Route exact path="/blog" component={BlogHome} />
         <Route exact path="/blog/:slug/:id" component={Blog} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/reset-password" component={resetPassword} />
+        <Route exact path="/reset-password" component={ResetPassword} />
+        <Route exact path="/forget-password" component={ForgetPassword} />
         <Route exact path="/sign-up" >
           <SignUp setParentData={setParentData} />
         </Route>
