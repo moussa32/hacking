@@ -23,6 +23,7 @@ import SmsConfirmation from "../Registerition/SmsConfirmation";
 import EmailVerify from "../Registerition/EmailVerify";
 import ResetPassword from "../Reset/ResetPassword";
 import ForgetPassword from "../ForgetPassword";
+import ResetEmail from "../Reset/ResetEmail";
 
 
 
@@ -49,6 +50,7 @@ const Home = (props) => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/reset-password" component={ResetPassword} />
         <Route exact path="/forget-password" component={ForgetPassword} />
+        <Route exact path="/reset-email" component={ResetEmail} />
         <Route exact path="/sign-up" >
           <SignUp setParentData={setParentData} />
         </Route>
