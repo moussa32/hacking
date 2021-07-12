@@ -801,6 +801,7 @@ blockquote:nth-of-type(even) footer:after {
   background-color: var(--lightGreen);
   border-color: var(--lightGreen);
   padding: 0.5rem 2.5rem;
+  transition: 0.8s;
 }
 
 .login-logo{

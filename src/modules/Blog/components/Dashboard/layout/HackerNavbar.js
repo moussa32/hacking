@@ -16,8 +16,6 @@ import { WhiteLogo } from "../../../../../assets/index";
 const HackerNavbar = ({ currentPathname }) => {
   let match = useRouteMatch();
   const history = useHistory();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isDropDown, setIsDropDown] = useState(false);
   const [isLoadded, setIsLoadded] = useState(false);
   const [activeTab, setActiveTab] = useState("main");
   const [hackerInfo, setHackerInfo] = useState({});
@@ -35,6 +33,7 @@ const HackerNavbar = ({ currentPathname }) => {
     } else {
       return setActiveTab("main");
     }
+    console.log(activeTab);
   }, [currentPathname]);
 
   useEffect(() => {
@@ -48,9 +47,6 @@ const HackerNavbar = ({ currentPathname }) => {
         }
       })
   }, [])
-
-  const toggle = () => setIsOpen(!isOpen);
-  const toggleDropDown = () => setIsDropDown(!isDropDown);
 
   let handleLogout = () => {
     handleRemoveUserToken('accessToken');
@@ -73,14 +69,12 @@ const HackerNavbar = ({ currentPathname }) => {
             aria-controls="navbarNavAltMarkup"
             aria-expanded="false"
             aria-label="Toggle navigation"
-            onClick={toggle}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
           <div
             className="collapse navbar-collapse"
             id="navbarNav"
-            style={{ display: isOpen ? "block" : "none" }}
           >
             <ul className="navbar-nav">
               <li
@@ -97,7 +91,7 @@ const HackerNavbar = ({ currentPathname }) => {
               >
                 <Link className="nav-link" to={`${match.path}/available-programs`}>
                   البرامج المتاحة
-            </Link>
+                </Link>
               </li>
               <li
                 className={`nav-item ${activeTab === "main" ? "active" : ""}`}
@@ -105,7 +99,7 @@ const HackerNavbar = ({ currentPathname }) => {
               >
                 <Link className="nav-link" to={`${match.path}`}>
                   لوحة التحكم
-            </Link>
+                </Link>
               </li>
               <li
                 className={`nav-item ${activeTab === "leaderboard" ? "active" : ""}`}
@@ -113,7 +107,7 @@ const HackerNavbar = ({ currentPathname }) => {
               >
                 <Link className="nav-link" to={`${match.path}/leaderboard`}>
                   لوحة القادة
-            </Link>
+                </Link>
               </li>
               <li
                 className={`nav-item ${activeTab === "" ? "active" : ""}`}
@@ -121,7 +115,7 @@ const HackerNavbar = ({ currentPathname }) => {
               >
                 <Link className="nav-link" to={`${match.path}/`}>
                   التسليمات
-            </Link>
+                </Link>
               </li>
             </ul>
             <ul className="navbar-nav mr-auto sub-hacker-list">
@@ -135,12 +129,12 @@ const HackerNavbar = ({ currentPathname }) => {
                   <BsBellFill className="text-lightgreen" size={'1.5rem'} />
                 </Link>
               </li>
-              <li className="nav-item dropdown" onClick={toggleDropDown}>
+              <li className="nav-item dropdown">
                 <button className="nav-link dropdown-toggle d-none d-sm-inline-block border-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
                   <img src={hackerInfo.hacker.avater ? (`${dvbaseUrl}/${hackerInfo.hacker.avater}`) : (`${DefaultAvatar}`)} className="hacker-avatar img-fluid rounded-circle mr-1" alt={hackerInfo.first_name} />
                   <IoIosArrowDown className="text-lightgreen mr-2" size={'1.3rem'} />
                 </button>
-                <div className={`dropdown-menu ${isDropDown ? "show" : ""} text-right ml-3`}>
+                <div className={`dropdown-menu text-right ml-3`}>
                   <a className="dropdown-item hacker-options" href="pages-profile.html"><FaUserAlt className="ml-2" /> الصفحة الشخصية</a>
                   <a className="dropdown-item hacker-options" href="pages-profile.html"><BsFillGearFill className="ml-2" /> الإعدادات</a>
                   <button onClick={handleLogout} className="dropdown-item hacker-options border-0 bg-transparent" href="#"><FaSignOutAlt className="ml-2" />تسجيل الخروج</button>
