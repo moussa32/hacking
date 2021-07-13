@@ -440,9 +440,15 @@ section.filtered-by-tag {
 }
 
 .utl-wrapper {
-  background: url("./assets/backs/utl-cover.svg") center/cover;
+  background: linear-gradient(90deg, rgb(0 255 43 / 10%), rgb(0 0 0 / 23%)), url("./assets/backs/utl-cover.svg");
   min-height: 100vh;
   padding-bottom: 2rem;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .terms-wrapper {
@@ -479,8 +485,14 @@ a.privacy-policy-link {
 
 .contact-wrapper {
   padding-top: 2rem;
-  background: url("./assets/backs/contact-cover.svg") center/cover;
+  background:linear-gradient(184deg, rgb(65 255 97 / 10%), rgb(0 0 0 / 23%)), url("./assets/backs/contact-cover.svg");
   min-height: 120vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .contact-us-form {
