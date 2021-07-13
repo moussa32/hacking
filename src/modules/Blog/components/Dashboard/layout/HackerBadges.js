@@ -1,18 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { dvbaseUrl } from "../../../../../api/Constants";
 import { GiRank3 } from 'react-icons/gi';
 
 
-const HackerBadges = ({ userInfo }) => {
+const HackerBadges = ({ badges }) => {
   return (
     <>
-      <div class="jumbotron jumbotron-fluid bg-black rounded py-4">
-        <div class="container px-4">
-          <h2 className="section-title text-right">{userInfo.hacker.badges.length === 0 ? ('') : (<GiRank3 className="section-icon mb-0" size={"3rem"} />)}الشعارات</h2>
-          {userInfo.hacker.badges.length === 0 ? (<><GiRank3 className="mt-4" size={"4rem"} /><p className="mt-4 lead mb-0">ليس لديك اي شعارات بعد</p></>) : (
-            <div class="row section-container">{
-              userInfo.hacker.badges.map(badge => {
+      <div className="jumbotron jumbotron-fluid bg-black rounded py-4">
+        <div className="container px-4">
+          <h2 className="section-title text-right">{badges.length === 0 ? ('') : (<GiRank3 className="section-icon mb-0" size={"3rem"} />)}الشعارات</h2>
+          {badges.length === 0 ? (<><GiRank3 className="mt-4" size={"4rem"} /><p className="mt-4 lead mb-0">ليس لديك اي شعارات بعد</p></>) : (
+            <div className="row section-container">{
+              badges.map(badge => {
                 return (
                   <div className="col-md-4 p-3 rounded">
                     <div className="card bg-transparent border-0">
@@ -33,4 +34,10 @@ const HackerBadges = ({ userInfo }) => {
   );
 }
 
-export default HackerBadges;
+const mapStateToProps = ({ blogs }) => {
+  return {
+    badges: blogs.userInfo.hacker.badges,
+  };
+}
+
+export default connect(mapStateToProps)(HackerBadges);

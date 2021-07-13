@@ -1,16 +1,17 @@
 import React from 'react';
+import { connect } from "react-redux";
 import { GiSkills } from 'react-icons/gi';
 
-const HackerSkills = ({ userSkills }) => {
+const HackerSkills = ({ skills }) => {
   return (
     <>
       <div className="jumbotron jumbotron-fluid bg-black rounded py-4">
         <div className="container px-4">
-          <h2 className="section-title text-right">{userSkills.length === 0 ? ('') : (<GiSkills className="section-icon mb-1 ml-2" size={"2rem"} />)}المهارات</h2>
+          <h2 className="section-title text-right">{skills.length === 0 ? ('') : (<GiSkills className="section-icon mb-1 ml-2" size={"2rem"} />)}المهارات</h2>
           <div className="section-container mt-4">
-            {userSkills.length === 0 ? (<><GiSkills className="mt-4" size={"4rem"} /><p className="mt-4 lead mb-0">أضف بعض المهارات</p></>) : (
+            {skills.length === 0 ? (<><GiSkills className="mt-4" size={"4rem"} /><p className="mt-4 lead mb-0">أضف بعض المهارات</p></>) : (
               <>{
-                userSkills.map(skill => {
+                skills.map(skill => {
                   return (
                     <div className="col-md-12 skill-body py-4">
                       <div className="row align-items-center skill-container">
@@ -36,4 +37,10 @@ const HackerSkills = ({ userSkills }) => {
   );
 }
 
-export default HackerSkills;
+const mapStateToProps = ({ blogs }) => {
+  return {
+    skills: blogs.userInfo.hacker.skills,
+  };
+};
+
+export default connect(mapStateToProps)(HackerSkills);

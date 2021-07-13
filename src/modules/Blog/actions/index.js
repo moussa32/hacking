@@ -5,13 +5,16 @@ import {
   GET_BLOG,
   GET_HOME_ADS,
   GET_BLOG_AD,
+  GET_USER_INFO,
 } from './types';
 import {
   getCategoriesList,
   getBlogsList,
   getBlogDetails,
 } from '../../../api/BlogsApi';
+import { getHackerInfo } from '../../../api/DashboardApi';
 import { getAllHomeAds, getSharedAd } from '../../../api/AdsApi';
+import { getNewTokens } from '../../../api/RefreshTokenApi';
 // import { showLoading, hideLoading } from "react-redux-loading";
 
 
@@ -34,6 +37,13 @@ export function getPagination(info) {
   return {
     type: GET_PAGINATION,
     pagination: { ...info },
+  };
+}
+
+export function getUserInfo(hackerInfo) {
+  return {
+    type: GET_USER_INFO,
+    userInfo: { ...hackerInfo },
   };
 }
 
@@ -96,6 +106,22 @@ export function handleGetPagination(currentPageNumber) {
       .then((res) => res.data)
       .then((pag) => {
         dispatch(getPagination({ 'currentPage': currentPageNumber, 'count': pag.count, 'next': pag.next, 'prev': pag.previous }))
+      });
+  };
+}
+
+export function handleGetUserInfo(token) {
+  return (dispatch) => {
+    return getHackerInfo(token)
+      .then((user) => user.data)
+      .then((hackerInfo) => {
+        dispatch(getUserInfo(hackerInfo))
+      })
+      .catch(function (error) {
+        if (error.response.status == 401) {
+          const reFreshtoken = handleGetUserToken('refreshToken');
+          getNewTokens(reFreshtoken);
+        }
       });
   };
 }

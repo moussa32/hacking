@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { dvbaseUrl } from "../../../../api/Constants";
+
 const ResetEmail = () => {
   const [validToken, setValidToken] = useState(false);
 
@@ -6,6 +9,10 @@ const ResetEmail = () => {
   const userTokenFromURL = (new URLSearchParams(window.location.search)).get("token") || null;
 
   useEffect(() => {
+    axios.post(`${dvbaseUrl}/api/v2/auth/users/reset_password_confirm/`, {
+      new_username: "moussa"
+    })
+
     if (userIdFromURL && userTokenFromURL) {
       setValidToken(true);
     } else {

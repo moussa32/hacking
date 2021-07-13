@@ -1,27 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 import { handleRemoveUserToken } from '../../../actions/index';
 import { MdEmail } from "react-icons/md";
 import { BsBellFill, BsFillGearFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
-import { FaUserAlt, FaSignOutAlt, FaBuromobelexperte } from "react-icons/fa";
-import { getHackerInfo } from '../../../../../api/DashboardApi';
-import { getNewTokens } from '../../../../../api/RefreshTokenApi';
+import { FaUserAlt, FaSignOutAlt } from "react-icons/fa";
 import { dvbaseUrl } from '../../../../../api/Constants';
-import { handleGetUserToken } from '../../../actions/index';
 import { DefaultAvatar } from '../../../../../assets/index';
+import { handleGetUserInfo } from "../../../actions/index";
+import { handleGetUserToken } from '../../../actions/index';
+
 
 import { WhiteLogo } from "../../../../../assets/index";
 
-const HackerNavbar = ({ currentPathname }) => {
+const HackerNavbar = (props) => {
+  const { currentPathname, dispatch, hackerInfo } = props;
+  const token = handleGetUserToken('accessToken');
   let match = useRouteMatch();
   const history = useHistory();
-  const [isLoadded, setIsLoadded] = useState(false);
+  const [data, setData] = useState(null);
+  const [loadded, setLoadded] = useState(null);
   const [activeTab, setActiveTab] = useState("main");
-  const [hackerInfo, setHackerInfo] = useState({});
-  const token = handleGetUserToken('accessToken');
-  const reFreshtoken = handleGetUserToken('refreshToken');
-  const hackerInformation = getHackerInfo(token);
+
+  useEffect(() => {
+    dispatch(handleGetUserInfo(token));
+    setData(hackerInfo);
+  }, [dispatch])
+
+  useEffect(() => {
+    if (data) {
+      setLoadded(true);
+    }
+  }, [hackerInfo])
 
   useEffect(() => {
     if (currentPathname.includes(`${match.path}/activity`)) {
@@ -33,20 +44,7 @@ const HackerNavbar = ({ currentPathname }) => {
     } else {
       return setActiveTab("main");
     }
-    console.log(activeTab);
   }, [currentPathname]);
-
-  useEffect(() => {
-    hackerInformation
-      .then(item => {
-        setHackerInfo(item.data);
-        setIsLoadded(true);
-      }).catch((erorr) => {
-        if (erorr.response.status == 401) {
-          getNewTokens(reFreshtoken);
-        }
-      })
-  }, [])
 
   let handleLogout = () => {
     handleRemoveUserToken('accessToken');
@@ -56,7 +54,7 @@ const HackerNavbar = ({ currentPathname }) => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark blog-nav">
-      {isLoadded ? (
+      {loadded ? (
         <>
           <Link className="navbar-brand" to="/">
             <img src={WhiteLogo} width={30} height={30} alt="logo" loading="lazy" />
@@ -131,7 +129,7 @@ const HackerNavbar = ({ currentPathname }) => {
               </li>
               <li className="nav-item dropdown">
                 <button className="nav-link dropdown-toggle d-none d-sm-inline-block border-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
-                  <img src={hackerInfo.hacker.avater ? (`${dvbaseUrl}/${hackerInfo.hacker.avater}`) : (`${DefaultAvatar}`)} className="hacker-avatar img-fluid rounded-circle mr-1" alt={hackerInfo.first_name} />
+                  <img src={hackerInfo.hacker.avatar ? (`${dvbaseUrl}/${hackerInfo.hacker.avatar}`) : (`${DefaultAvatar}`)} className="hacker-avatar img-fluid rounded-circle mr-1" alt={hackerInfo.first_name} />
                   <IoIosArrowDown className="text-lightgreen mr-2" size={'1.3rem'} />
                 </button>
                 <div className={`dropdown-menu text-right ml-3`}>
@@ -142,10 +140,15 @@ const HackerNavbar = ({ currentPathname }) => {
               </li>
             </ul>
           </div>
-        </>
-      ) : ('')}
+        </>) : null}
     </nav>
   );
 };
 
-export default HackerNavbar;
+const mapStateToProps = ({ blogs }) => {
+  return {
+    hackerInfo: blogs.userInfo,
+  };
+}
+
+export default connect(mapStateToProps)(HackerNavbar);

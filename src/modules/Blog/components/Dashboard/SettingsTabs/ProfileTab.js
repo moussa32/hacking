@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from "react-redux";
 import './ProfileTab.css';
 import { CountryDropdown } from 'react-country-region-selector';
 import { updateUserProfile } from '../../../../../api/ProfileApi';
@@ -7,7 +8,7 @@ import ReactStars from "react-rating-stars-component";
 import { BsCircleFill } from 'react-icons/bs';
 
 
-const ProfileTab = () => {
+const ProfileTab = ({ avatar }) => {
   const [profile, setProfile] = useState({
     first_name: "",
     last_name: "",
@@ -87,32 +88,32 @@ const ProfileTab = () => {
         <div className="col-md-12">
           <form className="profile-settings" onSubmit={newProfileSettings}>
             <div className="form-group">
-              <label for="firstName">الاسم الأول</label>
+              <label htmlFor="firstName">الاسم الأول</label>
               <input type="text" className="form-control custom-input border-0" name="first_name" id="firstName" aria-describedby="firstNameHelp" onChange={handleInput} />
             </div>
             <div className="form-group">
-              <label for="lastName">الاسم الاخير</label>
+              <label htmlFor="lastName">الاسم الاخير</label>
               <input type="text" className="form-control custom-input border-0" name="last_name" id="lastName" onChange={handleInput} />
             </div>
             <div className="form-group">
-              <label for="country">الدولة</label>
+              <label htmlFor="country">الدولة</label>
               <CountryDropdown className="form-control custom-input country-input border-0" value={profile.country} name="country" onChange={handleCountryInput} />
             </div>
             <div className="form-group">
-              <label for="linkedin">Linkedin</label>
+              <label htmlFor="linkedin">Linkedin</label>
               <input type="text" className="form-control custom-input border-0" name="linkedin" id="linkedin" onChange={handleInput} />
             </div>
             <div className="form-group">
-              <label for="github">Github</label>
+              <label htmlFor="github">Github</label>
               <input type="text" className="form-control custom-input border-0" name="github" id="github" onChange={handleInput} />
             </div>
             <div className="form-group">
-              <label for="twitter">twitter</label>
+              <label htmlFor="twitter">twitter</label>
               <input type="text" className="form-control custom-input border-0" id="twitter" name="twitter" onChange={handleInput} />
             </div>
             <div className="form-group">
-              <label for="bio">مقدمة</label>
-              <textarea class="form-control custom-input border-0" id="bio" rows="5" name="bio" onChange={handleInput}></textarea>
+              <label htmlFor="bio">مقدمة</label>
+              <textarea className="form-control custom-input border-0" id="bio" rows="5" name="bio" onChange={handleInput}></textarea>
             </div>
             <h3 className="my-4">المهارات:</h3>
             <div className="jumbotron jumbotron-fluid bg-second py-4 mb-1">
@@ -155,4 +156,11 @@ const ProfileTab = () => {
   );
 }
 
-export default ProfileTab;
+const mapStateToProps = ({ blogs }) => {
+  console.log(blogs.userInfo);
+  return {
+    avater: blogs.userInfo.hacker
+  };
+}
+
+export default connect(mapStateToProps)(ProfileTab);

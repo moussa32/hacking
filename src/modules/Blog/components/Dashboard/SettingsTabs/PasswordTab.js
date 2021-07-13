@@ -21,7 +21,6 @@ const PasswordTab = () => {
         if (response.status === 204) {
           setStatus({ type: "success", message: `تم إرسال رابط تغيير كلمة المرور إلى بريدك الالكتروني ${userEmail}` });
         }
-
       }, (error) => {
         console.log(error);
       });

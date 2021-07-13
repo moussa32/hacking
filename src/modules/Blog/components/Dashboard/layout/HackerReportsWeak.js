@@ -34,7 +34,7 @@ const StandrdVulnerabilities = () => {
         <div className="container px-4">
           <h2 className="section-title text-right">{isData ? (<GiBrokenShield className="section-icon" size={"2rem"} />) : ('')}نقاط الضعف</h2>
           {isData ? (<div className="section-container bg-second m-4 rounded vulcontainer">
-            <table class="table text-white table-responsive">
+            <table className="table text-white table-responsive">
               <thead>
                 <tr className="vultr">
                   <th scope="col" class="border-top-0" className="vulname text-lightgreen text-right">نقطة الضعف</th>

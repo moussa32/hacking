@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from "react-redux";
 import { Link, useRouteMatch } from 'react-router-dom';
 import { FaCogs } from "react-icons/fa";
 import { HiOutlineClipboardList } from "react-icons/hi";
-import { BiTask, BiCrown } from "react-icons/bi";
-import { AiFillDollarCircle } from "react-icons/ai";
-import { MdStars } from "react-icons/md";
+import { BiTask } from "react-icons/bi";
 import HackerInfo from './layout/HackerInfo';
 import HackerReports from './layout/HackerReports';
 import HackerBadges from './layout/HackerBadges';
@@ -13,103 +12,69 @@ import HackerWASP from './layout/HackerWASP';
 import HackerReportsWeak from './layout/HackerReportsWeak';
 import HackerThanks from './layout/HackerThanks';
 import HackerActivity from './layout/HackerActivity';
+import HackerStat from './layout/HackerStat';
 import Spinner from "../../../../shared/components/Spinner";
-import { getHackerInfo } from '../../../../api/DashboardApi';
-import { getNewTokens } from '../../../../api/RefreshTokenApi';
+
 import { handleGetUserToken } from '../../actions/index';
+import { handleGetUserInfo } from "../../actions/index";
 
 
 
 
-const Main = () => {
-  const [userInfo, setUserInfo] = useState(null);
+const Main = (props) => {
+  const { dispatch, hackerInfo } = props;
+
   const [loadded, setLoadded] = useState(false);
+  const [data, setData] = useState(null);
 
   const token = handleGetUserToken('accessToken');
-  const reFreshtoken = handleGetUserToken('refreshToken');
-  const hackerData = getHackerInfo(token);
   const match = useRouteMatch();
 
   useEffect(() => {
-    hackerData
-      .then(item => {
-        setUserInfo(item.data);
+    dispatch(handleGetUserInfo(token));
+    setData(hackerInfo);
+  }, [dispatch])
 
-        setLoadded(true);
-      }).catch(function (error) {
-        if (error.response.status == 401) {
-          getNewTokens(reFreshtoken);
-        }
-      })
-  }, [])
+  useEffect(() => {
+    if (data) {
+      setLoadded(true);
+    }
+  }, [hackerInfo])
+
 
   return (
-    <mian className="component-wrapper">
-      {loadded ? (<div class="container-fluid home">
+    <div className="component-wrapper">
+      {loadded ? (<div className="container-fluid home">
         <div className="row">
           <div className="col-1 bg-black">
             <nav className="col dbsidebar right-dbsidebar">
-              <ul class="nav flex-column vertical-nav">
-                <li class="nav-item">
+              <ul className="nav flex-column vertical-nav">
+                <li className="nav-item">
                   <Link to='/'><HiOutlineClipboardList size='2rem' className="text-white" /></Link>
                 </li>
-                <li class="nav-item">
+                <li className="nav-item">
                   <Link to='/'><BiTask size='2rem' className="text-white" /></Link>
                 </li>
               </ul>
             </nav>
           </div>
-          <div class="jumbotron jumbotron-fluid text-center col-10 py-4 bg-second dbmain rounded">
-            <div class="container-fluid">
-              <HackerInfo userInfo={userInfo} />
-              <section className="row">
-                <div className="col-md-4 p-3 rounded">
-                  <div className="card bg-black">
-                    <div className="card-body">
-                      <div className="row">
-                        <div className="col-md-6 text-right"><h4>الأرباح</h4></div>
-                        <div className="col-md-6 text-left"><h4><AiFillDollarCircle size={'2rem'} /></h4></div>
-                      </div>
-                      <p className="hacker-stat-numbers mt-2 mb-1">{userInfo.hacker.earnings ? (userInfo.hacker.earnings) : '00.00'}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 p-3 rounded">
-                  <div className="card bg-black">
-                    <div className="card-body">
-                      <div className="row">
-                        <div className="col-md-6 text-right"><h4>النقاط</h4></div>
-                        <div className="col-md-6 text-left"><h4><MdStars size={'2rem'} /></h4></div>
-                      </div>
-                      <p className="hacker-stat-numbers mt-2 mb-1">{userInfo.hacker.points ? (userInfo.hacker.points) : '0'}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 p-3 rounded">
-                  <div className="card bg-black">
-                    <div className="card-body">
-                      <div className="row">
-                        <div className="col-md-6 text-right"><h4>ترتيبك</h4></div>
-                        <div className="col-md-6 text-left"><h4><BiCrown size={'2rem'} /></h4></div>
-                      </div>
-                      <p className="hacker-stat-numbers mt-2 mb-1">{userInfo.hacker.rank ? (userInfo.hacker.rank) : '0'}</p>
-                    </div>
-                  </div>
-                </div>
-              </section>
+          <div className="jumbotron jumbotron-fluid text-center col-10 py-4 bg-second dbmain rounded">
+            <div className="container-fluid">
+              <HackerInfo />
+              <HackerStat />
               <HackerReports />
-              <HackerBadges userInfo={userInfo} />
-              <HackerSkills userSkills={userInfo.hacker.skills} />
+              <HackerBadges />
+              <HackerSkills />
               <HackerWASP />
               <HackerReportsWeak />
-              <HackerThanks userThankers={userInfo.thankers} />
+              <HackerThanks />
               <HackerActivity />
             </div>
           </div>
           <div className="col-1 bg-black">
             <nav className="col dbsidebar left-dbsidebar">
-              <ul class="nav flex-column vertical-nav left-vertical-nav">
-                <li class="nav-item settings-button rounded bg-second">
+              <ul className="nav flex-column vertical-nav left-vertical-nav">
+                <li className="nav-item settings-button rounded bg-second">
                   <Link to={`${match.path}/settings`}><FaCogs size='2rem' className="text-lightgreen" /></Link>
                 </li>
               </ul>
@@ -117,9 +82,14 @@ const Main = () => {
           </div>
         </div>
       </div >) : (<Spinner></Spinner>)}
-
-    </mian >
+    </div >
   )
 }
 
-export default Main;
+const mapStateToProps = ({ blogs }) => {
+  return {
+    hackerInfo: blogs.userInfo
+  };
+};
+
+export default connect(mapStateToProps)(Main);

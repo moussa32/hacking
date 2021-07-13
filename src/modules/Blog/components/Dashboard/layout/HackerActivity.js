@@ -84,7 +84,7 @@ const HackerActivity = () => {
                       <div className="row py-2">
                         <div className="col-md-8">
                           <div className="company-info">
-                            <img class="report-company-logo" src={`${dvbaseUrl}${report.reported_to.logo}`} alt={report.reported_to.name} />{report.title}
+                            <img className="report-company-logo" src={`${dvbaseUrl}${report.reported_to.logo}`} alt={report.reported_to.name} />{report.title}
                           </div>
                           <div className="report-info d-flex mt-3">
                             {report.close_state ? (<div className="report-status d-flex align-items-center">

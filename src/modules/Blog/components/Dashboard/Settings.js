@@ -37,7 +37,7 @@ const Settings = () => {
             <h2>الإعدادات</h2>
             {pills.map((pill, index) => {
               if (index == 0) {
-                return <a className="nav-link setting-tab-link active" id={`v-pills-${pill.type}-tab`} data-toggle="pill" href={`#v-pills-${pill.type}`} role="tab" aria-controls={`v-pills-${pill.type}`} aria-selected="false">{pill.lable}</a>
+                return <a key={index} className="nav-link setting-tab-link active" id={`v-pills-${pill.type}-tab`} data-toggle="pill" href={`#v-pills-${pill.type}`} role="tab" aria-controls={`v-pills-${pill.type}`} aria-selected="false">{pill.lable}</a>
               } else {
                 return <a className="nav-link setting-tab-link" id={`v-pills-${pill.type}-tab`} data-toggle="pill" href={`#v-pills-${pill.type}`} role="tab" aria-controls={`v-pills-${pill.type}`} aria-selected="false">{pill.lable}</a>
               }
@@ -52,12 +52,12 @@ const Settings = () => {
             </div>
             <div className="tab-pane fade bg-black" id="v-pills-password" role="tabpanel" aria-labelledby="v-pills-password-tab">
               <h2 className="text-center pt-4 pb-2">{pills[1].lable}</h2>
-              <small class="d-block text-center pb-4">تغيير كلمة المرور</small>
+              <small className="d-block text-center pb-4">تغيير كلمة المرور</small>
               <PasswordTab />
             </div>
             <div className="tab-pane fade bg-black" id="v-pills-email" role="tabpanel" aria-labelledby="v-pills-email-tab">
               <h2 className="text-center pt-4 pb-2">{pills[2].lable}</h2>
-              <small class="d-block text-center pb-4">تغيير بريدك الالكتروني</small>
+              <small className="d-block text-center pb-4">تغيير بريدك الالكتروني</small>
               <EmailTab />
             </div>
             <div className="tab-pane fade bg-black" id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">

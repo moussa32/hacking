@@ -5,6 +5,7 @@ import {
   GET_PAGINATION,
   GET_HOME_ADS,
   GET_BLOG_AD,
+  GET_USER_INFO,
 } from '../actions/types';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   blogsList: [],
   blog: null,
   pagination: {},
+  userInfo: {},
 };
 
 export default function blogs(state = initialState, action) {
@@ -35,6 +37,11 @@ export default function blogs(state = initialState, action) {
       return {
         ...state,
         blog: { ...action.blog },
+      };
+    case GET_USER_INFO:
+      return {
+        ...state,
+        userInfo: { ...action.userInfo },
       };
     case GET_HOME_ADS:
       return {
