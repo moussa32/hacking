@@ -878,6 +878,10 @@ blockquote:nth-of-type(even) footer:after {
   line-height: 1.6;
 }
 
+.sugesstion-password-item::marker{
+color:var(--lightGreen);
+}
+
 /*Email Confirmation*/
 .email-confirmation-icon{
   width: 15rem;
