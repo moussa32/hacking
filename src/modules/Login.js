@@ -1,34 +1,33 @@
 import React, { useState } from 'react';
-import { WhiteLogo } from '../../../assets/index';
-import { Link, useHistory } from 'react-router-dom';
+import { connect } from "react-redux";
+import { WhiteLogo } from '../assets/index';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import axios from 'axios';
-import { handleSetUserToken, handleGetUserToken } from '../actions/index';
-import { dvApiUrl } from '../../../api/Constants';
+import { handleSetUserToken, handleGetUserToken } from './Blog/actions/index';
+import { dvApiUrl } from '../api/Constants';
 
 const Login = () => {
-  const history = useHistory();
-  const token = handleGetUserToken('accessToken');
-
-  if (token) {
-    history.push("/dashboard");
-  }
-
+  const [isLoadding, setIsLoadding] = useState(false);
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
     formIsValid: false,
-    errors: { message: '' }
+  });
+  const [status, setStatus] = useState(null);
+  const [userType, setUserType] = useState({
+    type: "user",
   });
 
   const handleSubmit = e => {
     e.preventDefault();
+    setIsLoadding(true);
 
     if (!credentials.username || !credentials.password) {
-      setCredentials({ ...credentials, errors: { message: 'برجاء عدم ترك اي حقل فارغ' } });
+      setStatus({ type: "danger", message: 'برجاء عدم ترك اي حقل فارغ' });
       return '';
 
     } else {
-      setCredentials({ ...credentials, errors: { message: '' } });
+      setStatus({ type: "", message: "" });
 
       axios.post(`${dvApiUrl}/auth/hackers/login/`,
         credentials
@@ -36,15 +35,25 @@ const Login = () => {
         .then(res => {
           handleSetUserToken('accessToken', res.data.access);
           handleSetUserToken('refreshToken', res.data.refresh);
+          setStatus({ type: "success", message: "تم تسجيل الدخول بنجاح جاري تحويلك" });
+          setIsLoadding(false);
+
+          if (userType.type === "user") {
+            console.log("user");
+            <Redirect to="/" />
+          } else {
+            return <Redirect to="program/dashboard" />
+          }
         })
         .catch(function (error) {
+          setIsLoadding(false)
           if (error.response) {
             if (error.response.status === 401) {
-              setCredentials({ ...credentials, errors: { message: 'برجاء التأكد من اسم أو كلمة المرور' } })
+              setStatus({ type: "danger", message: 'برجاء التأكد من اسم أو كلمة المرور' })
             } else if (error.response.status === 404) {
-              setCredentials({ ...credentials, errors: { message: 'تحقق من البيانات المدخلة' } })
+              setStatus({ type: "danger", message: 'تحقق من البيانات المدخلة' })
             } else if (error.response.status === 429) {
-              setCredentials({ ...credentials, errors: { message: ' لقد سجلت بيانات الدخول بشكل خاطئ العديد من المرات أنتظر دقيقة' } })
+              setStatus({ type: "danger", message: ' لقد سجلت بيانات الدخول بشكل خاطئ العديد من المرات أنتظر دقيقة' })
             }
           }
         });
@@ -58,7 +67,7 @@ const Login = () => {
   }
 
   return (
-    <main class="component-wrapper login-wrapper">
+    <main className="component-wrapper login-wrapper">
       <div className="container home">
         <div className="row">
           <div className="col-md-6 mx-auto p-4 bg-black rounded">
@@ -66,19 +75,22 @@ const Login = () => {
             <h3 className="text-center py-4">تسجيل الدخول</h3>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label for="usernameOrEmail">إسم المستخدم</label>
+                <label htmlFor="usernameOrEmail">إسم المستخدم</label>
                 <input type="text" name="username" value={credentials.username} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input" id="usernameOrEmail" aria-describedby="emailHelp" required />
               </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">كلمة المرور</label>
+              <div className="form-group">
+                <label htmlFor="exampleInputPassword1">كلمة المرور</label>
                 <input name="password" type="password" value={credentials.password} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input" id="passwordInput" required />
               </div>
-              <div class="form-group py-1">
+              <div className="form-group py-1">
                 <Link className="text-lightgreen" to="/forget-password">نسيت كلمة المرور</Link>
               </div>
               <button type="submit" className="btn btn-lightgreen mx-auto d-block btn-lg">تسجيل الدخول</button>
-              {credentials.errors.message ? (<div class="alert alert-danger mt-4 text-center" role="alert">
-                {credentials.errors.message}
+              {isLoadding ? <div className="spinner-border d-block mx-auto text-success mt-4 mb-1" role="status">
+                <span className="sr-only">Loading...</span>
+              </div> : null}
+              {status ? (<div className={`alert alert-${status.type} mt-4 text-center`} role="alert">
+                {status.message}
               </div>) : ''}
               <p className="text-center py-3">إنشاء حساب جديد؟ <Link to="/sign-up" className="text-lightgreen">إنشاء</Link></p>
             </form>
@@ -89,4 +101,8 @@ const Login = () => {
   );
 }
 
-export default Login;
+const mapStateToProps = () => {
+
+}
+
+export default withRouter(connect(mapStateToProps)(Login));

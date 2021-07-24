@@ -28,7 +28,7 @@ const EmailVerify = () => {
 
     const getUnAuth = handleGetUserToken('accessToken');
 
-    axios.get(`${dvApiUrl}/auth/hackers/verify-email/?token=${getUnAuth}`, {
+    axios.get(`${dvApiUrl}/auth/verify-email/?token=${getUnAuth}`, {
       headers: {
         'Authorization': `Bearer ${getUnAuth}`
       }

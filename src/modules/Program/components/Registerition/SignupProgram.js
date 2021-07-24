@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Input from '../../../../shared/components/FormFields/Input';
 
 import Logo from '../../../../assets/images/green-logo.svg';
@@ -23,6 +23,8 @@ const SignupProgram = () => {
     }
   });
   const [status, setStatus] = useState({});
+  const [isLoadding, setIsLoadding] = useState(false);
+  const history = useHistory();
 
   const onTyping = (e) => {
     e.persist();
@@ -129,14 +131,22 @@ const SignupProgram = () => {
     const isValid = handleValidation();
 
     if (isValid) {
-      axios.post("http://bugbounty.pythonanywhere.com/api/v1/auth/hackers/signup/", formData)
+      setIsLoadding(true);
+
+      axios.post("http://bugbounty.pythonanywhere.com/api/v1/auth/programs/signup/", formData)
         .then(programData => {
           console.log(programData);
-          localStorage.setItem("accessToken", programData.access_token);
-          localStorage.setItem("refreshToken", programData.refresh_token);
+          localStorage.setItem("accessToken", programData.data.access_token);
+          localStorage.setItem("refreshToken", programData.data.refresh_token);
+          localStorage.setItem("registerEmail", programData.data.email);
+          setIsLoadding(false);
           setStatus({ created: "تم تسجيل البرنامج بنجاح جاري تحويلك" });
+          setTimeout(() => {
+            history.push("/program/email-confirmation");
+          }, 2000);
         })
         .catch(function (error) {
+          setIsLoadding(false);
           if (error.response.data.username) {
             setStatus({ usernameError: error.response.data.username });
           } else if (error.response.data.email) {
@@ -256,6 +266,9 @@ const SignupProgram = () => {
               </div>) : null}
               <button type="submit" className="btn btn-lightgreen mx-auto d-block btn-lg text-white my-4">إنشاء حساب</button>
             </form>
+            {isLoadding ? <div className="spinner-border d-block mx-auto text-success" role="status">
+              <span className="sr-only">Loading...</span>
+            </div> : null}
             {status.created ? (<div className="mt-2 alert alert-success custom-danger-alert" role="alert">
               {status.created}
             </div>) : null}

@@ -1,0 +1,20 @@
+import {
+  GET_PROGRAM_INFO,
+} from "./type";
+
+import { getProgram } from "../../../api/ProgramAPI/ProgramInfo";
+
+export const getProgramInfo = (info) => {
+  return {
+    type: GET_PROGRAM_INFO,
+    programInfo: { ...info }
+  }
+}
+
+export const handleGetProgram = (userAccessToken) => {
+  return (dispatch) => {
+    return getProgram(userAccessToken)
+      .then((res) => { console.log(res.data); })
+      .then((program) => dispatch(getProgramInfo(program)))
+  }
+}

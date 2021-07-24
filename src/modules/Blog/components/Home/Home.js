@@ -15,7 +15,7 @@ import ByTagsList from "../Blog/ByTagsList";
 import Tags from "../Blog/Tags";
 import BlogHome from "../Blog";
 import Main from "../Main";
-import Login from "../Login";
+import Login from "../../../Login";
 import SignUp from "../Registerition/SignUp";
 import EmailConfirmation from "../Registerition/EmailConfirmation";
 import MobileConfirmation from "../Registerition/MobileConfirmation";
