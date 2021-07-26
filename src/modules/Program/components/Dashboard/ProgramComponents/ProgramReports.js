@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar, Doughnut, Chart } from 'react-chartjs-2';
+import { getProgramReportsLevels } from '../../../../../api/ProgramAPI/ProgramReportsLevels'
+import { getNewTokens } from '../../../../../api/RefreshTokenApi';
 import { BsInboxesFill } from 'react-icons/bs';
 
-
-function ProgramReports() {
-  const [isData, setIsData] = useState(false);
+const ProgramReports = () => {
   const [isDataDone, setIsDataDone] = useState(false);
+  const [isData, setIsData] = useState(false);
 
   const [barChartData, setBarChartData] = useState({
     labels: [],
@@ -25,12 +26,51 @@ function ProgramReports() {
     datasets: [{
       data: [],
       backgroundColor: [
-        '#0e5296',
-        '#4d1055',
+        'rgb(24,138,76)',
+        'rgb(251,136,17)',
       ],
-      hoverOffset: 4
+      hoverOffset: 4,
+      borderWidth: 0
     }]
   });
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    const reFreshtoken = localStorage.getItem('refreshToken');
+
+    getProgramReportsLevels(token).then((res) => {
+      Chart.defaults.global.defaultFontColor = "#fff";
+
+      //Is there any data return from the server hide default icon
+      if (res.data.reports_by_level.length !== 0) {
+        setIsData(true);
+      }
+
+      const reportsByLevel = res.data.reports_by_level;
+      const pushReportsLabels = barChartData.labels;
+      const pushReportsValue = barChartData.datasets[0].data;
+
+      reportsByLevel.forEach((report) => {
+        pushReportsLabels.push(report.name);
+        pushReportsValue.push(report.reports_count);
+      })
+
+      const reportsByState = res.data.reports_by_state;
+      const pushStateReportsValue = doughnutChartData.datasets[0].data;
+
+      for (const [key, value] of Object.entries(reportsByState)) {
+        pushStateReportsValue.push(value);
+      }
+
+      setIsDataDone(true);
+
+    }).catch((error) => {
+      if (error.response.status == 401) {
+        getNewTokens(reFreshtoken);
+      }
+    })
+  }, []);
+
 
   const optionsForBars = {
     responsive: true,
@@ -57,12 +97,19 @@ function ProgramReports() {
 
   const options = {
     responsive: true,
-
+    legend: {
+      position: 'bottom',
+      rtl: true,
+      labels: {
+        usePointStyle: true,
+        boxWidth: 30,
+        padding: 20,
+      }
+    }
   }
 
-
   return (
-    <div className="jumbotron jumbotron-fluid bg-black rounded pt-4">
+    <div className="jumbotron jumbotron-fluid bg-second rounded pt-4">
       <h2 className="text-right mr-4 mb-4">{isData ? (<BsInboxesFill className="section-icon" size={"2rem"} />) : ''} التقارير</h2>
       <div className="container">
         {isData ? (
@@ -71,11 +118,11 @@ function ProgramReports() {
               <>
                 <h3 className="w-100 pb-4">مجموع التقارير {doughnutChartData.datasets[0].data[0] + doughnutChartData.datasets[0].data[1]}</h3>
                 <div className="row px-2">
-                  <div className="col-md-7 bg-second p-3">
-                    <Bar data={barChartData} options={optionsForBars} />
-                  </div>
-                  <div className="col-md-5 px-0">
+                  <div className="col mx-1 px-0 bg-black">
                     <Doughnut data={doughnutChartData} options={options} />
+                  </div>
+                  <div className="col bg-black p-3">
+                    <Bar data={barChartData} options={optionsForBars} />
                   </div>
                 </div>
               </>
@@ -89,7 +136,7 @@ function ProgramReports() {
         )}
       </div>
     </div >
-  )
+  );
 }
 
-export default ProgramReports
+export default ProgramReports;

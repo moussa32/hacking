@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
-import { connect } from "react-redux";
 import { WhiteLogo } from '../assets/index';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { handleSetUserToken, handleGetUserToken } from './Blog/actions/index';
 import { dvApiUrl } from '../api/Constants';
 
 const Login = () => {
   const [isLoadding, setIsLoadding] = useState(false);
+  const [status, setStatus] = useState(null);
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
     formIsValid: false,
   });
-  const [status, setStatus] = useState(null);
   const [userType, setUserType] = useState({
-    type: "user",
+    type: "program",
   });
+  let history = useHistory();
+  const redirectTimeOut = 3000;
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -39,10 +40,13 @@ const Login = () => {
           setIsLoadding(false);
 
           if (userType.type === "user") {
-            console.log("user");
-            <Redirect to="/" />
+            setTimeout(() => {
+              history.push('/dashboard');
+            }, redirectTimeOut);
           } else {
-            return <Redirect to="program/dashboard" />
+            setTimeout(() => {
+              history.push('program/dashboard');
+            }, redirectTimeOut);
           }
         })
         .catch(function (error) {
@@ -101,8 +105,4 @@ const Login = () => {
   );
 }
 
-const mapStateToProps = () => {
-
-}
-
-export default withRouter(connect(mapStateToProps)(Login));
+export default Login;

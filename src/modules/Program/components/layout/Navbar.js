@@ -5,11 +5,12 @@ import { BsBellFill, BsFillGearFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaUserAlt, FaSignOutAlt } from "react-icons/fa";
 import { DefaultAvatar } from '../../../../assets/index';
+import { dvbaseUrl } from "../../../../api/Constants";
 
 
 import { WhiteLogo } from "../../../../assets/index";
 
-const Navbar = ({ currentPathname, compaynName, companyLogo }) => {
+const Navbar = ({ currentPathname, companyName, companyLogo }) => {
   let match = useRouteMatch();
   const history = useHistory();
   const [activeTab, setActiveTab] = useState("main");
@@ -108,7 +109,7 @@ const Navbar = ({ currentPathname, compaynName, companyLogo }) => {
           </li>
           <li className="nav-item dropdown">
             <button className="nav-link dropdown-toggle d-none d-sm-inline-block border-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
-              <img src={companyLogo && companyLogo !== null ? companyLogo : DefaultAvatar} className="hacker-avatar img-fluid rounded-circle mr-1" alt={compaynName ? compaynName : "User Image"} />
+              <img src={companyLogo && companyLogo !== null ? `${dvbaseUrl}/${companyLogo}` : DefaultAvatar} className="hacker-avatar img-fluid rounded-circle mr-1" alt={companyName ? companyName : "User Image"} />
               <IoIosArrowDown className="text-lightgreen mr-2" size={'1.3rem'} />
             </button>
             <div className={`dropdown-menu text-right ml-3`}>

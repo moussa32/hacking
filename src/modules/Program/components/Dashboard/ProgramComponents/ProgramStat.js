@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiFillDollarCircle } from "react-icons/ai";
 
-function ProgramStat({ hackerEarnings, hackerPoints }) {
+function ProgramStat({ balance, payings }) {
   return (
     <section className="row">
       <div className="col-md-6 p-3 rounded">
@@ -11,7 +11,7 @@ function ProgramStat({ hackerEarnings, hackerPoints }) {
               <div className="col-md-6 text-right"><h4>الرصيد</h4></div>
               <div className="col-md-6 text-left"><h4><AiFillDollarCircle size={'2rem'} /></h4></div>
             </div>
-            <p className="hacker-stat-numbers mt-2 mb-1">{hackerEarnings ? (hackerEarnings) : '00.00'}</p>
+            <p className="hacker-stat-numbers mt-2 mb-1">{balance ? (balance) : '00.00'}</p>
           </div>
         </div>
       </div>
@@ -22,7 +22,7 @@ function ProgramStat({ hackerEarnings, hackerPoints }) {
               <div className="col-md-6 text-right"><h4>المدفوع</h4></div>
               <div className="col-md-6 text-left"><h4><AiFillDollarCircle size={'2rem'} /></h4></div>
             </div>
-            <p className="hacker-stat-numbers mt-2 mb-1">{hackerPoints ? (hackerPoints) : '0'}</p>
+            <p className="hacker-stat-numbers mt-2 mb-1">{payings ? (payings) : '0'}</p>
           </div>
         </div>
       </div>

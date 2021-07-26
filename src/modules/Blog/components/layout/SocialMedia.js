@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef,useCallback, useEffect } from 'react';
 import {
   FaTwitterSquare,
   FaSnapchatSquare,
@@ -7,15 +7,16 @@ import {
 } from 'react-icons/fa';
 
 const SocialMedia = () => {
-  const socialMediaList = useRef(null);
-  useEffect(() => {
-    window.addEventListener('scroll', () => {
-      socialMediaList.current.style.display = 'block';
-      setTimeout(() => {
-        socialMediaList.current.style.display = 'none';
-      }, 6000);
-    });
-  }, []);
+  const socialMediaList = useCallback(node => {
+    if (node && node !== null) {
+      window.addEventListener('scroll', () => {
+        node.style.display = 'block';
+        setTimeout(() => {
+          node.style.display = 'none';
+        }, 6000);
+      });
+    }
+  },[]);
 
   return (
     <ul

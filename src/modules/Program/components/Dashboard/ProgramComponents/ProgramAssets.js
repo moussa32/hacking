@@ -28,7 +28,7 @@ function ProgramAssets() {
       .then(res => {
         console.log(res);
         res.data.map(point => {
-          reportsAssetData.labels.push(point.name);
+          reportsAssetData.labels.push(point.url);
           reportsAssetData.datasets[0].data.push(point.reports_count);
         });
         setIsData(true);

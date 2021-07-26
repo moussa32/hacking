@@ -14,6 +14,7 @@ import ProgramActivity from "./ProgramComponents/ProgramActivity";
 import ProgramWeakPoints from "./ProgramComponents/ProgramWeakPoints";
 import ProgramWASP from "./ProgramComponents/ProgramWASP";
 import ProgramAssets from "./ProgramComponents/ProgramAssets";
+import ProgramReportsState from "./ProgramComponents/ProgramReportsState";
 import { getProgram } from "../../../../api/ProgramAPI/ProgramInfo";
 import { handleGetProgram } from "../../actions";
 
@@ -37,7 +38,7 @@ const Main = ({ location }) => {
     <>
       {isLoadded ? (
         <>
-          <Navbar currentPathname={location.pathname} />
+          <Navbar companyLogo={user.logo} companyName={user.company_name} currentPathname={location.pathname} />
           <div className="component-wrapper">
             <div className="container-fluid home">
               <div className="row">
@@ -56,11 +57,12 @@ const Main = ({ location }) => {
                 <div className="jumbotron jumbotron-fluid text-center col-10 py-4 bg-second dbmain rounded">
                   <div className="container-fluid">
                     <ProgramInfo userInfo={user} />
-                    <ProgramStat />
+                    <ProgramStat balance={user.balance} payings={user.payings} />
                     <ProgramReports />
                     <ProgramWeakPoints />
                     <ProgramAssets />
                     <ProgramWASP />
+                    <ProgramReportsState/>
                     <ProgramActivity />
                   </div>
                 </div>
