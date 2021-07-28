@@ -1,23 +1,9 @@
-import {
-  GET_CATEGORIES,
-  GET_BLOGS,
-  GET_PAGINATION,
-  GET_BLOG,
-  GET_HOME_ADS,
-  GET_BLOG_AD,
-  GET_USER_INFO,
-} from './types';
-import {
-  getCategoriesList,
-  getBlogsList,
-  getBlogDetails,
-} from '../../../api/BlogsApi';
-import { getHackerInfo } from '../../../api/DashboardApi';
-import { getAllHomeAds, getSharedAd } from '../../../api/AdsApi';
-import { getNewTokens } from '../../../api/RefreshTokenApi';
+import {GET_CATEGORIES, GET_BLOGS, GET_PAGINATION, GET_BLOG, GET_HOME_ADS, GET_BLOG_AD, GET_USER_INFO} from "./types";
+import {getCategoriesList, getBlogsList, getBlogDetails} from "../../../api/BlogsApi";
+import {getHackerInfo} from "../../../api/DashboardApi";
+import {getAllHomeAds, getSharedAd} from "../../../api/AdsApi";
+import {getNewTokens} from "../../../api/RefreshTokenApi";
 // import { showLoading, hideLoading } from "react-redux-loading";
-
-
 
 export function getCategories(categories) {
   return {
@@ -36,14 +22,14 @@ export function getBlogs(blogs) {
 export function getPagination(info) {
   return {
     type: GET_PAGINATION,
-    pagination: { ...info },
+    pagination: {...info},
   };
 }
 
 export function getUserInfo(hackerInfo) {
   return {
     type: GET_USER_INFO,
-    userInfo: { ...hackerInfo },
+    userInfo: {...hackerInfo},
   };
 }
 
@@ -57,14 +43,14 @@ export function getHomeAds(ads) {
 export function getBlog(blog) {
   return {
     type: GET_BLOG,
-    blog: { ...blog },
+    blog: {...blog},
   };
 }
 
 export function getBlogAd(ad) {
   return {
     type: GET_BLOG_AD,
-    blogAd: { ...ad },
+    blogAd: {...ad},
   };
 }
 
@@ -105,7 +91,7 @@ export function handleGetPagination(currentPageNumber) {
     return getBlogsList(currentPageNumber)
       .then((res) => res.data)
       .then((pag) => {
-        dispatch(getPagination({ 'currentPage': currentPageNumber, 'count': pag.count, 'next': pag.next, 'prev': pag.previous }))
+        dispatch(getPagination({currentPage: currentPageNumber, count: pag.count, next: pag.next, prev: pag.previous}));
       });
   };
 }
@@ -115,11 +101,11 @@ export function handleGetUserInfo(token) {
     return getHackerInfo(token)
       .then((user) => user.data)
       .then((hackerInfo) => {
-        dispatch(getUserInfo(hackerInfo))
+        dispatch(getUserInfo(hackerInfo));
       })
       .catch(function (error) {
         if (error.response.status == 401) {
-          const reFreshtoken = handleGetUserToken('refreshToken');
+          const reFreshtoken = handleGetUserToken("refreshToken");
           getNewTokens(reFreshtoken);
         }
       });
@@ -141,7 +127,7 @@ export function handleSetUserToken(tableName, userToken) {
 export function handleGetUserToken(tableName) {
   const tokenString = localStorage.getItem(tableName);
   const userToken = tokenString;
-  return userToken
+  return userToken;
 }
 
 export function handleRemoveUserToken(tableName) {
