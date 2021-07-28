@@ -14,7 +14,7 @@ const Login = () => {
     formIsValid: false,
   });
   const [userType, setUserType] = useState({
-    type: "program",
+    type: null,
   });
   let history = useHistory();
   const redirectTimeOut = 3000;
@@ -35,6 +35,7 @@ const Login = () => {
           handleSetUserToken("accessToken", res.data.access);
           handleSetUserToken("refreshToken", res.data.refresh);
           setStatus({type: "success", message: "تم تسجيل الدخول بنجاح جاري تحويلك"});
+          setUserType({type: res.data.type});
           setIsLoadding(false);
 
           if (userType.type === "user") {
