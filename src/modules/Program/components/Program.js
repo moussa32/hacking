@@ -9,6 +9,7 @@ import Main from "./Dashboard/Main";
 import Activity from "./Dashboard/Activity";
 import AvailablePrograms from "./Dashboard/AvailablePrograms";
 import Leaderboard from "./Dashboard/Leaderboard";
+import ProgramHome from "./ProgramHome";
 
 
 const Program = (props) => {
@@ -18,6 +19,7 @@ const Program = (props) => {
     <>
       <Switch>
         <Route exact path="/not-found" component={NotFound} />
+        <Route exact path="/program" component={ProgramHome} />
         <Route exact path={`${match.path}/dashboard`} component={Main} />
         <Route exact path={`${match.path}/dashboard/activity`} component={Activity} />
         <Route exact path={`${match.path}/dashboard/available-programs`} component={AvailablePrograms} />

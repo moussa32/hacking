@@ -14,7 +14,7 @@ const Login = () => {
     formIsValid: false,
   });
   const [userType, setUserType] = useState({
-    type: "program",
+    type: "user",
   });
   let history = useHistory();
   const redirectTimeOut = 3000;

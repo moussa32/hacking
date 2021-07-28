@@ -67,6 +67,10 @@ p {
   font-size: calc(0.5rem + 0.2vw);
 }
 
+.modal-header .close{
+  margin: -1rem auto -1rem -1rem;
+}
+
 @media screen and (max-width: 450px) {
   .blog-container .body img {
     width: 100% !important;
@@ -1135,5 +1139,55 @@ table td, table th{
   height: 49px;
   border-radius: 50%;
   margin-left: 2rem;
+  object-fit: cover;
+}
+
+/* Program */
+
+.program-logo{
+  max-width: 138px;
+  height: 130px;
+  border-radius: 54%;
+  padding: 23px;
+  background: linear-gradient(0deg,rgb(9 69 121) 0%, rgba(0,212,255,1) 100%);
+  object-fit: cover;
+}
+
+.program-stat {
+  border-left: 3px rgb(0 0 0 / 48%) solid;
+}
+
+@media screen and (max-width:768px){
+  .program-stat {
+    border-left:0;
+    margin:1rem 2rem;
+    border-bottom: 3px rgb(0 0 0 / 48%) solid;
+  }
+}
+
+.custom-nav-tabs{
+  border-bottom: 1px solid var(--lightGreen);
+}
+
+.nav-item > .program-nav-link{
+  color: var(--lightGreen) !important;
+}
+
+.nav-tabs .program-nav-link:hover{
+  border: 1px solid var(--lightGreen) !important;
+}
+
+.nav-tabs .program-nav-link:focus{
+  color: var(--lightGreen) !important;
+}
+
+.stat-value{
+  box-shadow: 0 1px 4px 2px rgb(22 22 22 / 48%);
+}
+
+.top-hackers-image{
+  max-width: 55px;
+  height: 55px;
+  border-radius: 30px;
   object-fit: cover;
 }

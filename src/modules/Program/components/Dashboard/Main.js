@@ -14,8 +14,9 @@ import ProgramActivity from "./ProgramComponents/ProgramActivity";
 import ProgramWeakPoints from "./ProgramComponents/ProgramWeakPoints";
 import ProgramWASP from "./ProgramComponents/ProgramWASP";
 import ProgramAssets from "./ProgramComponents/ProgramAssets";
-import ProgramReportsState from "./ProgramComponents/ProgramReportsState";
 import { getProgram } from "../../../../api/ProgramAPI/ProgramInfo";
+import { getNewTokens } from "../../../../api/RefreshTokenApi";
+import ProgramReportsState from "./ProgramComponents/ProgramReportsState";
 import { handleGetProgram } from "../../actions";
 
 
@@ -31,6 +32,10 @@ const Main = ({ location }) => {
         console.log(responseData);
         setUser(responseData);
         setIsLoadded(true);
+      }).catch(error => {
+        if(error.response.status === 401){
+          getNewTokens(localStorage.getItem('refreshToken'));
+        }
       })
   }, [])
 

@@ -41,7 +41,7 @@ const ProgramWASP = () => {
 
       setIsDataDone(true);
     }).catch((erorr) => {
-      if (erorr.response.status == 401) {
+      if (erorr.response.status === 401) {
         getNewTokens(reFreshtoken);
       }
     })
