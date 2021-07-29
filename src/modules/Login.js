@@ -13,9 +13,6 @@ const Login = () => {
     password: "",
     formIsValid: false,
   });
-  const [userType, setUserType] = useState({
-    type: null,
-  });
   let history = useHistory();
   const redirectTimeOut = 3000;
 
@@ -35,10 +32,10 @@ const Login = () => {
           handleSetUserToken("accessToken", res.data.access);
           handleSetUserToken("refreshToken", res.data.refresh);
           setStatus({type: "success", message: "تم تسجيل الدخول بنجاح جاري تحويلك"});
-          setUserType({type: res.data.type});
+          const userType = res.data.type;
           setIsLoadding(false);
 
-          if (userType.type === "user") {
+          if (userType === "hacker") {
             setTimeout(() => {
               history.push("/dashboard");
             }, redirectTimeOut);
