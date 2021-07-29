@@ -1215,3 +1215,25 @@ table th {
 .program-home-tab-section {
   box-shadow: inset 0 0 4px 3px #dddddd42;
 }
+
+.program-activity-log-item {
+  display: flex;
+  align-items: center;
+}
+
+.program-activity-log-item > p:last-child {
+  margin: 0;
+  margin-right: auto;
+}
+
+@media screen and (max-width: 470px) {
+  .program-activity-log-item {
+    flex-flow: column;
+  }
+  .program-activity-log-info {
+    margin-top: 1.4rem;
+  }
+  .program-activity-log-item > p:last-child {
+    margin: 1rem 0;
+  }
+}

@@ -1,26 +1,23 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {dvApiUrl, dvbaseUrl} from "../../../api/Constants";
-import {Link} from "react-router-dom";
-import {HiOutlineClipboardList} from "react-icons/hi";
-import {BiTask} from "react-icons/bi";
-import LeftSideBar from "./layout/LeftSideBar";
-import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import Spinner from "../../../shared/components/Spinner";
 import {AiOutlineDollarCircle} from "react-icons/ai";
-import {FaArrowCircleLeft} from "react-icons/fa";
+import {FaArrowCircleLeft, FaTelegramPlane} from "react-icons/fa";
 
 function ProgramHome(props) {
+  const {match} = props;
   const [programInfo, setProgramInfo] = useState(null);
   const [isLoadding, setIsLoadding] = useState(false);
   useEffect(() => {
-    axios.get(`${dvApiUrl}/programs/9/`).then((res) => {
-      console.log(res.data);
-      setProgramInfo(res.data);
-      setIsLoadding(true);
-    });
-  }, []);
+    if (match.params.id) {
+      axios.get(`${dvApiUrl}/programs/${match.params.id}/`).then((res) => {
+        setProgramInfo(res.data);
+        setIsLoadding(true);
+      });
+    }
+  }, [match.params.id]);
 
   const handleBadgeColor = (statue) => {
     if (statue === "ضروري") {
@@ -67,19 +64,23 @@ function ProgramHome(props) {
                     <div className="col-md-4 program-stat">
                       <h5 className="text-lightgreen mb-3">معدل</h5>
                       <p className="mb-2 lead">
-                        {Math.max.apply(
-                          Math,
-                          programInfo.bounty_bars.map(function (o) {
-                            return o.amount;
-                          })
-                        )}
+                        {programInfo.bounty_bars && programInfo.bounty_bars.length > 0
+                          ? Math.max.apply(
+                              Math,
+                              programInfo.bounty_bars.map(function (o) {
+                                return o.amount;
+                              })
+                            )
+                          : "0"}
                         $ -
-                        {Math.min.apply(
-                          Math,
-                          programInfo.bounty_bars.map(function (o) {
-                            return o.amount;
-                          })
-                        )}
+                        {programInfo.bounty_bars && programInfo.bounty_bars.length
+                          ? Math.min.apply(
+                              Math,
+                              programInfo.bounty_bars.map(function (o) {
+                                return o.amount;
+                              })
+                            )
+                          : "0"}
                         $
                       </p>
                     </div>
@@ -97,7 +98,7 @@ function ProgramHome(props) {
             </div>
             <div className="row p-4 bg-black mt-2">
               <div className="col-md-12">
-                <ul className="nav nav-tabs custom-nav-tabs d-flex justify-content-between pb-4" id="programTabs" role="tablist">
+                <ul className="nav nav-tabs custom-nav-tabs px-0 d-flex flex-column flex-md-row justify-content-between pb-4" id="programTabs" role="tablist">
                   <li className="nav-item" role="presentation">
                     <a className="nav-link program-nav-link text-lightgreen active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
                       الرئيسية
@@ -170,9 +171,11 @@ function ProgramHome(props) {
                               );
                             })
                           : handleNoData()}
-                        <h3 className="text-lightgreen text-right my-4">خارج النطاق</h3>
-                        {programInfo.out_scope_assets.length > 0
-                          ? programInfo.out_scope_assets.map(() => {
+
+                        {programInfo.out_scope_assets && programInfo.out_scope_assets.length > 0 ? (
+                          <>
+                            <h3 className="text-lightgreen text-right my-4">خارج النطاق</h3>
+                            {programInfo.out_scope_assets.map(() => {
                               return (
                                 <div className="jumbotron bg-black program-home-tab-section">
                                   <div className="row flex-row-reverse">
@@ -189,8 +192,9 @@ function ProgramHome(props) {
                                   </div>
                                 </div>
                               );
-                            })
-                          : handleNoData()}
+                            })}
+                          </>
+                        ) : null}
                       </div>
                     </div>
                   </div>
@@ -218,37 +222,31 @@ function ProgramHome(props) {
                     <div className="row pb-4">
                       <div className="col-md-12 mb-3">
                         <div className="card border border-secondary bg-transparent">
-                          <div className="card-body d-flex align-items-center py-3">
+                          <div className="card-body program-activity-log-item py-3">
                             <span className="rounded-circle p-2 text-white d-block">1</span>
-                            <div className="media align-items-center flex-fill mr-4">
-                              <img src="https://bugbounty.pythonanywhere.com//media/programs/logos/Bug.png" class="d-block top-hackers-image mx-4" alt="..." />
-                              <h5 className="my-0 mr-4">عبر دينا إلى paypal</h5>
-                            </div>
-                            <p className="align-self-center mr-auto pl-3 my-0">منذ 3 أيام</p>
+                            <img src="https://bugbounty.pythonanywhere.com//media/programs/logos/Bug.png" className="d-block top-hackers-image mx-4" alt="..." />
+                            <h5 className="program-activity-log-info lead">عبر دينا إلى paypal</h5>
+                            <p className="align-self-center lead">منذ 3 أيام</p>
                           </div>
                         </div>
                       </div>
                       <div className="col-md-12 mb-3">
                         <div className="card border border-secondary bg-transparent">
-                          <div className="card-body d-flex align-items-center py-3">
+                          <div className="card-body program-activity-log-item py-3">
                             <span className="rounded-circle p-2 text-white d-block">2</span>
-                            <div className="media align-items-center flex-fill mr-4">
-                              <img src="https://bugbounty.pythonanywhere.com//media/programs/logos/Bug.png" class="d-block top-hackers-image mx-4" alt="..." />
-                              <h5 className="my-0 mr-4">عبر دينا إلى paypal</h5>
-                            </div>
-                            <p className="align-self-center mr-auto pl-3 my-0">منذ 9 أيام</p>
+                            <img src="https://bugbounty.pythonanywhere.com//media/programs/logos/Bug.png" className="d-block top-hackers-image mx-4" alt="..." />
+                            <h5 className="program-activity-log-info lead">عبر دينا إلى paypal</h5>
+                            <p className="align-self-center lead">منذ 20 أيام</p>
                           </div>
                         </div>
                       </div>
                       <div className="col-md-12 mb-3">
                         <div className="card border border-secondary bg-transparent">
-                          <div className="card-body d-flex align-items-center py-3">
+                          <div className="card-body program-activity-log-item py-3">
                             <span className="rounded-circle p-2 text-white d-block">3</span>
-                            <div className="media align-items-center flex-fill mr-4">
-                              <img src="https://bugbounty.pythonanywhere.com//media/programs/logos/Bug.png" class="d-block top-hackers-image mx-4" alt="..." />
-                              <h5 className="my-0 mr-4">عبر دينا إلى paypal</h5>
-                            </div>
-                            <p className="align-self-center mr-auto pl-3 my-0">منذ 20 أيام</p>
+                            <img src="https://bugbounty.pythonanywhere.com//media/programs/logos/Bug.png" className="d-block top-hackers-image mx-4" alt="..." />
+                            <h5 className="program-activity-log-info lead">عبر دينا إلى paypal</h5>
+                            <p className="align-self-center lead">منذ 9 أيام</p>
                           </div>
                         </div>
                       </div>
@@ -261,9 +259,7 @@ function ProgramHome(props) {
                             <div key={announcement.id} className="jumbotron bg-second py-4 program-home-tab-section text-right">
                               <div className="row">
                                 <div className="col-md-6 ml-auto">
-                                  <p className="lead bg-black p-2 rounded d-flex justify-content-between">
-                                    {`${new Date(announcement.created).toISOString().slice(0, 19).replace("T", " ")}`} <span className="ml-3 d-block text-secondary">(شهرين)</span>
-                                  </p>
+                                  <p className="lead bg-black p-2 rounded d-flex justify-content-between">{`${new Date(announcement.created).toISOString().slice(0, 19).replace("T", " ")}`}</p>
                                 </div>
                                 <div className="col-md-12 ml-auto">
                                   <h3 className="text-lightgreen">{announcement.title}</h3>
@@ -273,7 +269,7 @@ function ProgramHome(props) {
                             </div>
                           );
                         })
-                      : handleBadgeColor()}
+                      : handleNoData()}
                   </div>
                   <div className="tab-pane fade" id="thanksBoard" role="tabpanel" aria-labelledby="thanksBoard-tab">
                     <div className="row pb-4">
@@ -311,8 +307,8 @@ function ProgramHome(props) {
                                 <h5 className="mt-0">دينا</h5>
                               </div>
                             </div>
-                            <button className="btn btn-lightgreen text-left mr-auto" data-toggle="modal" data-target="#contactProgramAdmin">
-                              تواصل
+                            <button className="btn btn-lightgreen text-left px-4 mr-auto" data-toggle="modal" data-target="#contactProgramAdmin">
+                              <FaTelegramPlane size={"1.2rem"} />
                             </button>
                           </div>
                         </div>
@@ -327,8 +323,8 @@ function ProgramHome(props) {
                                 <h5 className="mt-0">دينا</h5>
                               </div>
                             </div>
-                            <button className="btn btn-lightgreen text-left mr-auto" data-toggle="modal" data-target="#contactProgramAdmin">
-                              تواصل
+                            <button className="btn btn-lightgreen text-left px-4 mr-auto" data-toggle="modal" data-target="#contactProgramAdmin">
+                              <FaTelegramPlane size={"1.2rem"} />
                             </button>
                           </div>
                         </div>
@@ -343,8 +339,8 @@ function ProgramHome(props) {
                                 <h5 className="mt-0">دينا</h5>
                               </div>
                             </div>
-                            <button className="btn btn-lightgreen text-left mr-auto" data-toggle="modal" data-target="#contactProgramAdmin">
-                              تواصل
+                            <button className="btn btn-lightgreen text-left px-4 mr-auto" data-toggle="modal" data-target="#contactProgramAdmin">
+                              <FaTelegramPlane size={"1.2rem"} />
                             </button>
                           </div>
                         </div>
@@ -402,12 +398,14 @@ function ProgramHome(props) {
                     <h4 className="small muted lead">أكبر مكافأة</h4>
                     <p className="p-2 bg-black rounded text-center stat-value lead">
                       $
-                      {Math.max.apply(
-                        Math,
-                        programInfo.bounty_bars.map(function (o) {
-                          return o.amount;
-                        })
-                      )}
+                      {programInfo.bounty_bars && programInfo.bounty_bars.length > 0
+                        ? Math.max.apply(
+                            Math,
+                            programInfo.bounty_bars.map(function (o) {
+                              return o.amount;
+                            })
+                          )
+                        : "0"}
                     </p>
                   </div>
                   <div className="stat-section">

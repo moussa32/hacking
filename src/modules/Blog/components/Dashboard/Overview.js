@@ -6,7 +6,6 @@ import ScrollToTop from "../../../../shared/components/ScrollToTop";
 import NotFound from "./../../../../shared/components/NotFound";
 import Main from "./Main";
 import Activity from "./Activity";
-import AvailablePrograms from "./AvailablePrograms";
 import Leaderboard from "./Leaderboard";
 import Settings from "./Settings";
 import {handleGetUserToken} from "../../actions/index";
@@ -30,7 +29,6 @@ const Overview = (props) => {
         )}
         <Route exact path="/notfound" component={NotFound} />
         <Route exact path={`${match.path}/activity`} component={Activity} />
-        <Route exact path={`${match.path}/available-programs`} component={AvailablePrograms} />
         <Route exact path={`${match.path}/leaderboard`} component={Leaderboard} />
         <Route exact path={`${match.path}/settings`} component={Settings} />
         <Route exact path={`${match.path}`} component={Main} />

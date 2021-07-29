@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {connect} from "react-redux";
 import Navbar from "../layout/Navbar";
-import { withRouter, Link } from "react-router-dom";
-import { HiOutlineClipboardList } from "react-icons/hi";
-import { BiTask } from "react-icons/bi";
+import {withRouter, Link} from "react-router-dom";
+import {HiOutlineClipboardList} from "react-icons/hi";
+import {BiTask} from "react-icons/bi";
 import Spinner from "../../../../shared/components/Spinner";
-import LeftSideBar from '../layout/LeftSideBar';
-import Footer from '../layout/Footer';
+import LeftSideBar from "../layout/LeftSideBar";
+import Footer from "../layout/Footer";
 import ProgramInfo from "./ProgramComponents/ProgramInfo";
 import ProgramStat from "./ProgramComponents/ProgramStat";
 import ProgramReports from "./ProgramComponents/ProgramReports";
@@ -14,30 +14,27 @@ import ProgramActivity from "./ProgramComponents/ProgramActivity";
 import ProgramWeakPoints from "./ProgramComponents/ProgramWeakPoints";
 import ProgramWASP from "./ProgramComponents/ProgramWASP";
 import ProgramAssets from "./ProgramComponents/ProgramAssets";
-import { getProgram } from "../../../../api/ProgramAPI/ProgramInfo";
-import { getNewTokens } from "../../../../api/RefreshTokenApi";
+import {getProgram} from "../../../../api/ProgramAPI/ProgramInfo";
+import {getNewTokens} from "../../../../api/RefreshTokenApi";
 import ProgramReportsState from "./ProgramComponents/ProgramReportsState";
-import { handleGetProgram } from "../../actions";
 
-
-
-const Main = ({ location }) => {
-  const [user, setUser] = useState({})
+const Main = ({location}) => {
+  const [user, setUser] = useState({});
   const [isLoadded, setIsLoadded] = useState(false);
 
   useEffect(() => {
     getProgram(localStorage.getItem("accessToken"))
-      .then(res => {
+      .then((res) => {
         let responseData = res.data;
-        console.log(responseData);
         setUser(responseData);
         setIsLoadded(true);
-      }).catch(error => {
-        if(error.response.status === 401){
-          getNewTokens(localStorage.getItem('refreshToken'));
-        }
       })
-  }, [])
+      .catch((error) => {
+        if (error.response.status === 401) {
+          getNewTokens(localStorage.getItem("refreshToken"));
+        }
+      });
+  }, []);
 
   return (
     <>
@@ -51,10 +48,14 @@ const Main = ({ location }) => {
                   <nav className="col dbsidebar right-dbsidebar">
                     <ul className="nav flex-column vertical-nav">
                       <li className="nav-item">
-                        <Link to='/'><HiOutlineClipboardList size='2rem' className="text-white" /></Link>
+                        <Link to="/">
+                          <HiOutlineClipboardList size="2rem" className="text-white" />
+                        </Link>
                       </li>
                       <li className="nav-item">
-                        <Link to='/'><BiTask size='2rem' className="text-white" /></Link>
+                        <Link to="/">
+                          <BiTask size="2rem" className="text-white" />
+                        </Link>
                       </li>
                     </ul>
                   </nav>
@@ -67,27 +68,29 @@ const Main = ({ location }) => {
                     <ProgramWeakPoints />
                     <ProgramAssets />
                     <ProgramWASP />
-                    <ProgramReportsState/>
+                    <ProgramReportsState />
                     <ProgramActivity />
                   </div>
                 </div>
                 <LeftSideBar />
               </div>
               <Footer />
-            </div >
-          </div >
+            </div>
+          </div>
         </>
-      ) : (<Spinner></Spinner>)}
+      ) : (
+        <Spinner></Spinner>
+      )}
     </>
-  )
-}
+  );
+};
 
-const mapStateToProps = ({ program }) => {
+const mapStateToProps = ({program}) => {
   return {
     userInfo: program.programInfo,
     compaynName: program.programInfo.company_name,
-    companyLogo: program.programInfo.logo
-  }
-}
+    companyLogo: program.programInfo.logo,
+  };
+};
 
 export default connect(mapStateToProps)(withRouter(Main));
