@@ -1,0 +1,49 @@
+.carousel-item {
+  margin: 0 auto;
+  max-width: 97%;
+  height: 290px;
+  object-fit: cover;
+  float: none;
+}
+.carousel-item:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  border-radius: 10px;
+}
+.carousel-item > img {
+  border-radius: 10px;
+}
+.carousel-caption {
+  right: 0;
+  left: auto;
+  padding-bottom: 0;
+  margin-right: 30px;
+}
+.carousel-control-next,
+.carousel-control-prev {
+  opacity: 0.7;
+  width: 5%;
+}
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  width: 27px;
+  height: 27px;
+}
+.program-text > p {
+  font-style: normal;
+}
+
+.program-card:hover {
+  transition: 1s;
+  box-shadow: 0 0px 6px 3px rgb(8 204 150 / 58%);
+}
+
+.program-card-header {
+  border-bottom: 3px var(--lightGreen) solid;
+}
