@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import {connect} from "react-redux";
 import {Switch, Route, Redirect, withRouter, useRouteMatch} from "react-router";
 
 import NotFound from "../../../shared/components/NotFound";
@@ -9,14 +10,22 @@ import Main from "./Dashboard/Main";
 import Activity from "./Dashboard/Activity";
 import Leaderboard from "./Dashboard/Leaderboard";
 import ProgramHome from "./ProgramHome";
+import Settings from "./Dashboard/Settings.js";
 
-const Program = (props) => {
+import {handleGetProgram} from "../actions";
+
+const Program = ({dispatch}) => {
   const match = useRouteMatch();
+
+  useEffect(() => {
+    dispatch(handleGetProgram(localStorage.getItem("accessToken")));
+  }, [dispatch]);
 
   return (
     <>
       <Switch>
         <Route exact path="/not-found" component={NotFound} />
+        <Route exact path="/program/dashboard/settings" component={Settings} />
         <Route exact path={`${match.path}/dashboard`} component={Main} />
         <Route exact path={`${match.path}/dashboard/activity`} component={Activity} />
         <Route exact path={`${match.path}/dashboard/leaderboard`} component={Leaderboard} />
@@ -30,4 +39,8 @@ const Program = (props) => {
   );
 };
 
-export default withRouter(Program);
+const mapStateToProps = ({program}) => {
+  return {};
+};
+
+export default connect(mapStateToProps)(withRouter(Program));

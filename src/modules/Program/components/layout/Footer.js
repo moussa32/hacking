@@ -5,7 +5,7 @@ import {RiWhatsappFill, RiGithubFill} from "react-icons/ri";
 
 const Footer = () => {
   return (
-    <footer className="footer mt-auto py-3 bg-second">
+    <footer className="footer mt-4 py-3 bg-second">
       <div className="container">
         <div className="row">
           <div className="col-md-2">

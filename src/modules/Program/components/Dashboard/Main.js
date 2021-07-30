@@ -15,10 +15,11 @@ import ProgramWeakPoints from "./ProgramComponents/ProgramWeakPoints";
 import ProgramWASP from "./ProgramComponents/ProgramWASP";
 import ProgramAssets from "./ProgramComponents/ProgramAssets";
 import {getProgram} from "../../../../api/ProgramAPI/ProgramInfo";
+import {handleGetProgram} from "../../actions";
 import {getNewTokens} from "../../../../api/RefreshTokenApi";
 import ProgramReportsState from "./ProgramComponents/ProgramReportsState";
 
-const Main = ({location}) => {
+const Main = ({location, dispatch}) => {
   const [user, setUser] = useState({});
   const [isLoadded, setIsLoadded] = useState(false);
 
@@ -86,6 +87,7 @@ const Main = ({location}) => {
 };
 
 const mapStateToProps = ({program}) => {
+  console.log(program);
   return {
     userInfo: program.programInfo,
     compaynName: program.programInfo.company_name,
