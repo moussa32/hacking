@@ -1,11 +1,13 @@
 import React, {useEffect, useState, useMemo} from "react";
 import {FaDollarSign} from "react-icons/fa";
 import Spinner from "../shared/components/Spinner";
+import Swiper from "react-id-swiper";
 import {getAvailablePrograms, getAvailableProgramsByPram} from "../api/AvailableProgramsApi";
 import {getNewTokens} from "../api/RefreshTokenApi";
 import CustomSelect from "../shared/components/FormFields/CustomSelect";
+import Footer from "./Program/components/layout/Footer";
+import "swiper/css/swiper.css";
 import "./AvailablePrograms.css";
-import {TYPE_FLOW} from "interweave";
 
 const AvailablePrograms = () => {
   const [initPrograms, setInitPrograms] = useState(null);
@@ -73,6 +75,23 @@ const AvailablePrograms = () => {
     });
   }, []);
 
+  const params = {
+    spaceBetween: 10,
+    centeredSlides: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: true,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  };
+
   return (
     <mian className="component-wrapper h-100">
       {loadded ? (
@@ -81,42 +100,13 @@ const AvailablePrograms = () => {
             <div className="jumbotron jumbotron-fluid text-center col-12 py-4 bg-second rounded">
               <div className="container-fluid">
                 <div className="bg-black">
-                  <div id="programs-slider" className="carousel slide my-4" data-ride="carousel">
-                    <div className="carousel-inner">
-                      <div className="carousel-item active">
-                        <img src="https://cdn1.techhq.com/wp-content/uploads/2020/10/shutterstock_1096975310-861x484.png" className="d-block w-100" alt="..." />
-                        <div className="carousel-caption d-none d-md-block">
-                          <button type="button" className="btn btn-light px-4 py-2">
-                            تعرف على المزيد
-                          </button>
-                        </div>
-                      </div>
-                      <div className="carousel-item">
-                        <img src="https://q-mind.co/wp-content/uploads/2019/04/1.png" className="d-block w-100" alt="..." />
-                        <div className="carousel-caption d-none d-md-block">
-                          <button type="button" className="btn btn-light px-4 py-2">
-                            تعرف على المزيد
-                          </button>
-                        </div>
-                      </div>
-                      <div className="carousel-item">
-                        <img src="https://connect.geant.org/wp-content/uploads/2020/02/SWITCH-Hack-The-Hacker-Banner-TNC20.jpg" className="d-block w-100" alt="..." />
-                        <div className="carousel-caption d-none d-md-block">
-                          <button type="button" className="btn btn-light px-4 py-2">
-                            تعرف على المزيد
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <a className="carousel-control-prev" href="#programs-slider" role="button" data-slide="prev">
-                      <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span className="sr-only">Previous</span>
-                    </a>
-                    <a className="carousel-control-next" href="#programs-slider" role="button" data-slide="next">
-                      <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span className="sr-only">Next</span>
-                    </a>
-                  </div>
+                  <Swiper {...params}>
+                    <div>Slide 1</div>
+                    <div>Slide 2</div>
+                    <div>Slide 3</div>
+                    <div>Slide 4</div>
+                    <div>Slide 5</div>
+                  </Swiper>
                   <div className="jumbotron jumbotron-fluid bg-black rounded py-4">
                     <div className="container px-4">
                       <>
@@ -195,6 +185,7 @@ const AvailablePrograms = () => {
               </div>
             </div>
           </div>
+          <Footer />
         </div>
       ) : (
         <Spinner></Spinner>

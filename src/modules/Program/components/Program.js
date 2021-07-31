@@ -11,10 +11,11 @@ import Activity from "./Dashboard/Activity";
 import Leaderboard from "./Dashboard/Leaderboard";
 import ProgramHome from "./ProgramHome";
 import Settings from "./Dashboard/Settings.js";
+import Navbar from "./layout/Navbar";
 
 import {handleGetProgram} from "../actions";
 
-const Program = ({dispatch}) => {
+const Program = ({dispatch, location}) => {
   const match = useRouteMatch();
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const Program = ({dispatch}) => {
 
   return (
     <>
+      <Navbar currentPathname={location.pathname} />
       <Switch>
         <Route exact path="/not-found" component={NotFound} />
         <Route exact path="/program/dashboard/settings" component={Settings} />

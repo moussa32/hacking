@@ -61,7 +61,7 @@ const HackerNavbar = (props) => {
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul className="navbar-nav">
               <li className={`nav-item ${activeTab === "activity" ? "active" : ""}`} id="activity">
                 <Link className="nav-link" to={`${match.path}/activity`}>

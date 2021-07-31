@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import Navbar from "../layout/Navbar";
 import {withRouter, Link} from "react-router-dom";
 import {HiOutlineClipboardList} from "react-icons/hi";
 import {BiTask} from "react-icons/bi";
@@ -15,7 +14,6 @@ import ProgramWeakPoints from "./ProgramComponents/ProgramWeakPoints";
 import ProgramWASP from "./ProgramComponents/ProgramWASP";
 import ProgramAssets from "./ProgramComponents/ProgramAssets";
 import {getProgram} from "../../../../api/ProgramAPI/ProgramInfo";
-import {handleGetProgram} from "../../actions";
 import {getNewTokens} from "../../../../api/RefreshTokenApi";
 import ProgramReportsState from "./ProgramComponents/ProgramReportsState";
 
@@ -41,7 +39,6 @@ const Main = ({location, dispatch}) => {
     <>
       {isLoadded ? (
         <>
-          <Navbar companyLogo={user.logo} companyName={user.company_name} currentPathname={location.pathname} />
           <div className="component-wrapper">
             <div className="container-fluid home">
               <div className="row">

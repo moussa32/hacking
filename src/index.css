@@ -1229,10 +1229,51 @@ table th {
   .program-activity-log-item {
     flex-flow: column;
   }
+  .program-activity-log-item > * {
+    margin: 0.5rem 0;
+  }
   .program-activity-log-info {
     margin-top: 1.4rem;
   }
   .program-activity-log-item > p:last-child {
     margin: 1rem 0;
   }
+}
+
+/*Settings*/
+
+@media screen and (max-width: 480px) {
+  .notification-item {
+    flex-direction: column;
+  }
+  .notification-item > div {
+    margin: 1rem 0;
+    margin-left: auto;
+  }
+}
+
+/* enable absolute positioning */
+.inner-addon {
+  position: relative;
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  pointer-events: none;
+  top: 7px;
+  left: 9px;
+}
+
+/* align icon */
+.right-addon .glyphicon {
+  right: 0px;
+}
+
+/* add padding  */
+.left-addon input {
+  padding-left: 2.5rem;
+}
+.right-addon input {
+  padding-right: 30px;
 }

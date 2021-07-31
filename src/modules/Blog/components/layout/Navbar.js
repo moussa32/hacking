@@ -31,7 +31,7 @@ const Navbar = ({currentPathname}) => {
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" onClick={toggle}>
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarNav" style={{display: isOpen ? "block" : "none"}}>
+      <div className="collapse navbar-collapse" id="navbarNavAltMarkup" style={{display: isOpen ? "block" : "none"}}>
         <ul className="navbar-nav">
           <li className={`nav-item ${activeTab === "home" ? "active" : ""}`} id="home">
             <Link className="nav-link" to="/">
