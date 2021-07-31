@@ -1,3 +1,13 @@
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .settings-container {
   margin-top: 5.4rem;
 }
@@ -6,53 +16,54 @@
   border-radius: 5px;
 }
 
-.setting-tab-link{
-  color:#a7a6a6;
+.setting-tab-link {
+  color: #a7a6a6;
 }
 
 .setting-tab-link:hover {
   color: var(--lightGreen);
 }
 
-.nav-pills .setting-tab-link.active, .nav-pills .show>.setting-tab-link{
+.nav-pills .setting-tab-link.active,
+.nav-pills .show > .setting-tab-link {
   background-color: var(--lightGreen);
 }
 
-.btn-settings{
+.btn-settings {
   color: #fff;
   background-color: #313131;
   border-color: #313131;
 }
-.btn-settings:hover{
-    color: #fff;
-    background-color: var(--lightGreen);
-    border-color:  var(--lightGreen);
-    transition: 1s;
+.btn-settings:hover {
+  color: #fff;
+  background-color: var(--lightGreen);
+  border-color: var(--lightGreen);
+  transition: 1s;
 }
 
-.settings-submit-button{
+.settings-submit-button {
   margin-top: 3rem;
   padding: 0.5rem 2.5rem;
 }
 
-.settings-alert{
-  margin:0 auto;
+.settings-alert {
+  margin: 0 auto;
   margin-bottom: 2rem;
 }
 
-.tab-body{
-  padding-left:0;
+.tab-body {
+  padding-left: 0;
 }
 
-@media (max-width: 767px) { 
-  .tab-body{
-    padding-left:0;
+@media (max-width: 767px) {
+  .tab-body {
+    padding-left: 0;
     padding-right: 0;
     margin-top: 1rem;
   }
 }
 
-.settings-checkbox{
+.settings-checkbox {
   height: 25px;
   width: 25px;
   -webkit-appearance: none;
@@ -67,19 +78,34 @@
 }
 
 .settings-checkbox:checked {
-  border: 1px solid #41B883;
+  border: 1px solid #41b883;
   background-color: var(--lightGreen);
 }
 
-.settings-show-password{
+.settings-show-password {
   position: absolute;
   left: 17px;
   top: 17%;
   bottom: 25%;
 }
 
-.settings-show-password:hover{
+.settings-show-password:hover {
   color: #fff !important;
   transition: 1s;
-  cursor:pointer;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .domain-buttons {
+    margin: 0 auto;
+    margin-top: 1.3rem;
+  }
+}
+
+.add-domain-container {
+  padding-left: 1.8rem;
+}
+
+.add-domain-container > button {
+  padding: 0.5rem 2.5rem;
 }

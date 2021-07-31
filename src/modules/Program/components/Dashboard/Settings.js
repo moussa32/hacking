@@ -1,12 +1,15 @@
 import React from "react";
 import CompanyProfileTab from "./SettingsTabs/CompanyProfileTab";
 import CompanyPolicyTab from "./SettingsTabs/CompanyPolicyTab";
-import CompanyDomainTab from "./SettingsTabs/CompanyDomainTab.js";
 import CompanyRewardsTab from "./SettingsTabs/CompanyRewardsTab";
+import CompanyAssetsTab from "./SettingsTabs/CompanyAssetsTab.js";
+import CompanyAdsTab from "./SettingsTabs/CompanyAdsTab.js";
 import CompanyNotificationsTab from "./SettingsTabs/CompanyNotificationsTab.js";
 import CompanyPreferencesTab from "./SettingsTabs/CompanyPreferencesTab.js";
-import AccountPreferencesTab from "./SettingsTabs/AccountPreferencesTab.js";
-import SessionTab from "./SettingsTabs/SessionTab.js";
+import CompanyDeactivateTab from "./SettingsTabs/CompanyDeactivateTab.js";
+import CompanyEmailTab from "./SettingsTabs/CompanyEmailTab";
+import CompanyPasswordTab from "./SettingsTabs/CompanyPasswordTab";
+import CompanySessionTab from "./SettingsTabs/CompanySessionTab.js";
 import Footer from "../layout/Footer";
 import "./Settings.css";
 
@@ -22,7 +25,7 @@ const Settings = () => {
     {type: "deactivate", lable: "الغاء التفعيل"},
     {type: "password", lable: "كلمة المرور"},
     {type: "email", lable: "البريد المستخدم"},
-    {type: "username", lable: "اسم المستخدم"},
+    {type: "session", lable: "الجلسات"},
   ];
 
   return (
@@ -65,11 +68,11 @@ const Settings = () => {
               </div>
               <div className="tab-pane fade bg-black" id="v-pills-domains" role="tabpanel" aria-labelledby="v-pills-domains-tab">
                 <h2 className="text-center py-4">{pills[3].lable}</h2>
-                <CompanyDomainTab />
+                <CompanyAssetsTab />
               </div>
               <div className="tab-pane fade bg-black" id="v-pills-ads" role="tabpanel" aria-labelledby="v-pills-ads-tab">
                 <h2 className="text-center py-4">{pills[4].lable}</h2>
-                <AccountPreferencesTab />
+                <CompanyAdsTab />
               </div>
               <div className="tab-pane fade bg-black" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
                 <h2 className="text-center py-4">{pills[5].lable}</h2>
@@ -80,20 +83,20 @@ const Settings = () => {
                 <CompanyPreferencesTab />
               </div>
               <div className="tab-pane fade bg-black" id="v-pills-deactivate" role="tabpanel" aria-labelledby="v-pills-deactivate-tab">
-                <h2 className="text-center py-4">{pills[6].lable}</h2>
-                <SessionTab />
+                <h2 className="text-center py-4">{pills[7].lable}</h2>
+                <CompanyDeactivateTab />
               </div>
               <div className="tab-pane fade bg-black" id="v-pills-password" role="tabpanel" aria-labelledby="v-pills-password-tab">
-                <h2 className="text-center py-4">{pills[7].lable}</h2>
-                <SessionTab />
+                <h2 className="text-center py-4">{pills[8].lable}</h2>
+                <CompanyPasswordTab />
               </div>
               <div className="tab-pane fade bg-black" id="v-pills-email" role="tabpanel" aria-labelledby="v-pills-email-tab">
-                <h2 className="text-center py-4">{pills[8].lable}</h2>
-                <SessionTab />
-              </div>
-              <div className="tab-pane fade bg-black" id="v-pills-username" role="tabpanel" aria-labelledby="v-pills-username-tab">
                 <h2 className="text-center py-4">{pills[9].lable}</h2>
-                <SessionTab />
+                <CompanyEmailTab />
+              </div>
+              <div className="tab-pane fade bg-black" id="v-pills-session" role="tabpanel" aria-labelledby="v-pills-session-tab">
+                <h2 className="text-center py-4">{pills[10].lable}</h2>
+                <CompanySessionTab />
               </div>
             </div>
           </div>

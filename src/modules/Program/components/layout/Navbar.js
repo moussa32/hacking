@@ -10,7 +10,7 @@ import {dvbaseUrl, dvApiUrl} from "../../../../api/Constants";
 
 import {WhiteLogo} from "../../../../assets/index";
 
-const Navbar = ({currentPathname, companyName, companyLogo}) => {
+const Navbar = ({currentPathname}) => {
   let match = useRouteMatch();
   const history = useHistory();
   const [activeTab, setActiveTab] = useState("main");
@@ -97,7 +97,7 @@ const Navbar = ({currentPathname, companyName, companyLogo}) => {
               </li>
               <li className="nav-item dropdown">
                 <button className="nav-link dropdown-toggle d-none d-sm-inline-block border-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
-                  <img src={navbarInfo && navbarInfo.program !== null ? `${dvbaseUrl}/${navbarInfo.program.logo}` : DefaultAvatar} className="hacker-avatar img-fluid rounded-circle mr-1" alt={navbarInfo ? navbarInfo.program !== null : "User Image"} />
+                  <img src={navbarInfo && navbarInfo.program !== null ? `${dvbaseUrl}/${navbarInfo.program.logo}` : DefaultAvatar} className="hacker-avatar img-fluid rounded-circle mr-1" alt={navbarInfo && navbarInfo.program !== null ? navbarInfo.program.username : "User image"} />
                   <IoIosArrowDown className="text-lightgreen mr-2" size={"1.3rem"} />
                 </button>
                 <div className={`dropdown-menu text-right ml-3`}>

@@ -5,6 +5,7 @@ import Footer from "./layout/Footer";
 import Spinner from "../../../shared/components/Spinner";
 import {AiOutlineDollarCircle} from "react-icons/ai";
 import {FaArrowCircleLeft, FaTelegramPlane} from "react-icons/fa";
+import {handleBadgeColor} from "../../../shared/utils/handleBadgeColor";
 
 function ProgramHome(props) {
   const {match} = props;
@@ -19,18 +20,6 @@ function ProgramHome(props) {
     }
   }, [match.params.id]);
 
-  const handleBadgeColor = (statue) => {
-    if (statue === "ضروري") {
-      return "danger";
-    } else if (statue === "عالي") {
-      return "success";
-    } else if (statue === "متوسط") {
-      return "warning";
-    } else if (statue === "منخفض") {
-      return "info";
-    }
-  };
-
   const handleNoData = () => {
     return (
       <div className="alert alert-warning text-center w-100" role="alert">
@@ -42,7 +31,7 @@ function ProgramHome(props) {
   return (
     <>
       {isLoadding ? (
-        <div className="jumbotron jumbotron-fluid text-center col-12 py-4 bg-second rounded">
+        <div className="jumbotron jumbotron-fluid text-center pb-4 bg-second rounded">
           <div className="container-fluid">
             <div className="row p-4 bg-black">
               <div className="col-md-3">

@@ -11,7 +11,7 @@ function CompanyPreferencesTab() {
                 <div className="card-body d-flex align-items-center flex-row notification-item">
                   <p className="m-0 mr-3 flex-fill text-lightgreen lead">الاسم</p>
                   <div className="form-check form-check-inline align-self-center mb-0 p-0">
-                    <input className="form-check-input settings-checkbox" name="noNewReports" type="checkbox" id="noNewReports" value="none" checked />
+                    <input className="form-check-input settings-checkbox" name="noNewReports" type="checkbox" id="noNewReports" value="none" defaultChecked />
                   </div>
                 </div>
               </div>
@@ -91,7 +91,7 @@ function CompanyPreferencesTab() {
                 <div className="card-body d-flex align-items-center flex-row notification-item">
                   <p className="m-0 mr-3 flex-fill text-lightgreen lead">الاسم</p>
                   <div className="form-check form-check-inline align-self-center mb-0 p-0">
-                    <input className="form-check-input settings-checkbox" name="noNewReports" type="checkbox" id="noNewReports" value="none" checked />
+                    <input className="form-check-input settings-checkbox" name="noNewReports" type="checkbox" id="noNewReports" value="none" defaultChecked />
                   </div>
                 </div>
               </div>
