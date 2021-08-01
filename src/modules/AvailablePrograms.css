@@ -1,3 +1,13 @@
+.available-margin {
+  margin-top: 5.2rem;
+}
+
+.slider-image {
+  height: 500px;
+  width: auto;
+  object-fit: cover;
+}
+
 .carousel-item {
   margin: 0 auto;
   max-width: 97%;

@@ -16,7 +16,7 @@ export const handleGetProgram = (userAccessToken) => {
       .then((res) => res.data)
       .then((program) => dispatch(getProgramInfo(program)))
       .catch((error) => {
-        if (error.response.status == 401) {
+        if (error.response.status === 401) {
           const reFreshtoken = localStorage.getItem("refreshToken");
           getNewTokens(reFreshtoken);
         }

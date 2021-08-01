@@ -1,0 +1,8 @@
+@media screen and (max-width: 768px) {
+  .footer-list:nth-child(2) {
+    margin-top: 1.5rem;
+  }
+  .footer-list {
+    text-align: center;
+  }
+}

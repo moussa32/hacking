@@ -1,49 +1,47 @@
 import React, {useState, useEffect} from "react";
-import {Link, useRouteMatch, useHistory} from "react-router-dom";
-import {connect} from "react-redux";
+import {Link, useHistory} from "react-router-dom";
+import axios from "axios";
 import {handleRemoveUserToken} from "../../../actions/index";
+import {getNewTokens} from "../../../../../api/RefreshTokenApi";
+import {getHackerNavbar} from "../../../../../api/HackerNavbarApi";
 import {MdEmail} from "react-icons/md";
 import {BsBellFill, BsFillGearFill} from "react-icons/bs";
 import {IoIosArrowDown} from "react-icons/io";
 import {FaUserAlt, FaSignOutAlt} from "react-icons/fa";
 import {dvbaseUrl} from "../../../../../api/Constants";
 import {DefaultAvatar} from "../../../../../assets/index";
-import {handleGetUserInfo} from "../../../actions/index";
-import {handleGetUserToken} from "../../../actions/index";
+import {dvApiUrl} from "../../../../../api/Constants";
 
 import {WhiteLogo} from "../../../../../assets/index";
 
 const HackerNavbar = (props) => {
-  const {currentPathname, dispatch, hackerInfo} = props;
-  const token = handleGetUserToken("accessToken");
-  let match = useRouteMatch();
-  const history = useHistory();
+  const {currentPathname} = props;
+  const [navbarInfo, setNavbarInfo] = useState(null);
   const [data, setData] = useState(null);
   const [loadded, setLoadded] = useState(null);
   const [activeTab, setActiveTab] = useState("main");
 
-  useEffect(() => {
-    dispatch(handleGetUserInfo(token));
-    setData(hackerInfo);
-  }, [dispatch]);
+  const token = localStorage.getItem("accessToken");
+  const history = useHistory();
 
   useEffect(() => {
-    if (data) {
-      setLoadded(true);
-    }
-  }, [hackerInfo]);
-
-  useEffect(() => {
-    if (currentPathname.includes(`${match.path}/activity`)) {
+    if (currentPathname.includes(`dashboard/activity`)) {
       return setActiveTab("activity");
     } else if (currentPathname === `/available-programs`) {
       return setActiveTab("available-programs");
     } else if (currentPathname === "/leaderboard") {
-      setActiveTab(`${match.path}/leaderboard`);
+      setActiveTab(`dashboard/leaderboard`);
     } else {
       return setActiveTab("main");
     }
   }, [currentPathname]);
+
+  useEffect(() => {
+    getHackerNavbar(token).then((res) => {
+      setLoadded(true);
+      setNavbarInfo(res.data);
+    });
+  }, []);
 
   let handleLogout = () => {
     handleRemoveUserToken("accessToken");
@@ -63,8 +61,8 @@ const HackerNavbar = (props) => {
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul className="navbar-nav">
-              <li className={`nav-item ${activeTab === "activity" ? "active" : ""}`} id="activity">
-                <Link className="nav-link" to={`${match.path}/activity`}>
+              <li className={`nav-item ${activeTab === "activity" ? "active" : ""}`} id="activity" disable>
+                <Link className="nav-link disabled" to="/dashboard/activity">
                   النشاط <span className="sr-only">(current)</span>
                 </Link>
               </li>
@@ -74,42 +72,42 @@ const HackerNavbar = (props) => {
                 </Link>
               </li>
               <li className={`nav-item ${activeTab === "main" ? "active" : ""}`} id="main">
-                <Link className="nav-link" to={`${match.path}`}>
+                <Link className="nav-link" to="/dashboard">
                   لوحة التحكم
                 </Link>
               </li>
               <li className={`nav-item ${activeTab === "leaderboard" ? "active" : ""}`} id="leaderboard">
-                <Link className="nav-link" to={`${match.path}/leaderboard`}>
+                <Link className="nav-link disabled" to="/dashboard/leaderboard">
                   لوحة القادة
                 </Link>
               </li>
               <li className={`nav-item ${activeTab === "" ? "active" : ""}`} id="">
-                <Link className="nav-link" to={`${match.path}/`}>
+                <Link className="nav-link disabled" to="/">
                   التسليمات
                 </Link>
               </li>
             </ul>
             <ul className="navbar-nav mr-auto sub-hacker-list">
               <li className="nav-item nav-icon" id="messages">
-                <Link className="nav-link" to={`${match.path}/leaderboard`}>
+                <Link className="nav-link disabled" to="/dashboard/leaderboard">
                   <MdEmail className="text-lightgreen" size={"1.8rem"} />
                 </Link>
               </li>
               <li className="nav-item nav-icon" id="alerts">
-                <Link className="nav-link" to={`${match.path}/leaderboard`}>
+                <Link className="nav-link disabled" to="/dashboard/leaderboard">
                   <BsBellFill className="text-lightgreen" size={"1.5rem"} />
                 </Link>
               </li>
               <li className="nav-item dropdown">
                 <button className="nav-link dropdown-toggle d-none d-sm-inline-block border-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
-                  <img src={hackerInfo.hacker.avatar ? `${dvbaseUrl}/${hackerInfo.hacker.avatar}` : `${DefaultAvatar}`} className="hacker-avatar img-fluid rounded-circle mr-1" alt={hackerInfo.first_name} />
+                  <img src={navbarInfo !== null ? `${dvbaseUrl}/${navbarInfo.hacker.avater}` : `${DefaultAvatar}`} className="hacker-avatar img-fluid rounded-circle mr-1" alt={navbarInfo !== null && navbarInfo.username} />
                   <IoIosArrowDown className="text-lightgreen mr-2" size={"1.3rem"} />
                 </button>
                 <div className={`dropdown-menu text-right ml-3`}>
-                  <a className="dropdown-item hacker-options" href="pages-profile.html">
+                  <a className="dropdown-item hacker-options disabled" href="pages-profile.html">
                     <FaUserAlt className="ml-2" /> الصفحة الشخصية
                   </a>
-                  <a className="dropdown-item hacker-options" href="pages-profile.html">
+                  <a className="dropdown-item hacker-options" href="/dashboard/settings">
                     <BsFillGearFill className="ml-2" /> الإعدادات
                   </a>
                   <button onClick={handleLogout} className="dropdown-item hacker-options border-0 bg-transparent" href="#">
@@ -126,10 +124,4 @@ const HackerNavbar = (props) => {
   );
 };
 
-const mapStateToProps = ({blogs}) => {
-  return {
-    hackerInfo: blogs.userInfo,
-  };
-};
-
-export default connect(mapStateToProps)(HackerNavbar);
+export default HackerNavbar;

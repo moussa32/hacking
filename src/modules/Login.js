@@ -33,6 +33,7 @@ const Login = () => {
           handleSetUserToken("refreshToken", res.data.refresh);
           setStatus({type: "success", message: "تم تسجيل الدخول بنجاح جاري تحويلك"});
           const userType = res.data.type;
+          localStorage.setItem("type", userType);
           setIsLoadding(false);
 
           if (userType === "hacker") {

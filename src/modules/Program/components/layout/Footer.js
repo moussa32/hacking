@@ -2,6 +2,7 @@ import React from "react";
 import {WhiteLogo} from "../../../../assets";
 import {FaFacebook, FaLinkedin} from "react-icons/fa";
 import {RiWhatsappFill, RiGithubFill} from "react-icons/ri";
+import "./Footer.css";
 
 const Footer = () => {
   return (
@@ -9,9 +10,9 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-2">
-            <img src={WhiteLogo} alt="hacking tech" title="hacking" />
+            <img src={WhiteLogo} alt="hacking tech" className="d-block mx-auto" title="hacking" />
           </div>
-          <div className="col-md-2">
+          <div className="col-md-2 footer-list">
             <h5 className="text-lightgreen">الأحكام والشروط</h5>
             <ul className="list-unstyled text-small p-0">
               <li>
@@ -46,7 +47,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-2 footer-list">
             <h5 className="text-lightgreen">الأحكام والشروط</h5>
             <ul className="list-unstyled text-small p-0">
               <li>
@@ -81,7 +82,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-2 footer-list">
             <h5 className="text-lightgreen">الأحكام والشروط</h5>
             <ul className="list-unstyled text-small p-0">
               <li>
@@ -116,7 +117,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-2 footer-list">
             <h5 className="text-lightgreen">الأحكام والشروط</h5>
             <ul className="list-unstyled text-small p-0">
               <li>
@@ -151,7 +152,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-2 footer-list">
             <ul className="list-unstyled text-small p-0 d-flex align-items-center justify-content-center">
               <li className="mx-1">
                 <a className="text-white" href="#">

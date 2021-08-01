@@ -15,25 +15,19 @@ import Navbar from "./layout/Navbar";
 
 import {handleGetProgram} from "../actions";
 
-const Program = ({dispatch, location}) => {
-  const match = useRouteMatch();
-
-  useEffect(() => {
-    dispatch(handleGetProgram(localStorage.getItem("accessToken")));
-  }, [dispatch]);
-
+const Program = ({location}) => {
   return (
     <>
       <Navbar currentPathname={location.pathname} />
       <Switch>
         <Route exact path="/not-found" component={NotFound} />
+        <Route exact path="/program/signup" component={SignupProgram} />
+        <Route exact path="/program/email-confirmation" component={EmailConfirmation} />
+        <Route exact path="/program/verify-email" component={VerifyEmail} />
+        <Route exact path="/program/dashboard" component={Main} />
+        <Route exact path="/program/dashboard/activity" component={Activity} />
         <Route exact path="/program/dashboard/settings" component={Settings} />
-        <Route exact path={`${match.path}/dashboard`} component={Main} />
-        <Route exact path={`${match.path}/dashboard/activity`} component={Activity} />
-        <Route exact path={`${match.path}/dashboard/leaderboard`} component={Leaderboard} />
-        <Route exact path={`${match.path}/signup`} component={SignupProgram} />
-        <Route exact path={`${match.path}/email-confirmation`} component={EmailConfirmation} />
-        <Route exact path={`${match.path}/verify-email`} component={VerifyEmail} />
+        <Route exact path="/program/dashboard/leaderboard" component={Leaderboard} />
         <Route exact path="/program/:id/:slug" component={ProgramHome} />
         <Redirect to="/notfound" />
       </Switch>
@@ -41,8 +35,4 @@ const Program = ({dispatch, location}) => {
   );
 };
 
-const mapStateToProps = ({program}) => {
-  return {};
-};
-
-export default connect(mapStateToProps)(withRouter(Program));
+export default withRouter(Program);
