@@ -37,7 +37,7 @@ const Navbar = ({currentPathname}) => {
       })
       .catch((error) => {
         if (error.response.status === 401) {
-          getNewTokens(localStorage.getItem("reFreshToken"));
+          getNewTokens(localStorage.getItem("refreshToken"));
         } else if (error.response.status === 403) {
           setNavbarInfo(null);
         }
@@ -108,7 +108,7 @@ const Navbar = ({currentPathname}) => {
                   <a className="dropdown-item hacker-options disabled" href="pages-profile.html">
                     <FaUserAlt className="ml-2" /> الصفحة الشخصية
                   </a>
-                  <a className="dropdown-item hacker-options" href={`/program/settings`}>
+                  <a className="dropdown-item hacker-options" href={`/program/dashboard/settings`}>
                     <BsFillGearFill className="ml-2" /> الإعدادات
                   </a>
                   <button onClick={handleLogout} className="dropdown-item hacker-options border-0 bg-transparent" href="#">

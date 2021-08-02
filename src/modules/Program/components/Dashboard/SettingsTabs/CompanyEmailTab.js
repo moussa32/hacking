@@ -1,25 +1,33 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import {dvbaseUrl} from "../../../../../api/Constants";
+import { dvbaseUrl } from "../../../../../api/Constants";
 
 const CompanyEmailTab = () => {
-  const [status, setStatus] = useState({type: "", message: ""});
+  const [credentials, setCredentials] = useState({ current_password: "", new_email: "" });
+  const [status, setStatus] = useState({ type: "", message: "" });
 
-  const handleNewEmail = (e) => {
+  const token = localStorage.getItem("accessToken");
+
+  const handleNewEmail = e => {
     e.preventDefault();
-    const userEmail = e.target[0].value;
-    console.log(userEmail);
 
-    if (userEmail.length === 0) {
-      setStatus({type: "danger", message: "لا يمكنك ترك هذا الحقل فارغًا"});
+    if (credentials.new_email.length === 0 || credentials.current_password.length === 0) {
+      setStatus({ type: "danger", message: "لا يمكنك ترك هذا الحقل فارغًا" });
     } else {
       axios
-        .post(`${dvbaseUrl}/api/v2/auth/users/reset_username/`, {
-          email: userEmail,
+        .post(`${dvbaseUrl}/api/v1/auth/reset-email/`, credentials, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         })
-        .then((response) => {
+        .then(response => {
           console.log(response);
-          setStatus({type: "success", message: `تم إرسال رابط التأكد من تغيير بريدك الالكتروني الحالي إلى ${userEmail}`});
+          setStatus({ type: "success", message: `تم إرسال رابط التأكد من تغيير بريدك الالكتروني الحالي إلى ${credentials.new_email}` });
+        })
+        .catch(error => {
+          if (error.response.status === 404) {
+            setStatus({ type: "danger", message: "يوجد حساب مسجل بالفعل بهذا البريد الإلكتروني" });
+          }
         });
     }
   };
@@ -38,10 +46,16 @@ const CompanyEmailTab = () => {
         <div className="col-md-12">
           <form className="profile-settings" onSubmit={handleNewEmail}>
             <div className="form-group">
+              <label htmlFor="password" className="mb-3">
+                كلمة المرور الحاليه:
+              </label>
+              <input type="password" className="form-control custom-input border-0" id="current_password" onChange={e => setCredentials({ ...credentials, current_password: e.target.value })} />
+            </div>
+            <div className="form-group">
               <label htmlFor="email" className="mb-3">
                 البريد الإلكتروني الجديد:
               </label>
-              <input type="email" placeholder="example@gmail.com" className="form-control custom-input border-0" id="email" aria-describedby="emailHelp" />
+              <input type="email" placeholder="example@gmail.com" className="form-control custom-input border-0" id="new_email" onChange={e => setCredentials({ ...credentials, new_email: e.target.value })} />
               <small className="form-text text-muted">سيصلك رابط تأكيد إلى بريدك الإلكتروني الحالي.</small>
             </div>
             <button type="submit" className="btn btn-settings d-block mx-auto settings-submit-button">

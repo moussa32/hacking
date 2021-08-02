@@ -1,0 +1,28 @@
+#ck-button {
+  background-color: #313131;
+}
+
+#ck-button:hover {
+  background: black;
+  transition: 1s;
+}
+
+#ck-button label {
+  display: inherit;
+}
+
+#ck-button label span {
+  text-align: center;
+  padding: 3px 0px;
+  display: block;
+}
+
+#ck-button label input {
+  position: absolute;
+  display: none;
+}
+
+#ck-button input:checked + span {
+  background-color: var(--lightGreen);
+  color: #fff;
+}

@@ -1,55 +1,63 @@
-import React, {useState, useEffect} from "react";
-import {connect} from "react-redux";
-import {putCompanyInfo} from "../../../../../api/ProgramAPI/ProgramSettingsApi";
-import {dvbaseUrl} from "../../../../../api/Constants";
-import {getNewTokens} from "../../../../../api/RefreshTokenApi";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { putCompanyInfo, getCompanyInfo, getCompanyLogo, putCompanyLogo } from "../../../../../api/ProgramAPI/ProgramSettingsApi";
+import { dvbaseUrl } from "../../../../../api/Constants";
+import { getNewTokens } from "../../../../../api/RefreshTokenApi";
 import "./CompanyProfileTab.css";
 
-const CompanyProfileTab = ({companyLogo, companyName, companyUrl, companySummary}) => {
+const CompanyProfileTab = ({ companyLogo, companyName, companyUrl, companySummary }) => {
   const [profile, setProfile] = useState({
     company_name: "",
     url: "",
     summery: "",
   });
   const [status, setStatus] = useState(null);
+  const [logo, setLogo] = useState(null);
   const [isLoadding, setIsLoadding] = useState(false);
 
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
-    setProfile({...profile, company_name: companyName, url: companyUrl, summery: companySummary});
-  }, [companyName, companyUrl, companySummary]);
+    getCompanyInfo(token).then(res => {
+      const companyInfo = res.data;
+      setProfile({ ...profile, company_name: companyInfo.company_name, url: companyInfo.url, summery: companyInfo.summery });
+    });
+    getCompanyLogo(token).then(res => {
+      const companyLogo = res.data;
+      setLogo(`${companyLogo.logo}`);
+    });
+  }, []);
 
-  const handleInput = (e) => {
+  const handleInput = e => {
     let event = e.target;
-    setProfile({...profile, [event.name]: event.value});
+    setProfile({ ...profile, [event.name]: event.value });
   };
 
-  const avatarSelectedHandler = (e) => {
+  const avatarSelectedHandler = e => {
     let newAvatart = e.target.files[0];
     const formatImage = new FormData();
-    formatImage.append("file", newAvatart, newAvatart.name);
-    console.log(newAvatart);
-    setProfile({...profile, hacker: {...profile.hacker, avater: newAvatart}});
+    formatImage.append("logo", newAvatart);
+
+    return putCompanyLogo(token, formatImage).then(res => setLogo(res.data.logo));
   };
 
-  const newProfileSettings = (e) => {
+  const newProfileSettings = e => {
     e.preventDefault();
     setStatus(null);
     setIsLoadding(true);
 
     putCompanyInfo(token, profile)
-      .then((res) => {
+      .then(res => {
         setIsLoadding(false);
-        setStatus({type: "success", message: "تم تحديث بيانات الشركة بنجاح."});
+        setStatus({ type: "success", message: "تم تحديث بيانات الشركة بنجاح." });
       })
-      .catch((error) => {
+      .catch(error => {
         setIsLoadding(false);
         if (error.response.status === 401) {
-          setStatus({type: "danger", message: "جاري تحديث جلستك"});
+          setStatus({ type: "danger", message: "جاري تحديث جلستك" });
           getNewTokens(localStorage.getItem("reFreshtoken"));
         } else if (error.response.status === 400) {
-          setStatus({type: "danger", message: "لا يمكن ترك أحد الحقول فارغه"});
+          setStatus({ type: "danger", message: "لا يمكن ترك أحد الحقول فارغه" });
         }
       });
   };
@@ -58,9 +66,13 @@ const CompanyProfileTab = ({companyLogo, companyName, companyUrl, companySummary
     <>
       <div className="row">
         <div className="col-md-6 mx-auto mb-4">
-          <img className="profile-image" src={`${dvbaseUrl}/${companyLogo}`} />
-          <input type="file" className="custom-file-input" onChange={avatarSelectedHandler} />
-          <button className="btn btn-light d-block mx-auto">تغيير الصورة</button>
+          <img className="profile-image" src={`${dvbaseUrl}${logo}`} />
+          <div className="custom-file">
+            <input type="file" className="custom-file-input profile-image-input" id="customFile" onChange={avatarSelectedHandler} />
+            <label className="custom-file-label profile-image-label" htmlFor="customFile">
+              تغيير الصورة
+            </label>
+          </div>
         </div>
       </div>
       <div className="row mx-2">
@@ -68,7 +80,7 @@ const CompanyProfileTab = ({companyLogo, companyName, companyUrl, companySummary
           <form className="profile-settings" onSubmit={newProfileSettings}>
             <div className="form-group">
               <label htmlFor="company_name">اسم الشركة</label>
-              <input type="text" value={profile.company_name} className="form-control custom-input border-0" name="company_name" id="company_name" aria-describedby="companyNameHelp" onChange={handleInput} required />
+              <input type="text" value={profile.company_name} className="form-control custom-input border-0" name="company_name" id="company_name" onChange={handleInput} required />
             </div>
             <div className="form-group">
               <label htmlFor="company_url">رابط الشركة</label>
@@ -98,7 +110,7 @@ const CompanyProfileTab = ({companyLogo, companyName, companyUrl, companySummary
   );
 };
 
-const mapStateToProps = ({program}) => {
+const mapStateToProps = ({ program }) => {
   return {
     companyName: program.programInfo.company_name,
     companyLogo: program.programInfo.logo,

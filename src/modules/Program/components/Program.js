@@ -1,6 +1,6 @@
-import React, {useEffect} from "react";
-import {connect} from "react-redux";
-import {Switch, Route, Redirect, withRouter, useRouteMatch} from "react-router";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { Switch, Route, Redirect, withRouter, useRouteMatch } from "react-router";
 
 import NotFound from "../../../shared/components/NotFound";
 import SignupProgram from "./Registerition/SignupProgram";
@@ -12,10 +12,12 @@ import Leaderboard from "./Dashboard/Leaderboard";
 import ProgramHome from "./ProgramHome";
 import Settings from "./Dashboard/Settings.js";
 import Navbar from "./layout/Navbar";
+import { handleGetProgram } from "../actions";
 
-import {handleGetProgram} from "../actions";
-
-const Program = ({location}) => {
+const Program = ({ location, dispatch }) => {
+  useEffect(() => {
+    dispatch(handleGetProgram(localStorage.getItem("accessToken")));
+  }, [dispatch]);
   return (
     <>
       <Navbar currentPathname={location.pathname} />
@@ -35,4 +37,8 @@ const Program = ({location}) => {
   );
 };
 
-export default withRouter(Program);
+const mapStateToProps = ({ program }) => {
+  return {};
+};
+
+export default connect(mapStateToProps)(withRouter(Program));

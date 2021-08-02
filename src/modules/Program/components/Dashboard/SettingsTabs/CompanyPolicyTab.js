@@ -1,40 +1,51 @@
-import React, {useState, useEffect} from "react";
-import ReactMarkdown from "react-markdown";
-import {getCompanyPolicy, putCompanyPolicy} from "../../../../../api/ProgramAPI/ProgramSettingsApi";
-import {getNewTokens} from "../../../../../api/RefreshTokenApi";
+import React, { useState, useEffect } from "react";
+import { getCompanyPolicy, putCompanyPolicy } from "../../../../../api/ProgramAPI/ProgramSettingsApi";
+import { getNewTokens } from "../../../../../api/RefreshTokenApi";
+import ReactMde from "react-mde";
+import * as Showdown from "showdown";
+import "react-mde/lib/styles/css/react-mde-all.css";
+import "./CompanyPoliceTab.css";
 
 function CompanyPolicyTab() {
-  const [policy, setPolicy] = useState({policy: ""});
+  const [policy, setPolicy] = useState({ policy: "" });
   const [isLoadding, setIsLoadding] = useState(false);
   const [status, setStatus] = useState(null);
+  const [value, setValue] = useState("**Hello world!!!**");
 
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     getCompanyPolicy(token)
-      .then((res) => {
-        setPolicy({policy: res.data.policy});
+      .then(res => {
+        setPolicy({ policy: res.data.policy });
       })
-      .catch((error) => {
+      .catch(error => {
         if (error.response.status === 401) {
-          setStatus({type: "danger", message: "جاري تحديث جلستك"});
+          setStatus({ type: "danger", message: "جاري تحديث جلستك" });
           getNewTokens(localStorage.getItem("reFreshtoken"));
         }
       });
   }, []);
+
+  const converter = new Showdown.Converter({
+    tables: true,
+    simplifiedAutoLink: true,
+    strikethrough: true,
+    tasklists: true,
+  });
 
   const handlePutCompanyPolicy = () => {
     setIsLoadding(true);
     setStatus(null);
 
     putCompanyPolicy(token, policy)
-      .then((res) => {
+      .then(res => {
         setIsLoadding(false);
-        setStatus({type: "success", message: "تم تحديث سياسات البرنامج بنجاح."});
+        setStatus({ type: "success", message: "تم تحديث سياسات البرنامج بنجاح." });
       })
-      .catch((error) => {
+      .catch(error => {
         if (error.response.status === 401) {
-          setStatus({type: "danger", message: "جاري تحديث جلستك"});
+          setStatus({ type: "danger", message: "جاري تحديث جلستك" });
           getNewTokens(localStorage.getItem("reFreshtoken"));
         }
       });
@@ -46,10 +57,7 @@ function CompanyPolicyTab() {
       <div className="row">
         <div className="col-md-11 mx-auto">
           <div className="form-group">
-            <div className="content">
-              <ReactMarkdown>{policy.policy}</ReactMarkdown>
-            </div>
-            <textarea value={policy.policy} onChange={(e) => setPolicy({policy: e.target.value})} className="form-control p-3 custom-input border-0" id="summary" rows="6" name="summary"></textarea>
+            <textarea value={policy.policy} onChange={e => setPolicy({ policy: e.target.value })} className="form-control p-3 custom-input border-0" id="summary" rows="6" name="summary"></textarea>
           </div>
           <button className="btn btn-lightgreen w-50 btn-block mx-auto my-4" onClick={handlePutCompanyPolicy}>
             اضافة
