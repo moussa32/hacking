@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import CompanyAddNewAd from "./CompanyAddNewAd";
 import { getCompanyAds, getCompanyAd, deleteCompanyAds, putCompanyAd } from "../../../../../api/ProgramAPI/ProgramSettingsApi";
 import { MdDelete } from "react-icons/md";
@@ -17,11 +17,11 @@ function CompanyAdsTab() {
   const [trip, setTrip] = useState("ADS");
 
   const token = localStorage.getItem("accessToken");
+  const deleteButtonRef = useRef();
 
   useEffect(() => {
     getCompanyAds(token)
       .then(res => {
-        console.log(res.data);
         setAds(res.data);
       })
       .catch(error => {
@@ -31,10 +31,14 @@ function CompanyAdsTab() {
       });
   }, []);
 
+  useEffect(() => {
+    const deleteButton = deleteButtonRef.current;
+    deleteButton.setAttribute("data-dismiss", "modal");
+  }, []);
+
   const handelGetAd = adId => {
     getCompanyAd(token, adId)
       .then(res => {
-        console.log(res.data);
         setCurrentAdToEdit(res.data);
       })
       .catch(error => {
@@ -51,7 +55,6 @@ function CompanyAdsTab() {
       .then(res => {
         setIsLoadding(false);
         setModalStatus({ type: "success", message: "تم تحديث بيانات الإعلان" });
-        console.log(res.data);
       })
       .catch(error => {
         setIsLoadding(false);
@@ -62,7 +65,16 @@ function CompanyAdsTab() {
   };
 
   const handleDeleteAd = adID => {
-    deleteCompanyAds(token, adID).then(res => console.log(res.data));
+    deleteCompanyAds(token, adID).then(res => {
+      setAds(ads.filter(ad => ad.id !== adID));
+    });
+  };
+
+  const handleCloseTab = () => {
+    const deleteButton = deleteButtonRef.current;
+    setTimeout(() => {
+      deleteButton.click();
+    }, 500);
   };
 
   return (
@@ -101,7 +113,14 @@ function CompanyAdsTab() {
                         >
                           <BiEditAlt />
                         </button>
-                        <button className="btn btn-danger" data-toggle="modal" data-target="#deleteAdModal" onChange={() => setCurrentAdToDelete(ad.id)}>
+                        <button
+                          className="btn btn-danger"
+                          data-toggle="modal"
+                          data-target="#deleteAdModal"
+                          onClick={e => {
+                            setCurrentAdToDelete(ad.id);
+                          }}
+                        >
                           <MdDelete />
                         </button>
                       </div>
@@ -130,10 +149,17 @@ function CompanyAdsTab() {
                   <p className="text-dark lead my-4">انت على وشك حذف أحد النطاقات هل تريد ذلك حقًأ؟</p>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" data-dismiss="modal">
+                  <button type="button" className="btn btn-secondary" ref={deleteButtonRef} data-dismiss="modal">
                     الغاء
                   </button>
-                  <button type="button" className="btn btn-danger" onClick={() => handleDeleteAd(currentAdToDelete)}>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={() => {
+                      handleCloseTab();
+                      handleDeleteAd(currentAdToDelete);
+                    }}
+                  >
                     حذف
                   </button>
                 </div>

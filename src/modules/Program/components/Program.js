@@ -29,6 +29,7 @@ const Program = ({ location, dispatch }) => {
         <Route exact path="/program/dashboard" component={Main} />
         <Route exact path="/program/dashboard/activity" component={Activity} />
         <Route exact path="/program/dashboard/settings" component={Settings} />
+        <Route exact path="/program/dashboard/settings/:id" component={Settings} />
         <Route exact path="/program/dashboard/leaderboard" component={Leaderboard} />
         <Route exact path="/program/:id/:slug" component={ProgramHome} />
         <Redirect to="/notfound" />

@@ -1,33 +1,35 @@
-import React from 'react';
-import ProfileTab from './SettingsTabs/ProfileTab';
-import PasswordTab from './SettingsTabs/PasswordTab';
-import EmailTab from './SettingsTabs/EmailTab';
-import PaymentTab from './SettingsTabs/PaymentTab';
-import NotificationsTab from './SettingsTabs/NotificationsTab';
-import PointsTab from './SettingsTabs/PointsTab';
-import DeactivateTab from './SettingsTabs/DeactivateTab';
-import AuthenticationTab from './SettingsTabs/AuthenticationTab';
-import AccountPreferencesTab from './SettingsTabs/AccountPreferencesTab.js';
-import InvitationPreferencesTab from './SettingsTabs/InvitationPreferencesTab.js';
-import SessionTab from './SettingsTabs/SessionTab.js';
+import React, { useEffect } from "react";
+import ProfileTab from "./SettingsTabs/ProfileTab";
+import SkillsTab from "./SettingsTabs/SkillsTab.js";
+import PasswordTab from "./SettingsTabs/PasswordTab";
+import EmailTab from "../../../../shared/components/ResetEmail";
+import PaymentTab from "./SettingsTabs/PaymentTab";
+import NotificationsTab from "./SettingsTabs/NotificationsTab";
+import PointsTab from "./SettingsTabs/PointsTab";
+import DeactivateTab from "./SettingsTabs/DeactivateTab";
+import AuthenticationTab from "./SettingsTabs/AuthenticationTab";
+import AccountPreferencesTab from "./SettingsTabs/AccountPreferencesTab.js";
+import InvitationPreferencesTab from "./SettingsTabs/InvitationPreferencesTab.js";
+import SessionTab from "./SettingsTabs/SessionTab.js";
 
-
-import './Settings.css';
+import "./Settings.css";
 
 const Settings = () => {
   const pills = [
-    { type: 'profile', lable: 'الصفحة الشخصية' },
-    { type: 'password', lable: 'كلمة المرور' },
-    { type: 'email', lable: 'البريد الالكتروني' },
-    { type: 'payment', lable: 'الدفع' },
-    { type: 'notifications', lable: 'الاشعارات' },
-    { type: 'points', lable: 'النقاط' },
-    { type: 'deactivate', lable: 'تعطيل الحساب' },
-    { type: 'authentication', lable: 'المصادقة' },
-    { type: 'account-preferences', lable: 'تفضيلات الحساب' },
-    { type: 'invitation-preferences', lable: 'تفضيلات الدعوة' },
-    { type: 'session', lable: 'الجلسات' },
+    { type: "profile", lable: "الصفحة الشخصية" },
+    { type: "password", lable: "كلمة المرور" },
+    { type: "skills", lable: "المهارات" },
+    { type: "email", lable: "البريد الالكتروني" },
+    { type: "payment", lable: "الدفع" },
+    { type: "notifications", lable: "الاشعارات" },
+    { type: "points", lable: "النقاط" },
+    { type: "deactivate", lable: "تعطيل الحساب" },
+    { type: "authentication", lable: "المصادقة" },
+    { type: "account-preferences", lable: "تفضيلات الحساب" },
+    { type: "invitation-preferences", lable: "تفضيلات الدعوة" },
+    { type: "session", lable: "الجلسات" },
   ];
+  const token = localStorage.getItem("accessToken");
 
   return (
     <div className="container settings-container">
@@ -37,9 +39,17 @@ const Settings = () => {
             <h2>الإعدادات</h2>
             {pills.map((pill, index) => {
               if (index == 0) {
-                return <a key={index} className="nav-link setting-tab-link active" id={`v-pills-${pill.type}-tab`} data-toggle="pill" href={`#v-pills-${pill.type}`} role="tab" aria-controls={`v-pills-${pill.type}`} aria-selected="false">{pill.lable}</a>
+                return (
+                  <a key={index} className="nav-link setting-tab-link active" id={`v-pills-${pill.type}-tab`} data-toggle="pill" href={`#v-pills-${pill.type}`} role="tab" aria-controls={`v-pills-${pill.type}`} aria-selected="false">
+                    {pill.lable}
+                  </a>
+                );
               } else {
-                return <a className="nav-link setting-tab-link" id={`v-pills-${pill.type}-tab`} data-toggle="pill" href={`#v-pills-${pill.type}`} role="tab" aria-controls={`v-pills-${pill.type}`} aria-selected="false">{pill.lable}</a>
+                return (
+                  <a className="nav-link setting-tab-link" id={`v-pills-${pill.type}-tab`} data-toggle="pill" href={`#v-pills-${pill.type}`} role="tab" aria-controls={`v-pills-${pill.type}`} aria-selected="false">
+                    {pill.lable}
+                  </a>
+                );
               }
             })}
           </div>
@@ -55,41 +65,45 @@ const Settings = () => {
               <small className="d-block text-center pb-4">تغيير كلمة المرور</small>
               <PasswordTab />
             </div>
-            <div className="tab-pane fade bg-black" id="v-pills-email" role="tabpanel" aria-labelledby="v-pills-email-tab">
+            <div className="tab-pane fade bg-black" id="v-pills-skills" role="tabpanel" aria-labelledby="v-pills-skills-tab">
               <h2 className="text-center pt-4 pb-2">{pills[2].lable}</h2>
+              <SkillsTab />
+            </div>
+            <div className="tab-pane fade bg-black" id="v-pills-email" role="tabpanel" aria-labelledby="v-pills-email-tab">
+              <h2 className="text-center pt-4 pb-2">{pills[3].lable}</h2>
               <small className="d-block text-center pb-4">تغيير بريدك الالكتروني</small>
               <EmailTab />
             </div>
             <div className="tab-pane fade bg-black" id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">
-              <h2 className="text-center py-4">{pills[3].lable}</h2>
+              <h2 className="text-center py-4">{pills[4].lable}</h2>
               <PaymentTab />
             </div>
             <div className="tab-pane fade bg-black" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
-              <h2 className="text-center py-4">{pills[4].lable}</h2>
+              <h2 className="text-center py-4">{pills[5].lable}</h2>
               <NotificationsTab />
             </div>
             <div className="tab-pane fade bg-black" id="v-pills-points" role="tabpanel" aria-labelledby="v-pills-points-tab">
-              <h2 className="text-center py-4">{pills[5].lable}</h2>
+              <h2 className="text-center py-4">{pills[6].lable}</h2>
               <PointsTab />
             </div>
             <div className="tab-pane fade bg-black" id="v-pills-deactivate" role="tabpanel" aria-labelledby="v-pills-deactivate-tab">
-              <h2 className="text-center py-4">{pills[6].lable}</h2>
+              <h2 className="text-center py-4">{pills[7].lable}</h2>
               <DeactivateTab />
             </div>
             <div className="tab-pane fade bg-black" id="v-pills-authentication" role="tabpanel" aria-labelledby="v-pills-authentication-tab">
-              <h2 className="text-center py-4">التحقق بخطوتين</h2>
+              <h2 className="text-center py-4">{pills[8].label}</h2>
               <AuthenticationTab />
             </div>
             <div className="tab-pane fade bg-black" id="v-pills-account-preferences" role="tabpanel" aria-labelledby="v-pills-account-preferences-tab">
-              <h2 className="text-center py-4">{pills[8].lable}</h2>
+              <h2 className="text-center py-4">{pills[9].lable}</h2>
               <AccountPreferencesTab />
             </div>
             <div className="tab-pane fade bg-black" id="v-pills-invitation-preferences" role="tabpanel" aria-labelledby="v-pills-invitation-preferences-tab">
-              <h2 className="text-center py-4">{pills[9].lable}</h2>
+              <h2 className="text-center py-4">{pills[10].lable}</h2>
               <InvitationPreferencesTab />
             </div>
             <div className="tab-pane fade bg-black" id="v-pills-session" role="tabpanel" aria-labelledby="v-pills-session-tab">
-              <h2 className="text-center py-4">{pills[10].lable}</h2>
+              <h2 className="text-center py-4">{pills[11].lable}</h2>
               <SessionTab />
             </div>
           </div>
@@ -97,6 +111,6 @@ const Settings = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Settings;

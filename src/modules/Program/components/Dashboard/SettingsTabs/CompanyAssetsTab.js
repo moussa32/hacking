@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MdDelete } from "react-icons/md";
 import { BiEditAlt } from "react-icons/bi";
 import { getCompanyAssets, getCompanyAsset, deleteCompanyAssets, putCompanyAssets } from "../../../../../api/ProgramAPI/ProgramSettingsApi";
 import CompanyAddNewAsset from "./CompanyAddNewAsset";
 import { handleBadgeColor } from "../../../../../shared/utils/handleBadgeColor";
+import { handleLevelToNumber } from "../../../../../shared/utils/handleLevelName";
 import { getNewTokens } from "../../../../../api/RefreshTokenApi";
 
 const CompanyAssetsTab = () => {
   const [assets, setAssets] = useState(null);
-  const [trip, setTrip] = useState("assets");
+  const [step, setStep] = useState("assets");
   const [status, setStatus] = useState(null);
   const [modalStatus, setModalStatus] = useState(null);
   const [isLoadding, setIsLoadding] = useState(false);
-  const [currentAsset, setCurrentAsset] = useState(null);
-  const [assetToEdit, setAssetToEdit] = useState({ type: "", url: "", description: "" });
+  const [currentAssetId, setCurrentAssetId] = useState(null);
+  const [currentAsset, setCurrentAsset] = useState({ level: "", type: "", url: "", description: "", paid: "", in_scope: "" });
+  const [assetToEdit, setAssetToEdit] = useState({});
   const token = localStorage.getItem("accessToken");
+  const deleteButtonRef = useRef();
 
   useEffect(() => {
     getCompanyAssets(token).then(res => {
@@ -22,50 +25,78 @@ const CompanyAssetsTab = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const deleteButton = deleteButtonRef.current;
+    deleteButton.setAttribute("data-dismiss", "modal");
+  }, []);
+
   const handleDeleteAsset = assetId => {
-    deleteCompanyAssets(token, assetId).then(res => console.log(res.data));
+    deleteCompanyAssets(token, assetId).then(res => {
+      setAssets(assets.filter(asset => asset.id !== assetId));
+    });
+  };
+
+  const handleTypeName = type => {
+    if (type === "windows") {
+      return "Windows";
+    } else if (type === "android") {
+      return "Android";
+    } else if (type === "dm") {
+      return "Domain Name";
+    } else if (type === "ios") {
+      return "IOS";
+    }
   };
 
   const handelGetAsset = assetId => {
     getCompanyAsset(token, assetId)
       .then(res => {
-        setAssetToEdit(res.data);
+        setCurrentAsset(res.data);
       })
       .catch(error => {
         if (error.response.status === 401) {
           setStatus({ type: "danger", message: "جاري تحديث جلستك" });
-          getNewTokens(localStorage.getItem("reFreshtoken"));
+          getNewTokens(localStorage.getItem("refreshToken"));
         }
       });
   };
 
   const handleEditAsset = (token, assetId, newInfo) => {
-    console.log(assetToEdit);
     setIsLoadding(true);
-    putCompanyAssets(token, assetId, newInfo)
-      .then(res => {
-        setIsLoadding(false);
-        setModalStatus({ type: "success", message: "تم تحديث بيانات النطاق بنجاح" });
-        console.log(res.data);
-      })
-      .catch(error => {
-        setIsLoadding(false);
-        if (error.response.status === 401) {
-          getNewTokens(localStorage.getItem("reFreshtoken"));
-        }
-      });
+    if (newInfo && Object.keys(newInfo).length === 0) {
+      setIsLoadding(false);
+      setModalStatus({ type: "danger", message: "لم يتم تغيير قيمة اي حقل بعد" });
+    } else {
+      putCompanyAssets(token, assetId, newInfo)
+        .then(res => {
+          console.log(res.data);
+          setIsLoadding(false);
+          setModalStatus({ type: "success", message: "تم تحديث بيانات النطاق بنجاح" });
+        })
+        .catch(error => {
+          setIsLoadding(false);
+          if (error.response.status === 401) {
+            getNewTokens(localStorage.getItem("refreshToken"));
+          } else if (error.response.status === 400) {
+            setModalStatus({ type: "danger", message: "هناك خطأ في البيانات المرسلة" });
+          }
+        });
+    }
   };
 
-  const handleAddNewAsset = e => {
-    e.preventDefault();
+  const handleCloseTab = () => {
+    const deleteButton = deleteButtonRef.current;
+    setTimeout(() => {
+      deleteButton.click();
+    }, 500);
   };
 
   return (
     <>
-      {trip === "assets" && (
+      {step === "assets" && (
         <div className="row">
           <div className="col-md-12 mx-auto mb-4 rounded add-domain-container">
-            <button className="btn btn-lightgreen d-block mr-auto" onClick={() => setTrip("addAsset")}>
+            <button className="btn btn-lightgreen d-block mr-auto" onClick={() => setStep("addAsset")}>
               اضافة نطاقات جديدة
             </button>
           </div>
@@ -77,7 +108,7 @@ const CompanyAssetsTab = () => {
                     <div className="container">
                       <div className="row">
                         <div className="col-md-9">
-                          <h3 className="text-lightgreen">{asset.type}</h3>
+                          <h3 className="text-lightgreen">{handleTypeName(asset.type)}</h3>
                           <p className="lead">{asset.url}</p>
                           <div className="d-flex flex-row align-items-center">
                             <span className={`badge badge-${handleBadgeColor(asset.level)} inscope-assets-list`}></span>
@@ -92,13 +123,13 @@ const CompanyAssetsTab = () => {
                             data-toggle="modal"
                             data-target="#editAssetModal"
                             onClick={() => {
-                              setCurrentAsset(asset.id);
+                              setCurrentAssetId(asset.id);
                               handelGetAsset(asset.id);
                             }}
                           >
                             <BiEditAlt />
                           </button>
-                          <button className="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal" onClick={() => setCurrentAsset(asset.id)}>
+                          <button className="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal" onClick={() => setCurrentAssetId(asset.id)}>
                             <MdDelete />
                           </button>
                         </div>
@@ -126,7 +157,7 @@ const CompanyAssetsTab = () => {
         </div>
       )}
 
-      {trip === "addAsset" && <CompanyAddNewAsset />}
+      {step === "addAsset" && <CompanyAddNewAsset />}
 
       <div className="modal fade" id="deleteAssetModal" tabIndex="-1" aria-labelledby="deleteAssetModal" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
@@ -143,10 +174,17 @@ const CompanyAssetsTab = () => {
               <p className="text-dark lead my-4">انت على وشك حذف أحد النطاقات هل تريد ذلك حقًأ؟</p>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => handleEditAsset(currentAsset)}>
+              <button type="button" className="btn btn-secondary" data-dismiss="modal" ref={deleteButtonRef} onClick={() => handleEditAsset(currentAssetId)}>
                 الغاء
               </button>
-              <button type="button" className="btn btn-danger" onClick={() => handleDeleteAsset(currentAsset)}>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => {
+                  handleCloseTab();
+                  handleDeleteAsset(currentAssetId);
+                }}
+              >
                 حذف
               </button>
             </div>
@@ -166,24 +204,68 @@ const CompanyAssetsTab = () => {
             </div>
             <div className="modal-body">
               <form>
-                <select className="form-control py-0" value={assetToEdit.type.charAt(0).toUpperCase() + assetToEdit.type.slice(1)} id="exampleFormControlSelect1" onChange={e => setAssetToEdit({ ...assetToEdit, type: e.target.value.toLowerCase() })} required>
+                <select
+                  className="form-control py-0"
+                  value={currentAsset.type.charAt(0).toUpperCase() + currentAsset.type.slice(1)}
+                  onChange={e => {
+                    setCurrentAsset({ ...currentAsset, type: e.target.value.toLowerCase() });
+                    setAssetToEdit({ ...assetToEdit, type: e.target.value.toLowerCase() });
+                  }}
+                  required
+                >
                   <option value="">نوع المنتج / الأصل</option>
                   <option value="Windows">Windows</option>
-                  <option value="IOS">IOS</option>
+                  <option value="Ios">IOS</option>
                   <option value="Android">Android</option>
-                  <option value="dm">dm</option>
+                  <option value="Dm">Domain Name</option>
                 </select>
+                <label className="col-form-label text-lightgreen">قابل للدفع:</label>
+                <div className="form-check text-dark py-1">
+                  <input style={{ marginRight: " -1.25rem" }} value={currentAsset.paid} defaultChecked={currentAsset.paid} className="form-check-input" type="radio" name="paid" onChange={e => setAssetToEdit({ ...assetToEdit, paid: true })} required />
+                  <label className="form-check-label">مدفوع</label>
+                </div>
+                <div className="form-check text-dark py-1">
+                  <input style={{ marginRight: " -1.25rem" }} value={currentAsset.paid} defaultChecked={currentAsset.paid} className="form-check-input" type="radio" name="paid" onChange={e => setAssetToEdit({ ...assetToEdit, paid: false })} />
+                  <label className="form-check-label">غير مدفوع</label>
+                </div>
+                <div className="form-group rounded">
+                  <label className="form-label text-lightgreen">المستوى</label>
+                  <select
+                    className="form-control py-0"
+                    placeholder="المستويات"
+                    value={handleLevelToNumber(currentAsset.level)}
+                    onChange={e => {
+                      setCurrentAsset({ ...currentAsset, level: e.target.value });
+                      setAssetToEdit({ ...assetToEdit, level: parseInt(e.target.value) });
+                    }}
+                    required
+                  >
+                    <option value={2}>منخفض</option>
+                    <option value={3}>متوسط</option>
+                    <option value={4}>عالي</option>
+                    <option value={5}>ضروري</option>
+                  </select>
+                </div>
                 <div className="form-group rounded">
                   <label htmlFor="assetType" className="col-form-label text-dark">
                     الرابط:
                   </label>
-                  <input type="url" defaultValue={assetToEdit.url} className="form-control" placeholder="ex:https://google.com" onChange={e => setAssetToEdit({ ...assetToEdit, url: e.target.value })} required />
+                  <input type="url" defaultValue={currentAsset.url} className="form-control" placeholder="ex:https://google.com" onChange={e => setAssetToEdit({ ...assetToEdit, url: e.target.value })} required />
+                </div>
+                <label className="col-form-label text-lightgreen">قابل للتسليم:</label>
+                <div className="form-check text-dark py-1">
+                  <input style={{ marginRight: " -1.25rem" }} value={currentAsset.in_scope} defaultChecked={currentAsset.in_scope} className="form-check-input" type="radio" name="in_scope" onChange={e => setAssetToEdit({ ...assetToEdit, in_scope: false })} required />
+                  <label className="form-check-label">لا</label>
+                </div>
+                <div className="form-check text-dark py-1">
+                  <input style={{ marginRight: " -1.25rem" }} value={currentAsset.in_scope} defaultChecked={currentAsset.in_scope} className="form-check-input" type="radio" name="in_scope" onChange={e => setAssetToEdit({ ...assetToEdit, in_scope: true })} />
+                  <label className="form-check-label">نعم</label>
                 </div>
                 <div className="form-group rounded">
                   <label htmlFor="assetType" className="col-form-label text-dark">
                     الوصف :
                   </label>
-                  <textarea className="form-control p-3" defaultValue={assetToEdit.description} rows="6" name="description" onChange={e => setAssetToEdit({ ...assetToEdit, description: e.target.value })} required></textarea>
+                  <textarea className="form-control p-3" defaultValue={currentAsset.description} rows="6" name="description" onChange={e => setAssetToEdit({ ...assetToEdit, description: e.target.value })} required></textarea>
                 </div>
               </form>
               {isLoadding ? (
@@ -201,7 +283,7 @@ const CompanyAssetsTab = () => {
               <button type="button" className="btn btn-secondary" data-dismiss="modal">
                 الغاء
               </button>
-              <button type="button" className="btn btn-warning" onClick={() => handleEditAsset(token, assetToEdit.id, assetToEdit)}>
+              <button type="button" className="btn btn-warning" onClick={() => handleEditAsset(token, currentAsset.id, assetToEdit)}>
                 تعديل
               </button>
             </div>

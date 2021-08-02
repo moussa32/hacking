@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Switch, Route, withRouter, Redirect, useRouteMatch} from "react-router-dom";
+import React, { useState } from "react";
+import { Switch, Route, withRouter, Redirect, useRouteMatch } from "react-router-dom";
 
 import HackerNavbar from "./layout/HackerNavbar";
 import ScrollToTop from "../../../../shared/components/ScrollToTop";
@@ -8,9 +8,9 @@ import Main from "./Main";
 import Activity from "./Activity";
 import Leaderboard from "./Leaderboard";
 import Settings from "./Settings";
-import {handleGetUserToken} from "../../actions/index";
+import { handleGetUserToken } from "../../actions/index";
 
-const Overview = (props) => {
+const Overview = props => {
   const [parentData, setParentData] = useState({});
   let match = useRouteMatch();
   let token = handleGetUserToken("accessToken");

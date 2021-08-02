@@ -8,7 +8,7 @@ import "./CompanyAddNewAsset.css";
 function CompanyAddNewAsset({ owner }) {
   const [newAsset, setNewAsset] = useState({
     owner,
-    paid: true,
+    paid: "",
     type: "",
     in_scope: "",
     url: "",
@@ -18,22 +18,80 @@ function CompanyAddNewAsset({ owner }) {
   const [isLoadding, setIsLoadding] = useState(false);
   const token = localStorage.getItem("accessToken");
 
+  console.log(newAsset);
+
+  const handleValidation = () => {
+    let paidError = "";
+    let typeError = "";
+    let in_scopeError = "";
+    let urlError = "";
+    let descriptionError = "";
+
+    if (typeof newAsset.paid !== "boolean" || newAsset.paid === null) {
+      paidError = "يجب أن تحدد ما إذا كان النطاق مدفوع او غير مدفوع";
+    }
+
+    if (paidError) {
+      setStatus({ type: "danger", message: paidError });
+      return false;
+    }
+
+    if (!newAsset.type) {
+      typeError = "يجب أختيار النوع";
+    }
+
+    if (typeError) {
+      setStatus({ type: "danger", message: typeError });
+      return false;
+    }
+
+    if (typeof newAsset.in_scope !== "boolean" || newAsset.in_scope === null) {
+      in_scopeError = "يجب ان يتم تحديد هل النطاق قابل للتسليم ام لا";
+    }
+
+    if (in_scopeError) {
+      setStatus({ type: "danger", message: in_scopeError });
+      return false;
+    }
+
+    if (!newAsset.url) {
+      urlError = "يجب إدخال عنوان النطاق";
+    }
+
+    if (urlError) {
+      setStatus({ type: "danger", message: urlError });
+      return false;
+    }
+
+    if (!newAsset.descriptionError) {
+      descriptionError = "يجب كتابة وصف للنطاق";
+    }
+    setStatus({});
+    return true;
+  };
+
   const handleSubmitNewAsset = e => {
     e.preventDefault();
     setIsLoadding(true);
 
-    postCompanyAssets(token, newAsset)
-      .then(res => {
-        setIsLoadding(false);
-        setStatus({ type: "success", message: "تم إضافة النطاق بناجح" });
-      })
-      .catch(error => {
-        if (error.response.status === 400) {
-          console.log(error.response);
-        } else if (error.response.status === 401) {
-          getNewTokens(localStorage.getItem("refreshToken"));
-        }
-      });
+    const isValid = handleValidation();
+
+    if (isValid) {
+      postCompanyAssets(token, newAsset)
+        .then(res => {
+          setIsLoadding(false);
+          setStatus({ type: "success", message: "تم إضافة النطاق بناجح" });
+        })
+        .catch(error => {
+          if (error.response.status === 400) {
+            console.log(error.response);
+          } else if (error.response.status === 401) {
+            getNewTokens(localStorage.getItem("refreshToken"));
+          }
+        });
+    } else {
+      setIsLoadding(false);
+    }
   };
 
   return (
@@ -60,7 +118,7 @@ function CompanyAddNewAsset({ owner }) {
                 </label>
                 <div id="ck-button">
                   <label>
-                    <input type="radio" value="1" name="paid" onChange={e => setNewAsset({ ...newAsset, paid: true })} required />
+                    <input type="radio" value="1" name="paid" onChange={e => setNewAsset({ ...newAsset, paid: true })} />
                     <span>
                       <AiFillDollarCircle className="text-lightgreen" /> مدفوع
                     </span>
@@ -68,7 +126,7 @@ function CompanyAddNewAsset({ owner }) {
                 </div>
                 <div id="ck-button">
                   <label>
-                    <input type="radio" value="2" name="paid" onChange={e => setNewAsset({ ...newAsset, paid: false })} required />
+                    <input type="radio" value="2" name="paid" onChange={e => setNewAsset({ ...newAsset, paid: false })} />
                     <span>
                       <AiFillDollarCircle className="text-danger" /> غير مدفوع
                     </span>
@@ -87,7 +145,7 @@ function CompanyAddNewAsset({ owner }) {
                 </label>
                 <div id="ck-button">
                   <label>
-                    <input type="radio" value="1" name="in_scope" onChange={e => setNewAsset({ ...newAsset, in_scope: false })} required />
+                    <input type="radio" value="1" name="in_scope" onChange={e => setNewAsset({ ...newAsset, in_scope: false })} />
                     <span>لا</span>
                   </label>
                 </div>

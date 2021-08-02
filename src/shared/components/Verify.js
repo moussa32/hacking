@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {useHistory} from "react-router-dom";
-import {dvApiUrl} from "../../api/Constants";
+import { useHistory } from "react-router-dom";
+import { dvApiUrl } from "../../api/Constants";
 
 const Verify = () => {
   const [status, setStatus] = useState({
@@ -26,7 +26,7 @@ const Verify = () => {
     if (tokenFromURL) {
       localStorage.setItem("accessToken", tokenFromURL);
     } else {
-      setStatus({type: "danger", message: "لم يتم التعرف على الرمز"});
+      setStatus({ type: "danger", message: "لم يتم التعرف على الرمز" });
     }
   };
 
@@ -41,9 +41,9 @@ const Verify = () => {
           Authorization: `Bearer ${getUnAuth}`,
         },
       })
-      .then((res) => {
+      .then(res => {
         setIsLoadding(false);
-        setStatus({type: "success", message: "تم تفعيل بريدك الإلكتروني بنجاح جاري تحويلك"});
+        setStatus({ type: "success", message: "تم تفعيل بريدك الإلكتروني بنجاح جاري تحويلك" });
 
         localStorage.removeItem("registerEmail");
         setTimeout(() => {
@@ -54,14 +54,14 @@ const Verify = () => {
         setIsLoadding(false);
         if (error.response) {
           if (error.response.status === 400) {
-            setStatus({type: "danger", message: "لا يوجد بريد إلكتروني مرتبط بهذا الرمز"});
+            setStatus({ type: "danger", message: "لا يوجد بريد إلكتروني مرتبط بهذا الرمز" });
             setTimeout(() => {
               history.push("/program/email-confirmation");
             }, 5000);
           } else if (error.response.status === 404) {
-            setStatus({type: "danger", message: "هناك خطأ في الخادم"});
+            setStatus({ type: "danger", message: "هناك خطأ في الخادم" });
           } else if (error.response.status === 401) {
-            setStatus({type: "danger", message: "لقد انتهت فترة الرمز برجاء طلب رمز اخر"});
+            setStatus({ type: "danger", message: "لقد انتهت فترة الرمز برجاء طلب رمز اخر" });
           }
         }
       });

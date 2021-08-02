@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from "react";
-import {connect} from "react-redux";
-import {Link, useRouteMatch} from "react-router-dom";
-import {FaCogs} from "react-icons/fa";
-import {HiOutlineClipboardList} from "react-icons/hi";
-import {BiTask} from "react-icons/bi";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Link, useRouteMatch } from "react-router-dom";
+import { FaCogs } from "react-icons/fa";
+import { HiOutlineClipboardList } from "react-icons/hi";
+import { BiTask } from "react-icons/bi";
 import HackerInfo from "./layout/HackerInfo";
 import HackerReports from "./layout/HackerReports";
 import HackerBadges from "./layout/HackerBadges";
@@ -15,11 +15,11 @@ import HackerActivity from "./layout/HackerActivity";
 import HackerStat from "./layout/HackerStat";
 import Spinner from "../../../../shared/components/Spinner";
 
-import {handleGetUserToken} from "../../actions/index";
-import {handleGetUserInfo} from "../../actions/index";
+import { handleGetUserToken } from "../../actions/index";
+import { handleGetUserInfo } from "../../actions/index";
 
-const Main = (props) => {
-  const {dispatch, hackerInfo} = props;
+const Main = props => {
+  const { dispatch, hackerInfo } = props;
 
   const [loadded, setLoadded] = useState(false);
   const [data, setData] = useState(null);
@@ -29,6 +29,7 @@ const Main = (props) => {
 
   useEffect(() => {
     dispatch(handleGetUserInfo(token));
+    console.log(hackerInfo);
     setData(hackerInfo);
   }, [dispatch]);
 
@@ -92,7 +93,7 @@ const Main = (props) => {
   );
 };
 
-const mapStateToProps = ({blogs}) => {
+const mapStateToProps = ({ blogs }) => {
   return {
     hackerInfo: blogs.userInfo,
   };

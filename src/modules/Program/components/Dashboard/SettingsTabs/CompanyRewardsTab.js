@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from "react";
-import {BiDollar} from "react-icons/bi";
-import {getCompanyRewards, setCompanyRewards, putCompanyRewards} from "../../../../../api/ProgramAPI/ProgramSettingsApi";
-import {getNewTokens} from "../../../../../api/RefreshTokenApi";
+import React, { useState, useEffect } from "react";
+import { BiDollar } from "react-icons/bi";
+import { getCompanyRewards, setCompanyRewards, putCompanyRewards } from "../../../../../api/ProgramAPI/ProgramSettingsApi";
+import { getNewTokens } from "../../../../../api/RefreshTokenApi";
 
 const CompanyRewardsTab = () => {
   const [rewards, setRewards] = useState([
-    {level: 2, amount: 0, program: 9},
-    {level: 3, amount: 0, program: 9},
-    {level: 4, amount: 0, program: 9},
-    {level: 5, amount: 0, program: 9},
+    { level: 2, amount: 0, program: 9 },
+    { level: 3, amount: 0, program: 9 },
+    { level: 4, amount: 0, program: 9 },
+    { level: 5, amount: 0, program: 9 },
   ]);
   const [status, setStatus] = useState(null);
   const [isLoadding, setIsLoadding] = useState(false);
@@ -16,10 +16,13 @@ const CompanyRewardsTab = () => {
 
   useEffect(() => {
     getCompanyRewards(token)
-      .then((res) => {
-        setRewards(res.data);
+      .then(res => {
+        console.log(res.data);
+        if (res.data.length > 0) {
+          setRewards(res.data);
+        }
       })
-      .catch((error) => {
+      .catch(error => {
         if (error.response.status === 401) {
           getNewTokens(localStorage.getItem("reFreshtoken"));
         }
@@ -32,7 +35,7 @@ const CompanyRewardsTab = () => {
     setRewards(newRewards);
   };
 
-  const handleSubmitForm = (e) => {
+  const handleSubmitForm = e => {
     e.preventDefault();
     setIsLoadding(true);
     setStatus(null);
@@ -40,7 +43,7 @@ const CompanyRewardsTab = () => {
     let isNewRewards = true;
 
     for (let i in rewards) {
-      if (rewards[i].amount > 0) {
+      if (rewards[i].amount <= 0) {
         isNewRewards = false;
       } else {
         isNewRewards = true;
@@ -48,19 +51,21 @@ const CompanyRewardsTab = () => {
     }
 
     if (isNewRewards) {
-      setCompanyRewards(token, rewards).then((res) => {
+      setCompanyRewards(token, rewards).then(res => {
         const updatedRewards = res.data;
-        setRewards({...rewards, updatedRewards});
+        setRewards({ ...rewards, updatedRewards });
         setIsLoadding(false);
-        setStatus({type: "success", message: "تم وضع البيانات"});
+        setStatus({ type: "success", message: "تم وضع البيانات" });
       });
     } else {
-      putCompanyRewards(token, rewards).then((res) => {
-        const updatedRewards = res.data;
-        setRewards({...rewards, updatedRewards});
-        setIsLoadding(false);
-        setStatus({type: "success", message: "تم تحديث البيانات"});
-      });
+      setIsLoadding(false);
+      setStatus({ type: "danger", message: "لا يمكنك ان تتضع احدى المكافأت بصفر او جميعهم" });
+      // putCompanyRewards(token, rewards).then(res => {
+      //   const updatedRewards = res.data;
+      //   setRewards({ ...rewards, updatedRewards });
+      //   setIsLoadding(false);
+      //   setStatus({ type: "success", message: "تم تحديث البيانات" });
+      // });
     }
   };
 
@@ -96,7 +101,7 @@ const CompanyRewardsTab = () => {
                       <input
                         type="number"
                         className="form-control custom-input bg-black border-0"
-                        onChange={(e) => {
+                        onChange={e => {
                           updateRewardAmount(3, e.target.value);
                         }}
                         value={rewards[3].amount}
@@ -123,7 +128,7 @@ const CompanyRewardsTab = () => {
                         type="number"
                         className="form-control custom-input bg-black border-0"
                         value={rewards[2].amount}
-                        onChange={(e) => {
+                        onChange={e => {
                           updateRewardAmount(2, e.target.value);
                         }}
                         required
@@ -149,7 +154,7 @@ const CompanyRewardsTab = () => {
                         type="number"
                         className="form-control custom-input bg-black border-0"
                         value={rewards[0].amount}
-                        onChange={(e) => {
+                        onChange={e => {
                           updateRewardAmount(0, e.target.value);
                         }}
                         required
@@ -175,7 +180,7 @@ const CompanyRewardsTab = () => {
                         type="number"
                         className="form-control custom-input bg-black border-0"
                         value={rewards[1].amount}
-                        onChange={(e) => {
+                        onChange={e => {
                           updateRewardAmount(1, e.target.value);
                         }}
                         required

@@ -25,11 +25,7 @@ import ResetPassword from "../Reset/ResetPassword";
 import ForgetPassword from "../ForgetPassword";
 import ResetEmail from "../Reset/ResetEmail";
 
-
-
-
-
-const Home = (props) => {
+const Home = props => {
   const [parentData, setParentData] = useState({});
   const [userPhoneNumber, setUserPhoneNumber] = useState({});
 
@@ -51,7 +47,7 @@ const Home = (props) => {
         <Route exact path="/reset-password" component={ResetPassword} />
         <Route exact path="/forget-password" component={ForgetPassword} />
         <Route exact path="/reset-email" component={ResetEmail} />
-        <Route exact path="/sign-up" >
+        <Route exact path="/signup">
           <SignUp setParentData={setParentData} />
         </Route>
         <Route exact path="/email-confirmation">
@@ -63,7 +59,7 @@ const Home = (props) => {
         <Route exact path="/sms-confirmation">
           <SmsConfirmation phoneNumberFromComponent={userPhoneNumber} />
         </Route>
-        <Route exact path="/verify-email" >
+        <Route exact path="/verify-email">
           <EmailVerify userToken={parentData} />
         </Route>
         <Route exact path="/" component={Main} />

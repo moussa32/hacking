@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { DefaultAvatar } from "../../../../../assets";
 import { putCompanyInfo, getCompanyInfo, getCompanyLogo, putCompanyLogo } from "../../../../../api/ProgramAPI/ProgramSettingsApi";
 import { dvbaseUrl } from "../../../../../api/Constants";
 import { getNewTokens } from "../../../../../api/RefreshTokenApi";
@@ -24,7 +25,9 @@ const CompanyProfileTab = ({ companyLogo, companyName, companyUrl, companySummar
     });
     getCompanyLogo(token).then(res => {
       const companyLogo = res.data;
-      setLogo(`${companyLogo.logo}`);
+      if (companyLogo.logo !== null) {
+        setLogo(`${companyLogo.logo}`);
+      }
     });
   }, []);
 
@@ -66,7 +69,7 @@ const CompanyProfileTab = ({ companyLogo, companyName, companyUrl, companySummar
     <>
       <div className="row">
         <div className="col-md-6 mx-auto mb-4">
-          <img className="profile-image" src={`${dvbaseUrl}${logo}`} />
+          <img className="profile-image" src={logo !== null ? `${dvbaseUrl}${logo}` : DefaultAvatar} />
           <div className="custom-file">
             <input type="file" className="custom-file-input profile-image-input" id="customFile" onChange={avatarSelectedHandler} />
             <label className="custom-file-label profile-image-label" htmlFor="customFile">

@@ -1,22 +1,22 @@
-import React, {useState, useEffect} from "react";
-import {Link, useRouteMatch, useHistory} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import axios from "axios";
-import {MdEmail} from "react-icons/md";
-import {BsBellFill, BsFillGearFill} from "react-icons/bs";
-import {IoIosArrowDown} from "react-icons/io";
-import {FaUserAlt, FaSignOutAlt} from "react-icons/fa";
-import {DefaultAvatar} from "../../../../assets/index";
-import {dvbaseUrl} from "../../../../api/Constants";
-import {getProgramNavbar} from "../../../../api/ProgramAPI/ProgramNavbarApi";
+import { MdEmail } from "react-icons/md";
+import { BsBellFill, BsFillGearFill } from "react-icons/bs";
+import { IoIosArrowDown } from "react-icons/io";
+import { FaUserAlt, FaSignOutAlt } from "react-icons/fa";
+import { DefaultAvatar } from "../../../../assets/index";
+import { dvbaseUrl } from "../../../../api/Constants";
+import { getProgramNavbar } from "../../../../api/ProgramAPI/ProgramNavbarApi";
 
-import {WhiteLogo} from "../../../../assets/index";
-import {getNewTokens} from "../../../../api/RefreshTokenApi";
+import { WhiteLogo } from "../../../../assets/index";
+import { getNewTokens } from "../../../../api/RefreshTokenApi";
 
-const Navbar = ({currentPathname}) => {
+const Navbar = ({ currentPathname }) => {
   let match = useRouteMatch();
   const history = useHistory();
   const [activeTab, setActiveTab] = useState("main");
-  const [navbarInfo, setNavbarInfo] = useState({program: {}});
+  const [navbarInfo, setNavbarInfo] = useState({ program: {} });
 
   useEffect(() => {
     if (currentPathname.includes("/program/dashboard/activity")) {
@@ -32,10 +32,10 @@ const Navbar = ({currentPathname}) => {
 
   useEffect(() => {
     getProgramNavbar(localStorage.getItem("accessToken"))
-      .then((res) => {
+      .then(res => {
         setNavbarInfo(res.data);
       })
-      .catch((error) => {
+      .catch(error => {
         if (error.response.status === 401) {
           getNewTokens(localStorage.getItem("refreshToken"));
         } else if (error.response.status === 403) {
@@ -101,7 +101,7 @@ const Navbar = ({currentPathname}) => {
               </li>
               <li className="nav-item dropdown">
                 <button className="nav-link dropdown-toggle d-none d-sm-inline-block border-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
-                  <img src={navbarInfo && navbarInfo.program !== null ? `${dvbaseUrl}/${navbarInfo.program.logo}` : DefaultAvatar} className="hacker-avatar img-fluid rounded-circle mr-1" alt={navbarInfo && navbarInfo.program !== null ? navbarInfo.program.username : "User image"} />
+                  <img src={navbarInfo.program && navbarInfo.program.logo !== null ? `${dvbaseUrl}/${navbarInfo.program.logo}` : DefaultAvatar} className="hacker-avatar img-fluid rounded-circle mr-1" alt={navbarInfo && navbarInfo.program !== null ? navbarInfo.program.username : "User image"} />
                   <IoIosArrowDown className="text-lightgreen mr-2" size={"1.3rem"} />
                 </button>
                 <div className={`dropdown-menu text-right ml-3`}>

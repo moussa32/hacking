@@ -164,7 +164,7 @@ export const postCompanyAds = async (userAccessToken, newAd) => {
 };
 
 export const deleteCompanyAds = async (userAccessToken, adId) => {
-  const res = await axios.delete(`${dvApiUrl}​/programs/dashboard/settings/announcements/${adId}/`, {
+  const res = await axios.delete(`${dvApiUrl}/programs/dashboard/settings/announcements/${adId}/`, {
     headers: {
       Authorization: `Bearer ${userAccessToken}`,
     },

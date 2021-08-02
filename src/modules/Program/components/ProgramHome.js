@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {dvApiUrl, dvbaseUrl} from "../../../api/Constants";
+import { dvApiUrl, dvbaseUrl } from "../../../api/Constants";
 import Footer from "./layout/Footer";
 import Spinner from "../../../shared/components/Spinner";
-import {AiOutlineDollarCircle} from "react-icons/ai";
-import {FaArrowCircleLeft, FaTelegramPlane} from "react-icons/fa";
-import {handleBadgeColor} from "../../../shared/utils/handleBadgeColor";
+import { AiOutlineDollarCircle } from "react-icons/ai";
+import { FaArrowCircleLeft, FaTelegramPlane } from "react-icons/fa";
+import { handleBadgeColor } from "../../../shared/utils/handleBadgeColor";
 
 function ProgramHome(props) {
-  const {match} = props;
+  const { match } = props;
   const [programInfo, setProgramInfo] = useState(null);
   const [isLoadding, setIsLoadding] = useState(false);
   useEffect(() => {
     if (match.params.id) {
-      axios.get(`${dvApiUrl}/programs/${match.params.id}/`).then((res) => {
+      axios.get(`${dvApiUrl}/programs/${match.params.id}/`).then(res => {
         setProgramInfo(res.data);
         setIsLoadding(true);
       });
@@ -36,7 +36,7 @@ function ProgramHome(props) {
             <div className="row p-4 bg-black">
               <div className="col-md-3">
                 <img className="program-logo" src={`${dvbaseUrl}/${programInfo.logo}`} alt={programInfo.company_name} />
-                <a className="d-block text-center mt-3" href={programInfo.url} target="_blank">
+                <a className="d-block text-center mt-3 text-break" href={programInfo.url} target="_blank">
                   {programInfo.url}
                 </a>
               </div>
@@ -46,7 +46,7 @@ function ProgramHome(props) {
                     <h3 className="program-title">{programInfo.company_name}</h3>
                     <p className="program-summery text-muted small text-break lead">{programInfo.summery}</p>
                   </div>
-                  <button className="btn btn-lightgreen align-self-center">تسليم التقرير</button>
+                  <button className="btn btn-lightgreen align-self-center px-4 disabled">تسليم التقرير</button>
                 </div>
                 <div className="jumbotron bg-second p-3 mt-3">
                   <div className="row">
@@ -130,7 +130,7 @@ function ProgramHome(props) {
                       <div className="container">
                         <h3 className="text-lightgreen text-right my-4">النطاقات</h3>
                         {programInfo.in_scope_assets.length > 0
-                          ? programInfo.in_scope_assets.map((asset) => {
+                          ? programInfo.in_scope_assets.map(asset => {
                               return (
                                 <div key={asset.id} className="jumbotron bg-black pb-4 program-home-tab-section">
                                   <div className="row flex-row-reverse">
@@ -190,7 +190,7 @@ function ProgramHome(props) {
                   <div className="tab-pane fade" id="rewards" role="tabpanel" aria-labelledby="rewards-tab">
                     <div className="row">
                       {programInfo.bounty_bars && programInfo.bounty_bars.length > 0
-                        ? programInfo.bounty_bars.map((bar) => {
+                        ? programInfo.bounty_bars.map(bar => {
                             return (
                               <div className="col-md-6 py-3">
                                 <div className="card bg-second">
@@ -243,7 +243,7 @@ function ProgramHome(props) {
                   </div>
                   <div className="tab-pane fade" id="ads" role="tabpanel" aria-labelledby="ads-tab">
                     {programInfo.announcements && programInfo.announcements.length > 0
-                      ? programInfo.announcements.map((announcement) => {
+                      ? programInfo.announcements.map(announcement => {
                           return (
                             <div key={announcement.id} className="jumbotron bg-second py-4 program-home-tab-section text-right">
                               <div className="row">
@@ -263,7 +263,7 @@ function ProgramHome(props) {
                   <div className="tab-pane fade" id="thanksBoard" role="tabpanel" aria-labelledby="thanksBoard-tab">
                     <div className="row pb-4">
                       {programInfo.thanked_hackers.length > 0
-                        ? programInfo.thanked_hackers.map((hacker) => {
+                        ? programInfo.thanked_hackers.map(hacker => {
                             return (
                               <div className="col-md-12 mb-3">
                                 <div className="card bg-second border-0">
