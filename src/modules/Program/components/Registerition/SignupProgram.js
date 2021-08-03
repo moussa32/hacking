@@ -1,10 +1,11 @@
-import React, {useState} from "react";
-import {Link, useHistory} from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Input from "../../../../shared/components/FormFields/Input";
+import { dvApiUrl } from "../../../../api/Constants";
 
 import Logo from "../../../../assets/images/green-logo.svg";
 
-import {CountryDropdown} from "react-country-region-selector";
+import { CountryDropdown } from "react-country-region-selector";
 import PhoneInput from "react-phone-input-2";
 import ar from "react-phone-input-2/lang/ar.json";
 
@@ -25,9 +26,9 @@ const SignupProgram = () => {
   const [isLoadding, setIsLoadding] = useState(false);
   const history = useHistory();
 
-  const onTyping = (e) => {
+  const onTyping = e => {
     e.persist();
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleValidation = () => {
@@ -45,7 +46,7 @@ const SignupProgram = () => {
     }
 
     if (usernameError) {
-      setStatus({usernameError});
+      setStatus({ usernameError });
       return false;
     }
 
@@ -54,7 +55,7 @@ const SignupProgram = () => {
     }
 
     if (emailError) {
-      setStatus({emailError});
+      setStatus({ emailError });
       return false;
     }
 
@@ -63,7 +64,7 @@ const SignupProgram = () => {
     }
 
     if (countryError) {
-      setStatus({countryError});
+      setStatus({ countryError });
       return false;
     }
 
@@ -72,7 +73,7 @@ const SignupProgram = () => {
     }
 
     if (phoneNumberError) {
-      setStatus({phoneNumberError});
+      setStatus({ phoneNumberError });
       return false;
     }
 
@@ -81,7 +82,7 @@ const SignupProgram = () => {
     }
 
     if (passwordError) {
-      setStatus({passwordError});
+      setStatus({ passwordError });
       return false;
     }
 
@@ -90,7 +91,7 @@ const SignupProgram = () => {
     }
 
     if (passwordError) {
-      setStatus({passwordError});
+      setStatus({ passwordError });
       return false;
     }
 
@@ -99,7 +100,7 @@ const SignupProgram = () => {
     }
 
     if (companyNameError) {
-      setStatus({companyNameError});
+      setStatus({ companyNameError });
       return false;
     }
 
@@ -108,7 +109,7 @@ const SignupProgram = () => {
     }
 
     if (companyURLError) {
-      setStatus({companyURLError});
+      setStatus({ companyURLError });
       return false;
     }
 
@@ -117,14 +118,14 @@ const SignupProgram = () => {
     }
 
     if (accept_rulesError) {
-      setStatus({accept_rulesError});
+      setStatus({ accept_rulesError });
       return false;
     }
     setStatus({});
     return true;
   };
 
-  const handleSignupProgram = (e) => {
+  const handleSignupProgram = e => {
     e.preventDefault();
 
     const isValid = handleValidation();
@@ -133,15 +134,15 @@ const SignupProgram = () => {
       setIsLoadding(true);
 
       axios
-        .post("http://bugbounty.pythonanywhere.com/api/v1/auth/programs/signup/", formData)
-        .then((programData) => {
+        .post(`${dvApiUrl}/auth/programs/signup/`, formData)
+        .then(programData => {
           console.log(programData);
           localStorage.setItem("accessToken", programData.data.access_token);
           localStorage.setItem("refreshToken", programData.data.refresh_token);
           localStorage.setItem("type", "program");
           localStorage.setItem("registerEmail", programData.data.email);
           setIsLoadding(false);
-          setStatus({created: "تم تسجيل البرنامج بنجاح جاري تحويلك"});
+          setStatus({ created: "تم تسجيل البرنامج بنجاح جاري تحويلك" });
           setTimeout(() => {
             history.push("/program/email-confirmation");
           }, 2000);
@@ -149,9 +150,9 @@ const SignupProgram = () => {
         .catch(function (error) {
           setIsLoadding(false);
           if (error.response.data.username) {
-            setStatus({usernameError: error.response.data.username});
+            setStatus({ usernameError: error.response.data.username });
           } else if (error.response.data.email) {
-            setStatus({emailError: error.response.data.email});
+            setStatus({ emailError: error.response.data.email });
           }
         });
     }
@@ -181,7 +182,7 @@ const SignupProgram = () => {
                 <label htmlFor="rcrs-country" className="d-block">
                   الدولة
                 </label>
-                <CountryDropdown value={formData.country} id="rcrs-country" className="form-control custom-input country-input" defaultOptionLabel={""} onChange={(val) => setFormData({...formData, country: val})} />
+                <CountryDropdown value={formData.country} id="rcrs-country" className="form-control custom-input country-input" defaultOptionLabel={""} onChange={val => setFormData({ ...formData, country: val })} />
               </div>
               {status.countryError ? (
                 <div className="mt-2 alert alert-danger custom-danger-alert" role="alert">
@@ -192,7 +193,7 @@ const SignupProgram = () => {
                 <label htmlFor="" className="d-block">
                   رقم الهاتف
                 </label>
-                <PhoneInput country={"kw"} name="phone_number" localization={ar} enableSearch={true} inputClass={"w-100"} containerStyle={{borderRadius: "5px", border: "1px #ddd solid"}} onChange={(number) => setFormData({...formData, phoneNumber: number})} />
+                <PhoneInput country={"kw"} name="phone_number" localization={ar} enableSearch={true} inputClass={"w-100"} containerStyle={{ borderRadius: "5px", border: "1px #ddd solid" }} onChange={number => setFormData({ ...formData, phoneNumber: number })} />
               </div>
               {status.phoneNumberError ? (
                 <div className="mt-2 alert alert-danger custom-danger-alert" role="alert">
@@ -220,20 +221,20 @@ const SignupProgram = () => {
                 </ul>
               </div>
               <h4 className="my-4 text-lightgreen">معلومات عن الشركة</h4>
-              <Input inputClassNames="custom-input" type="text" id="company_name" label="اسم الشركة" value={formData.program.company_name} onChange={(companyName) => setFormData({...formData, program: {...formData.program, company_name: companyName.target.value}})} />
+              <Input inputClassNames="custom-input" type="text" id="company_name" label="اسم الشركة" value={formData.program.company_name} onChange={companyName => setFormData({ ...formData, program: { ...formData.program, company_name: companyName.target.value } })} />
               {status.companyNameError ? (
                 <div className="mt-2 alert alert-danger custom-danger-alert" role="alert">
                   {status.companyNameError}
                 </div>
               ) : null}
-              <Input inputClassNames="custom-input" type="url" id="companyUrl" label="الرابط الخاص بالشركة" value={formData.program.url} onChange={(url) => setFormData({...formData, program: {...formData.program, url: url.target.value}})} />
+              <Input inputClassNames="custom-input" type="url" id="companyUrl" label="الرابط الخاص بالشركة" value={formData.program.url} onChange={url => setFormData({ ...formData, program: { ...formData.program, url: url.target.value } })} />
               {status.companyURLError ? (
                 <div className="mt-2 alert alert-danger custom-danger-alert" role="alert">
                   {status.companyURLError}
                 </div>
               ) : null}
               <div className="form-group">
-                <input className="form-check-input signup-checkbox bg-dark" name="accept_rules" type="checkbox" id="accept_rules" onChange={(rule) => setFormData({...formData, accept_rules: rule.target.checked})} />
+                <input className="form-check-input signup-checkbox bg-dark" name="accept_rules" type="checkbox" id="accept_rules" onChange={rule => setFormData({ ...formData, accept_rules: rule.target.checked })} />
                 <label className="form-check-label signup-checkbox-label" htmlFor="accept_rules">
                   موافق على{" "}
                   <Link to="/terms-of-use" className="text-lightgreen">
