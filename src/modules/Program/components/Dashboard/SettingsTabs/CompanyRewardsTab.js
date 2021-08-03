@@ -1,71 +1,63 @@
 import React, { useState, useEffect } from "react";
 import { BiDollar } from "react-icons/bi";
-import { getCompanyRewards, setCompanyRewards, putCompanyRewards } from "../../../../../api/ProgramAPI/ProgramSettingsApi";
+import { handleLevelToName } from "../../../../../shared/utils/handleLevelName";
+import { handleBadgeColor } from "../../../../../shared/utils/handleBadgeColor";
+import { getCompanyRewards, putCompanyRewards } from "../../../../../api/ProgramAPI/ProgramSettingsApi";
 import { getNewTokens } from "../../../../../api/RefreshTokenApi";
 
 const CompanyRewardsTab = () => {
   const [rewards, setRewards] = useState([
-    { level: 2, amount: 0, program: 9 },
-    { level: 3, amount: 0, program: 9 },
-    { level: 4, amount: 0, program: 9 },
-    { level: 5, amount: 0, program: 9 },
+    { id: 0, level: 2, amount: 0, program: 9 },
+    { id: 1, level: 3, amount: 0, program: 9 },
+    { id: 2, level: 4, amount: 0, program: 9 },
+    { id: 3, level: 5, amount: 0, program: 9 },
   ]);
   const [status, setStatus] = useState(null);
+  const [isNewRewards, setIsNewRewards] = useState(false);
   const [isLoadding, setIsLoadding] = useState(false);
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     getCompanyRewards(token)
       .then(res => {
-        console.log(res.data);
-        if (res.data.length > 0) {
-          setRewards(res.data);
-        }
+        setRewards(res.data);
       })
       .catch(error => {
         if (error.response.status === 401) {
-          getNewTokens(localStorage.getItem("reFreshtoken"));
+          getNewTokens(localStorage.getItem("refreshToken"));
         }
       });
   }, []);
 
-  const updateRewardAmount = (index, newData) => {
-    let newRewards = [...rewards];
-    newRewards[index].amount = newData;
-    setRewards(newRewards);
+  const updateRewardAmount = (rewardID, rewardLevel, rewardAmount) => {
+    setRewards(
+      rewards.map(reward => {
+        return reward.level === rewardLevel ? { ...reward, id: rewardID, amount: rewardAmount } : reward;
+      })
+    );
   };
+
+  // let hasZero = Object.keys(rewards).some(reward => !rewards[reward])
+
+  const checkRewards = reward => {
+    return reward.amount <= 0;
+  };
+
+  let hasZero = rewards.some(checkRewards);
 
   const handleSubmitForm = e => {
     e.preventDefault();
     setIsLoadding(true);
     setStatus(null);
 
-    let isNewRewards = true;
-
-    for (let i in rewards) {
-      if (rewards[i].amount <= 0) {
-        isNewRewards = false;
-      } else {
-        isNewRewards = true;
-      }
-    }
-
-    if (isNewRewards) {
-      setCompanyRewards(token, rewards).then(res => {
-        const updatedRewards = res.data;
-        setRewards({ ...rewards, updatedRewards });
-        setIsLoadding(false);
-        setStatus({ type: "success", message: "تم وضع البيانات" });
-      });
-    } else {
+    if (hasZero) {
       setIsLoadding(false);
-      setStatus({ type: "danger", message: "لا يمكنك ان تتضع احدى المكافأت بصفر او جميعهم" });
-      // putCompanyRewards(token, rewards).then(res => {
-      //   const updatedRewards = res.data;
-      //   setRewards({ ...rewards, updatedRewards });
-      //   setIsLoadding(false);
-      //   setStatus({ type: "success", message: "تم تحديث البيانات" });
-      // });
+      setStatus({ type: "danger", message: "لا يمكنك وضع اي مكافأة بدون قيمة" });
+    } else {
+      putCompanyRewards(token, rewards).then(res => {
+        setIsLoadding(false);
+        setStatus({ type: "success", message: "تم وضع البيانات بنجاح" });
+      });
     }
   };
 
@@ -87,110 +79,36 @@ const CompanyRewardsTab = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-12 mb-3">
-            <div className="card border-0 bg-second">
-              <div className="card-body pt-3 pb-0 align-items-center">
-                <div className="row">
-                  <div className="col-md-4 mb-3 d-flex align-items-center">
-                    <span className="badge badge-danger program-bountry-bars"></span>
-                    <p className="align-self-center lead mb-0">ضروري</p>
-                  </div>
-                  <div className="col-md-8 mb-3">
-                    <div className="inner-addon left-addon">
-                      <BiDollar className="text-lightgreen glyphicon" size={"1.4rem"} />
-                      <input
-                        type="number"
-                        className="form-control custom-input bg-black border-0"
-                        onChange={e => {
-                          updateRewardAmount(3, e.target.value);
-                        }}
-                        value={rewards[3].amount}
-                        required
-                      />
+          {rewards.map(reward => {
+            return (
+              <div key={reward.id} className="col-md-12 mb-3">
+                <div className="card border-0 bg-second">
+                  <div className="card-body pt-3 pb-0 align-items-center">
+                    <div className="row">
+                      <div className="col-md-4 mb-3 d-flex align-items-center">
+                        <span className={`badge badge-${handleBadgeColor(handleLevelToName(reward.level))} program-bountry-bars`}></span>
+                        <p className="align-self-center lead mb-0">{handleLevelToName(reward.level)}</p>
+                      </div>
+                      <div className="col-md-8 mb-3">
+                        <div className="inner-addon left-addon">
+                          <BiDollar className="text-lightgreen glyphicon" size={"1.4rem"} />
+                          <input
+                            type="number"
+                            className="form-control custom-input bg-black border-0"
+                            onChange={e => {
+                              updateRewardAmount(reward.id, reward.level, parseInt(e.target.value));
+                            }}
+                            value={reward.amount}
+                            required
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="col-md-12 mb-3">
-            <div className="card border-0 bg-second">
-              <div className="card-body pt-3 pb-0 align-items-center">
-                <div className="row">
-                  <div className="col-md-4 mb-3 d-flex align-items-center">
-                    <span className="badge badge-success program-bountry-bars"></span>
-                    <p className="align-self-center lead mb-0">مرتفع</p>
-                  </div>
-                  <div className="col-md-8 mb-3">
-                    <div className="inner-addon left-addon">
-                      <BiDollar className="text-lightgreen glyphicon" size={"1.4rem"} />
-                      <input
-                        type="number"
-                        className="form-control custom-input bg-black border-0"
-                        value={rewards[2].amount}
-                        onChange={e => {
-                          updateRewardAmount(2, e.target.value);
-                        }}
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-12 mb-3">
-            <div className="card border-0 bg-second">
-              <div className="card-body pt-3 pb-0 align-items-center">
-                <div className="row">
-                  <div className="col-md-4 mb-3 d-flex align-items-center">
-                    <span className="badge badge-warning program-bountry-bars"></span>
-                    <p className="align-self-center lead mb-0">منخفض</p>
-                  </div>
-                  <div className="col-md-8 mb-3">
-                    <div className="inner-addon left-addon">
-                      <BiDollar className="text-lightgreen glyphicon" size={"1.4rem"} />
-                      <input
-                        type="number"
-                        className="form-control custom-input bg-black border-0"
-                        value={rewards[0].amount}
-                        onChange={e => {
-                          updateRewardAmount(0, e.target.value);
-                        }}
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-12 mb-3">
-            <div className="card border-0 bg-second">
-              <div className="card-body pt-3 pb-0 align-items-center">
-                <div className="row">
-                  <div className="col-md-4 mb-3 d-flex align-items-center">
-                    <span className="badge badge-warning program-bountry-bars"></span>
-                    <p className="align-self-center lead mb-0">متوسط</p>
-                  </div>
-                  <div className="col-md-8 mb-3">
-                    <div className="inner-addon left-addon">
-                      <BiDollar className="text-lightgreen glyphicon" size={"1.4rem"} />
-                      <input
-                        type="number"
-                        className="form-control custom-input bg-black border-0"
-                        value={rewards[1].amount}
-                        onChange={e => {
-                          updateRewardAmount(1, e.target.value);
-                        }}
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            );
+          })}
           <button type="submit" className="btn btn-lightgreen d-block w-50 mx-auto">
             اضافة المكافأت
           </button>
