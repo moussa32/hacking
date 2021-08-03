@@ -12,6 +12,7 @@ import Leaderboard from "./Dashboard/Leaderboard";
 import ProgramHome from "./ProgramHome";
 import Settings from "./Dashboard/Settings.js";
 import Navbar from "./layout/Navbar";
+import MainNavbar from "../../../modules/Blog/components/layout/Navbar";
 import { handleGetProgram } from "../actions";
 
 const Program = ({ location, dispatch }) => {
@@ -20,7 +21,7 @@ const Program = ({ location, dispatch }) => {
   }, [dispatch]);
   return (
     <>
-      <Navbar currentPathname={location.pathname} />
+      {localStorage.getItem("accessToken") ? <Navbar currentPathname={location.pathname} /> : <MainNavbar currentPathname={location.pathname} />}
       <Switch>
         <Route exact path="/not-found" component={NotFound} />
         <Route exact path="/program/signup" component={SignupProgram} />
