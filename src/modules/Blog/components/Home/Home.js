@@ -47,7 +47,7 @@ const Home = props => {
         <Route exact path="/reset-password" component={ResetPassword} />
         <Route exact path="/forget-password" component={ForgetPassword} />
         <Route exact path="/reset-email" component={ResetEmail} />
-        <Route exact path="/signup">
+        <Route exact path="/hacker/signup">
           <SignUp setParentData={setParentData} />
         </Route>
         <Route exact path="/email-confirmation">

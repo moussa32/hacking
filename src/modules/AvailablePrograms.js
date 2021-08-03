@@ -1,9 +1,9 @@
-import React, {useEffect, useState, useMemo} from "react";
-import {FaDollarSign} from "react-icons/fa";
+import React, { useEffect, useState, useMemo } from "react";
+import { FaDollarSign } from "react-icons/fa";
 import Spinner from "../shared/components/Spinner";
 import Swiper from "react-id-swiper";
-import {getAvailablePrograms, getAvailableProgramsByPram} from "../api/AvailableProgramsApi";
-import {getNewTokens} from "../api/RefreshTokenApi";
+import { getAvailablePrograms, getAvailableProgramsByPram } from "../api/AvailableProgramsApi";
+import { getNewTokens } from "../api/RefreshTokenApi";
 import CustomSelect from "../shared/components/FormFields/CustomSelect";
 import Footer from "./Program/components/layout/Footer";
 import Navbar from "../modules/Blog/components/layout/Navbar";
@@ -12,7 +12,7 @@ import ProgramNavbar from "./Program/components/layout/Navbar";
 import "swiper/css/swiper.css";
 import "./AvailablePrograms.css";
 
-const AvailablePrograms = (props) => {
+const AvailablePrograms = props => {
   const [initPrograms, setInitPrograms] = useState(null);
   const [programs, setPrograms] = useState(null);
   const [programType, setProgramType] = useState(null);
@@ -22,34 +22,34 @@ const AvailablePrograms = (props) => {
   const reFreshtoken = localStorage.getItem("refreshToken");
   const allAvailablePrograms = getAvailablePrograms(token);
 
-  const convertDate = (ISODate) => {
+  const convertDate = ISODate => {
     let newDate = new Date(`${ISODate}`);
     let convertedDate = `${newDate.getFullYear()}/${newDate.getMonth() + 1}/${newDate.getDay()}`;
     return convertedDate;
   };
 
-  const onProductType = (type) => {
+  const onProductType = type => {
     if (type) {
-      setProgramType({...programType, type: type.value.toLowerCase()});
+      setProgramType({ ...programType, type: type.value.toLowerCase() });
     } else {
-      setProgramType({...programType, type: ""});
+      setProgramType({ ...programType, type: "" });
     }
   };
 
-  const onProductStatus = (statue) => {
+  const onProductStatus = statue => {
     if (statue) {
-      setProgramType({...programType, status: statue.value.toLowerCase()});
+      setProgramType({ ...programType, status: statue.value.toLowerCase() });
     } else {
-      setProgramType({...programType, status: ""});
+      setProgramType({ ...programType, status: "" });
     }
   };
 
-  const handleFetch = (option) => {
+  const handleFetch = option => {
     getAvailableProgramsByPram(option)
-      .then((res) => {
+      .then(res => {
         setPrograms(() => res.data);
       })
-      .catch((error) => {
+      .catch(error => {
         if (error.response.status === 400) {
           console.log(error.response.data.program_assets__type[0]);
         } else if (error.response.status === 401) {
@@ -71,7 +71,7 @@ const AvailablePrograms = (props) => {
   }, [programType]);
 
   useEffect(() => {
-    allAvailablePrograms.then((item) => {
+    allAvailablePrograms.then(item => {
       setPrograms(item.data);
       setInitPrograms(item.data);
       setLoadded(true);
@@ -140,9 +140,9 @@ const AvailablePrograms = (props) => {
                               <CustomSelect
                                 id="program-type"
                                 options={[
-                                  {value: "opened", label: "مفتوح"},
-                                  {value: "closed", label: "مغلق"},
-                                  {value: "eligable", label: "مدفوع"},
+                                  { value: "opened", label: "مفتوح" },
+                                  { value: "closed", label: "مغلق" },
+                                  { value: "eligable", label: "مدفوع" },
                                 ]}
                                 isClearable={true}
                                 isSearchable={true}
@@ -155,10 +155,10 @@ const AvailablePrograms = (props) => {
                               <CustomSelect
                                 id="product-type"
                                 options={[
-                                  {value: "Windows", label: "Windows"},
-                                  {value: "IOS", label: "IOS"},
-                                  {value: "Android", label: "Android"},
-                                  {value: "dm", label: "Domain Name"},
+                                  { value: "Windows", label: "Windows" },
+                                  { value: "IOS", label: "IOS" },
+                                  { value: "Android", label: "Android" },
+                                  { value: "dm", label: "Domain Name" },
                                 ]}
                                 isClearable={true}
                                 isSearchable={true}
@@ -176,7 +176,7 @@ const AvailablePrograms = (props) => {
                             </>
                           ) : (
                             <div className="row section-container px-0">
-                              {programs.map((program) => {
+                              {programs.map(program => {
                                 return (
                                   <div key={program.id} className="col-xl-4 col-md-4 p-3 rounded">
                                     <a href={`/program/${program.id}/${program.company_name}`} className="card bg-second border-0 program-card text-white text-decoration-none">

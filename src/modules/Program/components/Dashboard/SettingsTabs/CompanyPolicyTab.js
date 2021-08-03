@@ -9,6 +9,7 @@ import "./CompanyPoliceTab.css";
 function CompanyPolicyTab() {
   const [policy, setPolicy] = useState({ policy: "" });
   const [isLoadding, setIsLoadding] = useState(false);
+  const [selectedTab, setSelectedTab] = useState("write");
   const [status, setStatus] = useState(null);
   const [value, setValue] = useState("**Hello world!!!**");
 
@@ -57,6 +58,7 @@ function CompanyPolicyTab() {
       <div className="row">
         <div className="col-md-11 mx-auto">
           <div className="form-group">
+            <ReactMde value={policy.policy} onChange={e => setPolicy({ policy: e })} selectedTab={selectedTab} onTabChange={setSelectedTab} />
             <textarea value={policy.policy} onChange={e => setPolicy({ policy: e.target.value })} className="form-control p-3 custom-input border-0" id="summary" rows="6" name="summary"></textarea>
           </div>
           <button className="btn btn-lightgreen w-50 btn-block mx-auto my-4" onClick={handlePutCompanyPolicy}>

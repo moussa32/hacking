@@ -1,18 +1,23 @@
-import React from 'react';
+import React from "react";
 import { connect } from "react-redux";
-import { GiSkills } from 'react-icons/gi';
+import { GiSkills } from "react-icons/gi";
 
 const HackerSkills = ({ skills }) => {
   return (
     <>
       <div className="jumbotron jumbotron-fluid bg-black rounded py-4">
         <div className="container px-4">
-          <h2 className="section-title text-right">{skills.length === 0 ? ('') : (<GiSkills className="section-icon mb-1 ml-2" size={"2rem"} />)}المهارات</h2>
+          <h2 className="section-title text-right">{skills.length === 0 ? "" : <GiSkills className="section-icon mb-1 ml-2" size={"2rem"} />}المهارات</h2>
           <div className="section-container mt-4">
-            {skills.length === 0 ? (<><GiSkills className="mt-4" size={"4rem"} /><p className="mt-4 lead mb-0">أضف بعض المهارات</p></>) : (
-              <>{
-                skills.map(skill => {
-                  return (
+            {skills.length === 0 ? (
+              <>
+                <GiSkills className="mt-4" size={"4rem"} />
+                <p className="mt-4 lead mb-0">أضف بعض المهارات</p>
+              </>
+            ) : (
+              <>
+                {skills.map(skill => {
+                  return skill.rating !== 0 ? (
                     <div className="col-md-12 skill-body py-4">
                       <div className="row align-items-center skill-container">
                         <div className="col-md-4">
@@ -26,16 +31,16 @@ const HackerSkills = ({ skills }) => {
                         </div>
                       </div>
                     </div>
-                  )
-                })
-              }
-              </>)}
+                  ) : null;
+                })}
+              </>
+            )}
           </div>
         </div>
       </div>
     </>
   );
-}
+};
 
 const mapStateToProps = ({ blogs }) => {
   return {

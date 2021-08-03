@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from "react";
-import {Link} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import {GreenLogo} from "../../../../assets/index";
+import { GreenLogo } from "../../../../assets/index";
 
-const Navbar = ({currentPathname}) => {
+const Navbar = ({ currentPathname }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
 
@@ -12,6 +12,10 @@ const Navbar = ({currentPathname}) => {
       return setActiveTab("blog");
     } else if (currentPathname === "/about-us") {
       return setActiveTab("about-us");
+    } else if (currentPathname === "/signup") {
+      return setActiveTab("signup");
+    } else if (currentPathname === "/available-programs") {
+      return setActiveTab("available-programs");
     } else if (currentPathname === "/contact-us") {
       setActiveTab("contact-us");
     } else if (currentPathname === "/login") {
@@ -31,7 +35,7 @@ const Navbar = ({currentPathname}) => {
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" onClick={toggle}>
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarNavAltMarkup" style={{display: isOpen ? "block" : "none"}}>
+      <div className="collapse navbar-collapse" id="navbarNavAltMarkup" style={{ display: isOpen ? "block" : "none" }}>
         <ul className="navbar-nav">
           <li className={`nav-item ${activeTab === "home" ? "active" : ""}`} id="home">
             <Link className="nav-link" to="/">
@@ -43,6 +47,11 @@ const Navbar = ({currentPathname}) => {
               المدونة
             </Link>
           </li>
+          <li className={`nav-item ${activeTab === "available-programs" ? "active" : ""}`} id="available-programs">
+            <Link className="nav-link" to="/available-programs">
+              البرامج المتاحة
+            </Link>
+          </li>
           <li className={`nav-item ${activeTab === "about-us" ? "active" : ""}`} id="about-us">
             <Link className="nav-link" to="/about-us">
               من نحن
@@ -51,6 +60,11 @@ const Navbar = ({currentPathname}) => {
           <li className={`nav-item ${activeTab === "contact-us" ? "active" : ""}`} id="contact-us">
             <Link className="nav-link" to="/contact-us">
               اتصل بنا
+            </Link>
+          </li>
+          <li className={`nav-item ${activeTab === "signup" ? "active" : ""}`} id="signup">
+            <Link className="nav-link" to="/signup">
+              إنضم إلينا
             </Link>
           </li>
         </ul>

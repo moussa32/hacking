@@ -823,6 +823,10 @@ blockquote:nth-of-type(even) footer:after {
   transition: 0.8s;
 }
 
+.bg-lightgreen {
+  background-color: var(--lightGreen);
+}
+
 .login-logo {
   max-width: 110px;
   height: 75px;

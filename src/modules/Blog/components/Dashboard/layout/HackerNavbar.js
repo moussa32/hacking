@@ -1,21 +1,21 @@
-import React, {useState, useEffect} from "react";
-import {Link, useHistory} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import {handleRemoveUserToken} from "../../../actions/index";
-import {getNewTokens} from "../../../../../api/RefreshTokenApi";
-import {getHackerNavbar} from "../../../../../api/HackerNavbarApi";
-import {MdEmail} from "react-icons/md";
-import {BsBellFill, BsFillGearFill} from "react-icons/bs";
-import {IoIosArrowDown} from "react-icons/io";
-import {FaUserAlt, FaSignOutAlt} from "react-icons/fa";
-import {dvbaseUrl} from "../../../../../api/Constants";
-import {DefaultAvatar} from "../../../../../assets/index";
-import {dvApiUrl} from "../../../../../api/Constants";
+import { handleRemoveUserToken } from "../../../actions/index";
+import { getNewTokens } from "../../../../../api/RefreshTokenApi";
+import { getHackerNavbar } from "../../../../../api/HackerNavbarApi";
+import { MdEmail } from "react-icons/md";
+import { BsBellFill, BsFillGearFill } from "react-icons/bs";
+import { IoIosArrowDown } from "react-icons/io";
+import { FaUserAlt, FaSignOutAlt } from "react-icons/fa";
+import { dvbaseUrl } from "../../../../../api/Constants";
+import { DefaultAvatar } from "../../../../../assets/index";
+import { dvApiUrl } from "../../../../../api/Constants";
 
-import {WhiteLogo} from "../../../../../assets/index";
+import { WhiteLogo } from "../../../../../assets/index";
 
-const HackerNavbar = (props) => {
-  const {currentPathname} = props;
+const HackerNavbar = props => {
+  const { currentPathname } = props;
   const [navbarInfo, setNavbarInfo] = useState(null);
   const [data, setData] = useState(null);
   const [loadded, setLoadded] = useState(null);
@@ -37,9 +37,10 @@ const HackerNavbar = (props) => {
   }, [currentPathname]);
 
   useEffect(() => {
-    getHackerNavbar(token).then((res) => {
+    getHackerNavbar(token).then(res => {
       setLoadded(true);
       setNavbarInfo(res.data);
+      console.log(res.data);
     });
   }, []);
 
@@ -100,7 +101,7 @@ const HackerNavbar = (props) => {
               </li>
               <li className="nav-item dropdown">
                 <button className="nav-link dropdown-toggle d-none d-sm-inline-block border-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
-                  <img src={navbarInfo !== null ? `${dvbaseUrl}/${navbarInfo.hacker.avater}` : `${DefaultAvatar}`} className="hacker-avatar img-fluid rounded-circle mr-1" alt={navbarInfo !== null && navbarInfo.username} />
+                  <img src={navbarInfo !== null && navbarInfo.hacker.avater !== null ? `${dvbaseUrl}/${navbarInfo.hacker.avater}` : `${DefaultAvatar}`} className="hacker-avatar img-fluid rounded-circle mr-1" alt={navbarInfo !== null && navbarInfo.username} />
                   <IoIosArrowDown className="text-lightgreen mr-2" size={"1.3rem"} />
                 </button>
                 <div className={`dropdown-menu text-right ml-3`}>

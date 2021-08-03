@@ -5,7 +5,7 @@ import { CountryDropdown } from "react-country-region-selector";
 import { getNewTokens } from "../../../../../api/RefreshTokenApi";
 import { DefaultAvatar } from "../../../../../assets";
 import { handleGetUserToken } from "../../../actions/index";
-import { putHackerAvatar, putHackerInfo } from "../../../../../api/HackerSettingsApi";
+import { putHackerAvatar, putHackerInfo, getHackerInfo } from "../../../../../api/HackerSettingsApi";
 import "./ProfileTab.css";
 
 const ProfileTab = ({ avater }) => {
@@ -28,8 +28,19 @@ const ProfileTab = ({ avater }) => {
       },
     },
   });
+  const [modifiedProfile, setModifiedProfile] = useState({});
 
   useEffect(() => {
+    getHackerInfo(token)
+      .then(res => {
+        const hackerInfo = res.data;
+        setProfile(hackerInfo);
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          getNewTokens(localStorage.getItem("refreshToken"));
+        }
+      });
     setAvatar(avater);
   }, []);
   const token = handleGetUserToken("accessToken");
@@ -38,14 +49,17 @@ const ProfileTab = ({ avater }) => {
     let event = e.target;
 
     if (event.name === "linkedin" || event.name === "github" || event.name === "twitter") {
+      setModifiedProfile({ ...modifiedProfile, hacker: { ...modifiedProfile.hacker, [event.name]: event.value } });
       setProfile({ ...profile, hacker: { ...profile.hacker, [event.name]: event.value } });
     } else {
+      setModifiedProfile({ ...modifiedProfile, [event.name]: event.value });
       setProfile({ ...profile, [event.name]: event.value });
     }
   };
 
   const handleCountryInput = e => {
     setProfile({ ...profile, country: e });
+    setModifiedProfile({ ...modifiedProfile, country: e });
   };
 
   const avatarSelectedHandler = e => {
@@ -55,7 +69,6 @@ const ProfileTab = ({ avater }) => {
 
     return putHackerAvatar(token, formatImage)
       .then(res => {
-        console.log(res.data);
         setAvatar(res.data.avater);
       })
       .catch(error => {
@@ -69,11 +82,10 @@ const ProfileTab = ({ avater }) => {
     e.preventDefault();
     setIsLoadding(true);
 
-    putHackerInfo(token, profile)
+    putHackerInfo(token, modifiedProfile)
       .then(res => {
         setIsLoadding(false);
         setStatus({ type: "success", message: "تم تعديل البيانات بنجاح" });
-        console.log(res.data);
       })
       .catch(error => {
         setIsLoadding(false);
@@ -82,8 +94,6 @@ const ProfileTab = ({ avater }) => {
           getNewTokens(localStorage.getItem("refreshToken"));
         }
       });
-
-    console.log(profile);
   };
 
   return (
@@ -104,43 +114,31 @@ const ProfileTab = ({ avater }) => {
           <form className="profile-settings" onSubmit={newProfileSettings}>
             <div className="form-group">
               <label htmlFor="firstName">الاسم الأول</label>
-              <input type="text" className="form-control custom-input border-0" name="first_name" id="firstName" onChange={handleInput} />
+              <input type="text" value={profile.first_name} className="form-control custom-input border-0" name="first_name" id="firstName" onChange={handleInput} />
             </div>
             <div className="form-group">
               <label htmlFor="lastName">الاسم الاخير</label>
-              <input type="text" className="form-control custom-input border-0" name="last_name" id="lastName" onChange={handleInput} />
+              <input type="text" value={profile.last_name} className="form-control custom-input border-0" name="last_name" id="lastName" onChange={handleInput} />
             </div>
             <div className="form-group">
               <label htmlFor="country">الدولة</label>
-              <CountryDropdown className="form-control custom-input country-input border-0" value={profile.country} name="country" onChange={handleCountryInput} />
+              <CountryDropdown value={profile.country} className="form-control custom-input country-input border-0" value={profile.country} name="country" onChange={handleCountryInput} />
             </div>
             <div className="form-group">
               <label htmlFor="linkedin">Linkedin</label>
-              <input type="text" className="form-control custom-input border-0" name="linkedin" id="linkedin" onChange={handleInput} />
+              <input type="text" value={profile.hacker.linkedin} className="form-control custom-input border-0" name="linkedin" id="linkedin" onChange={handleInput} />
             </div>
             <div className="form-group">
               <label htmlFor="github">Github</label>
-              <input type="text" className="form-control custom-input border-0" name="github" id="github" onChange={handleInput} />
+              <input type="text" value={profile.hacker.github} className="form-control custom-input border-0" name="github" id="github" onChange={handleInput} />
             </div>
             <div className="form-group">
               <label htmlFor="twitter">twitter</label>
-              <input type="text" className="form-control custom-input border-0" id="twitter" name="twitter" onChange={handleInput} />
+              <input type="text" value={profile.hacker.twitter} className="form-control custom-input border-0" id="twitter" name="twitter" onChange={handleInput} />
             </div>
             <div className="form-group">
-              <label htmlFor="bio">مقدمة</label>
-              <textarea className="form-control custom-input border-0" id="bio" rows="5" name="bio" onChange={handleInput}></textarea>
-            </div>
-
-            <div className="jumbotron jumbotron-fluid bg-second py-4 mb-1">
-              <div className="container">
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="row pb-4">
-                      <div className="col-md-12"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <label htmlFor="bio">نبذه تعريفية</label>
+              <textarea value={profile.bio} className="p-3 form-control custom-input border-0" id="bio" rows="5" name="bio" onChange={handleInput}></textarea>
             </div>
             <button type="submit" className="btn btn-settings d-block mr-auto settings-submit-button">
               تعديل البيانات الشخصية
@@ -163,7 +161,6 @@ const ProfileTab = ({ avater }) => {
 };
 
 const mapStateToProps = ({ blogs }) => {
-  console.log(blogs.userInfo);
   return {
     avater: blogs.userInfo.hacker.avater,
   };

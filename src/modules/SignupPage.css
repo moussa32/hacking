@@ -1,0 +1,23 @@
+.signup-page {
+  background-image: url("../assets/backs/main-cover.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  padding-bottom: 2rem;
+}
+.signup-card {
+  background: linear-gradient(180deg, var(--lightGreen), rgb(8 186 137 / 66%), rgb(49 49 49 / 33%));
+  transition: 0.8s;
+  height: 100%;
+}
+
+.signup-title {
+  border-bottom: 4px white solid;
+  padding-bottom: 1rem;
+}
+
+.signup-card:hover {
+  box-shadow: 0px 1px 10px 5px rgb(26 187 145 / 51%);
+  transition: 0.8s;
+  transform: translateY(-25px);
+}
