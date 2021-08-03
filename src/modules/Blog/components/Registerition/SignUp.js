@@ -1,72 +1,71 @@
-import React, { useState } from 'react';
-import Logo from '../../../../assets/images/green-logo.svg';
-import { CountryDropdown } from 'react-country-region-selector';
-import { sendUserInfo } from '../../../../api/SignUpApi';
-import './SignUp.css';
+import React, { useState } from "react";
+import Logo from "../../../../assets/images/green-logo.svg";
+import { CountryDropdown } from "react-country-region-selector";
+import { sendUserInfo } from "../../../../api/SignUpApi";
+import "./SignUp.css";
 
-import ReCAPTCHA from 'react-google-recaptcha';
-import { BLOG_APP_CAPTCHA_KEY } from '../../../../shared/constants/constants';
+import ReCAPTCHA from "react-google-recaptcha";
+import { BLOG_APP_CAPTCHA_KEY } from "../../../../shared/constants/constants";
 import { Link, useHistory } from "react-router-dom";
-import { handleSetUserToken } from '../../actions/index';
-
+import { handleSetUserToken } from "../../actions/index";
 
 const SignUp = ({ setParentData }) => {
   const [signUpData, setSignUpData] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    gender: '',
-    birthDate: '',
-    country: '',
-    password: '',
-    rePassword: '',
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    gender: "",
+    birthDate: "",
+    country: "",
+    password: "",
+    rePassword: "",
     accept_rules: false,
   });
   const [status, setStatus] = useState({
-    firstNameError: '',
-    lastNameError: '',
-    usernameError: '',
-    emailError: '',
-    genderError: '',
-    birthDateError: '',
-    countryError: '',
-    passwordError: '',
-    rePasswordError: '',
-    accept_rulesError: ''
+    firstNameError: "",
+    lastNameError: "",
+    usernameError: "",
+    emailError: "",
+    genderError: "",
+    birthDateError: "",
+    countryError: "",
+    passwordError: "",
+    rePasswordError: "",
+    accept_rulesError: "",
   });
   const history = useHistory();
 
-  const onTyping = (e) => {
+  const onTyping = e => {
     e.persist();
     debugger;
     setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
     console.log(signUpData);
-  }
+  };
 
-  const onSetCountry = (e) => {
+  const onSetCountry = e => {
     debugger;
     setSignUpData({ ...signUpData, country: e });
-  }
+  };
 
-  const handleCheck = (e) => {
-    setSignUpData({ ...signUpData, 'accept_rules': e.target.checked });
-  }
+  const handleCheck = e => {
+    setSignUpData({ ...signUpData, accept_rules: e.target.checked });
+  };
 
   const handleValidation = () => {
-    let usernameError = '';
-    let firstNameError = '';
-    let lastNameError = '';
-    let emailError = '';
-    let genderError = '';
-    let birthDateError = '';
-    let countryError = '';
-    let passwordError = '';
-    let rePasswordError = '';
-    let accept_rulesError = '';
+    let usernameError = "";
+    let firstNameError = "";
+    let lastNameError = "";
+    let emailError = "";
+    let genderError = "";
+    let birthDateError = "";
+    let countryError = "";
+    let passwordError = "";
+    let rePasswordError = "";
+    let accept_rulesError = "";
 
     if (!signUpData.firstName) {
-      firstNameError = 'مطلوب';
+      firstNameError = "مطلوب";
     }
 
     if (firstNameError) {
@@ -75,7 +74,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (!signUpData.lastName) {
-      lastNameError = 'مطلوب';
+      lastNameError = "مطلوب";
     }
 
     if (lastNameError) {
@@ -84,7 +83,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (!signUpData.username) {
-      usernameError = 'مطلوب';
+      usernameError = "مطلوب";
     }
 
     if (usernameError) {
@@ -93,7 +92,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (!signUpData.email) {
-      emailError = 'مطلوب';
+      emailError = "مطلوب";
     }
 
     if (emailError) {
@@ -102,7 +101,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (!signUpData.gender) {
-      genderError = 'مطلوب';
+      genderError = "مطلوب";
     }
 
     if (genderError) {
@@ -111,7 +110,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (!signUpData.birthDate) {
-      birthDateError = 'مطلوب';
+      birthDateError = "مطلوب";
     }
 
     if (birthDateError) {
@@ -120,7 +119,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (!signUpData.country) {
-      countryError = 'مطلوب';
+      countryError = "مطلوب";
     }
 
     if (countryError) {
@@ -129,7 +128,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (!signUpData.password) {
-      passwordError = 'مطلوب';
+      passwordError = "مطلوب";
     }
 
     if (passwordError) {
@@ -138,7 +137,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (!signUpData.rePassword) {
-      rePasswordError = 'مطلوب';
+      rePasswordError = "مطلوب";
     }
 
     if (rePasswordError) {
@@ -147,7 +146,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (!signUpData.accept_rules) {
-      accept_rulesError = 'مطلوب';
+      accept_rulesError = "مطلوب";
     }
 
     if (accept_rulesError) {
@@ -156,7 +155,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (signUpData.password.length < 8) {
-      passwordError = 'يجب ان تكون كلمة المرور أكبر من 8 أحرف';
+      passwordError = "يجب ان تكون كلمة المرور أكبر من 8 أحرف";
     }
 
     if (passwordError) {
@@ -165,7 +164,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (signUpData.password !== signUpData.rePassword) {
-      passwordError = 'يجب ان تكون كلمة المرور متطابقة';
+      passwordError = "يجب ان تكون كلمة المرور متطابقة";
     }
 
     if (passwordError) {
@@ -174,41 +173,43 @@ const SignUp = ({ setParentData }) => {
     }
 
     return true;
-  }
+  };
 
-  const Registration = (e) => {
+  const Registration = e => {
     e.preventDefault();
     const isValid = handleValidation();
     console.log(isValid);
 
     if (isValid) {
       const dataToBeSent = {
-        "first_name": signUpData.firstName,
-        "last_name": signUpData.lastName,
-        "username": signUpData.username,
-        "email": signUpData.email,
-        "gender": signUpData.gender,
-        "birth_date": signUpData.birthDate,
-        "country": signUpData.country,
-        "password": signUpData.password,
-        "accept_rules": signUpData.accept_rules
-      }
+        first_name: signUpData.firstName,
+        last_name: signUpData.lastName,
+        username: signUpData.username,
+        email: signUpData.email,
+        gender: signUpData.gender,
+        birth_date: signUpData.birthDate,
+        country: signUpData.country,
+        password: signUpData.password,
+        accept_rules: signUpData.accept_rules,
+      };
 
       let sendData = sendUserInfo(dataToBeSent);
 
       sendData
-        .then((res) => {
+        .then(res => {
           console.log(res.data);
 
           /*Send submited data to Home Component to handle it in next step*/
           setParentData(res.data);
 
-          handleSetUserToken('refreshToken', res.data.tokens.refresh_token);
-          handleSetUserToken('accessToken', res.data.tokens.access_token);
+          handleSetUserToken("refreshToken", res.data.tokens.refresh_token);
+          handleSetUserToken("type", res.data.hacker_data.role);
+          handleSetUserToken("accessToken", res.data.tokens.access_token);
 
           /*Redirect to next step*/
           history.push("/email-confirmation");
-        }).catch(function (error) {
+        })
+        .catch(function (error) {
           const errorArray = error.response.data;
           if (error.response.status === 400) {
             console.log(errorArray);
@@ -221,7 +222,7 @@ const SignUp = ({ setParentData }) => {
         });
       return sendData;
     }
-  }
+  };
 
   return (
     <main className="component-wrapper sign-up-wrapper">
@@ -234,31 +235,39 @@ const SignUp = ({ setParentData }) => {
                 <div className="form-group col-md-6">
                   <label for="firstName">الاسم الأول</label>
                   <input type="text" className="form-control custom-input" value={signUpData.firstName} name="firstName" id="firstName" onChange={onTyping} />
-                  {status.firstNameError ? (<div class="mt-2 alert alert-danger custom-danger-alert" role="alert">
-                    {status.firstNameError}
-                  </div>) : null}
+                  {status.firstNameError ? (
+                    <div class="mt-2 alert alert-danger custom-danger-alert" role="alert">
+                      {status.firstNameError}
+                    </div>
+                  ) : null}
                 </div>
                 <div className="form-group col-md-6">
                   <label for="secondName">الاسم الثاني</label>
                   <input type="text" className="form-control custom-input" name="lastName" id="lastName" onChange={onTyping} />
-                  {status.lastNameError ? (<div class="mt-2 alert alert-danger custom-danger-alert" role="alert">
-                    {status.lastNameError}
-                  </div>) : null}
+                  {status.lastNameError ? (
+                    <div class="mt-2 alert alert-danger custom-danger-alert" role="alert">
+                      {status.lastNameError}
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <div className="form-group">
                 <label for="username">اسم المستخدم</label>
                 <input type="text" className="form-control custom-input" name="username" id="username" onChange={onTyping} />
-                {status.usernameError ? (<div class="mt-2 alert alert-danger" role="alert">
-                  {status.usernameError}
-                </div>) : null}
+                {status.usernameError ? (
+                  <div class="mt-2 alert alert-danger" role="alert">
+                    {status.usernameError}
+                  </div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label for="email">البريد الإلكتروني</label>
                 <input type="email" className="form-control custom-input" name="email" id="email" onChange={onTyping} />
-                {status.emailError ? (<div class="mt-2 alert alert-danger" role="alert">
-                  {status.emailError}
-                </div>) : null}
+                {status.emailError ? (
+                  <div class="mt-2 alert alert-danger" role="alert">
+                    {status.emailError}
+                  </div>
+                ) : null}
               </div>
               <fieldset className="form-group row">
                 <legend className="col-form-label col-sm-2 float-sm-left pt-0">الجنس</legend>
@@ -277,9 +286,11 @@ const SignUp = ({ setParentData }) => {
                   </div>
                 </div>
               </fieldset>
-              {status.genderError ? (<div class="mt-2 alert alert-danger" role="alert">
-                {status.genderError}
-              </div>) : null}
+              {status.genderError ? (
+                <div class="mt-2 alert alert-danger" role="alert">
+                  {status.genderError}
+                </div>
+              ) : null}
               <div className="form-row">
                 <div className="form-group col-md-5">
                   <label for="inputCity">تاريخ الميلاد</label>
@@ -287,60 +298,90 @@ const SignUp = ({ setParentData }) => {
                 <div className="form-group col-md-7">
                   <input type="date" placeholder="تاريخ الميلاد" name="birthDate" className="form-control custom-input birthdate-input" id="dat" onChange={onTyping} />
                 </div>
-                {status.birthDateError ? (<div class="mt-2 alert alert-danger w-100 text-center" role="alert">
-                  {status.birthDateError}
-                </div>) : null}
+                {status.birthDateError ? (
+                  <div class="mt-2 alert alert-danger w-100 text-center" role="alert">
+                    {status.birthDateError}
+                  </div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label for="exampleFormControlSelect1">الدولة</label>
                 <CountryDropdown value={signUpData.country} className="form-control custom-input country-input" name="country" onChange={onSetCountry} />
-                {status.countryError ? (<div class="mt-2 alert alert-danger" role="alert">
-                  {status.countryError}
-                </div>) : null}
+                {status.countryError ? (
+                  <div class="mt-2 alert alert-danger" role="alert">
+                    {status.countryError}
+                  </div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label for="password">كلمة المرور</label>
                 <input type="password" className="form-control custom-input" name="password" id="password" onChange={onTyping} />
-                {status.passwordError ? (<div class="mt-2 alert alert-danger" role="alert">
-                  {status.passwordError}
-                </div>) : null}
+                {status.passwordError ? (
+                  <div class="mt-2 alert alert-danger" role="alert">
+                    {status.passwordError}
+                  </div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label for="re-password">تأكيد كلمة المرور</label>
                 <input type="password" className="form-control custom-input" id="re-password" name="rePassword" onChange={onTyping} />
-                {status.rePasswordError ? (<div class="mt-2 alert alert-danger" role="alert">
-                  {status.rePasswordError}
-                </div>) : null}
+                {status.rePasswordError ? (
+                  <div class="mt-2 alert alert-danger" role="alert">
+                    {status.rePasswordError}
+                  </div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label className="suggestion-password text-lightgreen">اقتراحات لكلمة مرور قوية</label>
                 <ul>
-                  <li className="sugesstion-password-item"><small>مزيج من الأحرف الكبيرة والصغيرة والأرقام والأحرف الخاصة</small></li>
-                  <li className="sugesstion-password-item"><small>أحرف على الأقل أو أكثر من 8</small></li>
-                  <li className="sugesstion-password-item"><small>مزيج من الكلمات العشوائية</small></li>
+                  <li className="sugesstion-password-item">
+                    <small>مزيج من الأحرف الكبيرة والصغيرة والأرقام والأحرف الخاصة</small>
+                  </li>
+                  <li className="sugesstion-password-item">
+                    <small>أحرف على الأقل أو أكثر من 8</small>
+                  </li>
+                  <li className="sugesstion-password-item">
+                    <small>مزيج من الكلمات العشوائية</small>
+                  </li>
                 </ul>
               </div>
               <div className="form-group">
                 <input className="form-check-input signup-checkbox bg-dark" name="accept_rules" type="checkbox" id="gridCheck1" onChange={e => handleCheck(e)} />
                 <label className="form-check-label signup-checkbox-label" for="gridCheck1">
-                  موافق على <Link to='/terms-of-use' className="text-lightgreen">اتفاقية المستخدم</Link> و <Link to='/privacy-policy' className="text-lightgreen">شروط الاستخدام</Link>
+                  موافق على{" "}
+                  <Link to="/terms-of-use" className="text-lightgreen">
+                    اتفاقية المستخدم
+                  </Link>{" "}
+                  و{" "}
+                  <Link to="/privacy-policy" className="text-lightgreen">
+                    شروط الاستخدام
+                  </Link>
                 </label>
               </div>
-              {status.accept_rulesError ? (<div class="mt-2 alert alert-danger text-center" role="alert">
-                {status.accept_rulesError}
-              </div>) : null}
+              {status.accept_rulesError ? (
+                <div class="mt-2 alert alert-danger text-center" role="alert">
+                  {status.accept_rulesError}
+                </div>
+              ) : null}
               <div className="form-row w-100">
-                <ReCAPTCHA
-                  theme="dark"
-                  className="blog-recaptcha mr-1"
-                  sitekey={BLOG_APP_CAPTCHA_KEY}
-                />
+                <ReCAPTCHA theme="dark" className="blog-recaptcha mr-1" sitekey={BLOG_APP_CAPTCHA_KEY} />
               </div>
-              <button type="submit" className="btn btn-lightgreen mx-auto d-block btn-lg text-white my-4">إنشاء حساب</button>
-              {status.errorServer ? (<div class="alert alert-danger mt-4 text-center" role="alert">
-                {status.errorServer}
-              </div>) : ''}
-              <small className="text-center my-3 d-block">هل لديك حساب؟ <Link to='/login' className="text-lightgreen">تسجيل الدخول</Link></small>
+              <button type="submit" className="btn btn-lightgreen mx-auto d-block btn-lg text-white my-4">
+                إنشاء حساب
+              </button>
+              {status.errorServer ? (
+                <div class="alert alert-danger mt-4 text-center" role="alert">
+                  {status.errorServer}
+                </div>
+              ) : (
+                ""
+              )}
+              <small className="text-center my-3 d-block">
+                هل لديك حساب؟{" "}
+                <Link to="/login" className="text-lightgreen">
+                  تسجيل الدخول
+                </Link>
+              </small>
             </form>
           </div>
           <div className="col-md-6 align-items-center signup-left-side">
@@ -354,6 +395,6 @@ const SignUp = ({ setParentData }) => {
       </div>
     </main>
   );
-}
+};
 
 export default SignUp;

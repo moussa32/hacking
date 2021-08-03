@@ -46,6 +46,7 @@ const HackerNavbar = props => {
 
   let handleLogout = () => {
     handleRemoveUserToken("accessToken");
+    handleRemoveUserToken("type");
     handleRemoveUserToken("refreshToken");
     history.push("/login");
   };
