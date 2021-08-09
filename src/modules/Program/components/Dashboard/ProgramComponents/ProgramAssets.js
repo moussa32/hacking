@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
-import {Doughnut} from "react-chartjs-2";
-import {FaReact} from "react-icons/fa";
-import {getProgramReportsAsset} from "../../../../../api/ProgramAPI/ProgramReportsAsset";
+import React, { useState, useEffect } from "react";
+import { Doughnut } from "react-chartjs-2";
+import { FaReact } from "react-icons/fa";
+import { getProgramReportsAsset } from "../../../../../api/ProgramAPI/ProgramReportsAsset";
 
 function ProgramAssets() {
   const [reportsAssetData, setReportsAssetData] = useState({
@@ -17,9 +17,9 @@ function ProgramAssets() {
   const [isData, setIsData] = useState(false);
 
   useEffect(() => {
-    getProgramReportsAsset(localStorage.getItem("accessToken")).then((res) => {
+    getProgramReportsAsset(localStorage.getItem("accessToken")).then(res => {
       console.log(res.data);
-      res.data.map((point) => {
+      res.data.map(point => {
         reportsAssetData.labels.push(point.url);
         reportsAssetData.datasets[0].data.push(point.reports_count);
       });
@@ -39,12 +39,10 @@ function ProgramAssets() {
   };
 
   return (
-    <>
-      {isData ? (
+    <div className="bg-black p-4 mb-4">
+      <h2 className="text-right mb-4">{isData && reportsAssetData.length > 0 ? <FaReact className="section-icon" size={"2rem"} /> : ""} حسب الأصول</h2>
+      {isData && reportsAssetData.length > 0 ? (
         <div className="jumbotron jumbotron-fluid bg-black rounded pt-4">
-          <h2 className="text-right mr-4 mb-4">
-            <FaReact className="section-icon" size={"2rem"} /> حسب الأصول
-          </h2>
           <div className="container">
             <div className="row px-2">
               <div className="col-md-11 px-0">
@@ -59,7 +57,7 @@ function ProgramAssets() {
           <p className="mt-4 lead mb-0">لا يوجد اي أصول</p>
         </>
       )}
-    </>
+    </div>
   );
 }
 

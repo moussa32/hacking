@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from "react";
-import {getProgramActivity} from "../../../../../api/ProgramAPI/ProgramActivity";
-import {dvbaseUrl} from "../../../../../api/Constants";
+import React, { useState, useEffect } from "react";
+import { getProgramActivity } from "../../../../../api/ProgramAPI/ProgramActivity";
+import { dvbaseUrl } from "../../../../../api/Constants";
 import TimeAgo from "javascript-time-ago";
 import ReactTimeAgo from "react-time-ago";
 import ar from "javascript-time-ago/locale/ar";
-import {FiActivity} from "react-icons/fi";
+import { FiActivity } from "react-icons/fi";
 
 const ProgramActivity = () => {
   const [activity, setActivity] = useState([]);
@@ -16,38 +16,38 @@ const ProgramActivity = () => {
   const timeAgo = new TimeAgo("ar");
 
   useEffect(() => {
-    getProgramActivity(token).then((res) => {
+    getProgramActivity(token).then(res => {
       setIsData(true);
       setActivity(res.data);
     });
   }, []);
 
-  const checkUserLevel = (level) => {
+  const checkUserLevel = level => {
     if (level === "منخفض") {
       return (
         <div className="report-status d-flex align-items-center">
-          <span className="badge badge-pill badge-warning report-alert" style={{background: "#16a085"}}></span>
+          <span className="badge badge-pill badge-warning report-alert" style={{ background: "#16a085" }}></span>
           <span>{level}</span>
         </div>
       );
     } else if (level === "متوسط") {
       return (
         <div className="report-status d-flex align-items-center">
-          <span className="badge badge-pill badge-warning report-alert" style={{background: "#d35400"}}></span>
+          <span className="badge badge-pill badge-warning report-alert" style={{ background: "#d35400" }}></span>
           <span>{level}</span>
         </div>
       );
     } else if (level === "عالي") {
       return (
         <div className="report-status d-flex align-items-center">
-          <span className="badge badge-pill badge-warning report-alert" style={{background: "#c0392b"}}></span>
+          <span className="badge badge-pill badge-warning report-alert" style={{ background: "#c0392b" }}></span>
           <span>{level}</span>
         </div>
       );
     } else if (level === "ضروري") {
       return (
         <div className="report-status d-flex align-items-center">
-          <span className="badge badge-pill badge-danger report-alert" style={{background: "#8e44ad"}}></span>
+          <span className="badge badge-pill badge-danger report-alert" style={{ background: "#8e44ad" }}></span>
           <span>{level}</span>
         </div>
       );
@@ -57,12 +57,12 @@ const ProgramActivity = () => {
   return (
     <div className="jumbotron jumbotron-fluid bg-black rounded py-4">
       <div className="container">
-        <h2 className="section-title text-right">{isData ? <FiActivity className="section-icon ml-3 mb-2" size={"2rem"} /> : ""}النشاط</h2>
-        {isData ? (
+        <h2 className="section-title text-right">{isData && activity.length > 0 ? <FiActivity className="section-icon ml-3 mb-2" size={"2rem"} /> : ""}النشاط</h2>
+        {isData && activity.length > 0 ? (
           <div className="section-container bg-second m-4 rounded vulcontainer">
             <h3 className="text-lightgreen text-right">اسم الشركة</h3>
             <div className="row">
-              {activity.map((report) => {
+              {activity.map(report => {
                 return (
                   <div className="col-md-12 mt-4 report-container" key={report.id}>
                     <div className="row py-2">
