@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
-import {connect} from "react-redux";
-import {withRouter, Link} from "react-router-dom";
-import {HiOutlineClipboardList} from "react-icons/hi";
-import {BiTask} from "react-icons/bi";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { withRouter, Link } from "react-router-dom";
+import { HiOutlineClipboardList } from "react-icons/hi";
+import { BiTask } from "react-icons/bi";
 import Spinner from "../../../../shared/components/Spinner";
 import LeftSideBar from "../layout/LeftSideBar";
 import Footer from "../layout/Footer";
@@ -13,27 +13,28 @@ import ProgramActivity from "./ProgramComponents/ProgramActivity";
 import ProgramWeakPoints from "./ProgramComponents/ProgramWeakPoints";
 import ProgramWASP from "./ProgramComponents/ProgramWASP";
 import ProgramAssets from "./ProgramComponents/ProgramAssets";
-import {getProgram} from "../../../../api/ProgramAPI/ProgramInfo";
-import {getNewTokens} from "../../../../api/RefreshTokenApi";
+import { getProgram } from "../../../../api/ProgramAPI/ProgramInfo";
+import { getNewTokens } from "../../../../api/RefreshTokenApi";
 import ProgramReportsState from "./ProgramComponents/ProgramReportsState";
+import WarningNotifection from "../../../../shared/components/WarningNotifection";
 
-const Main = ({dispatch}) => {
+const Main = ({ dispatch }) => {
   const [user, setUser] = useState({});
   const [isLoadded, setIsLoadded] = useState(false);
   const [status, setStatus] = useState(null);
 
   useEffect(() => {
     getProgram(localStorage.getItem("accessToken"))
-      .then((res) => {
+      .then(res => {
         let responseData = res.data;
         setUser(responseData);
         setIsLoadded(true);
       })
-      .catch((error) => {
+      .catch(error => {
         if (error.response.status === 401) {
           getNewTokens(localStorage.getItem("refreshToken"));
         } else if (error.response.status === 403) {
-          setStatus({type: "danger", message: "لا يمكنك الدخول إلى لوحة التحكم بدون تفعيل بريدك الإلكتروني ورقم الهاتف"});
+          setStatus({ type: "danger", message: "لا يمكنك الدخول إلى لوحة التحكم بدون تفعيل بريدك الإلكتروني ورقم الهاتف" });
         }
       });
   }, []);
@@ -43,12 +44,7 @@ const Main = ({dispatch}) => {
       <div className="component-wrapper">
         <div className="container-fluid home">
           {status ? (
-            <div className={`jumbotron jumbotron-fluid bg-${status.type}`}>
-              <div className="container text-center">
-                <h1>لم يتم تفعيل حسابك بالكامل</h1>
-                <p className="mt-3 lead">معذرة لا يمكنك الدخول إلى لوحة التحكم بدون تفعيل بريدك الإلكتروني أو رقم الهاتف</p>
-              </div>
-            </div>
+            <WarningNotifection isTitle={true} title={"لم يتم تفعيل حسابك بالكامل"} message={"معذرة لا يمكنك الدخول إلى لوحة التحكم بدون تفعيل بريدك الإلكتروني أو رقم الهاتف"} />
           ) : (
             <>
               {isLoadded ? (
@@ -95,7 +91,7 @@ const Main = ({dispatch}) => {
   );
 };
 
-const mapStateToProps = ({program}) => {
+const mapStateToProps = ({ program }) => {
   console.log(program);
   return {
     userInfo: program.programInfo,

@@ -15,15 +15,11 @@ import ByTagsList from "../Blog/ByTagsList";
 import Tags from "../Blog/Tags";
 import BlogHome from "../Blog";
 import Main from "../Main";
-import Login from "../../../Login";
 import SignUp from "../Registerition/SignUp";
 import EmailConfirmation from "../Registerition/EmailConfirmation";
 import MobileConfirmation from "../Registerition/MobileConfirmation";
 import SmsConfirmation from "../Registerition/SmsConfirmation";
 import EmailVerify from "../Registerition/EmailVerify";
-import ResetPassword from "../Reset/ResetPassword";
-import ForgetPassword from "../ForgetPassword";
-import ResetEmail from "../Reset/ResetEmail";
 
 const Home = props => {
   const [parentData, setParentData] = useState({});
@@ -43,10 +39,6 @@ const Home = props => {
         <Route exact path="/tags/:tag" component={ByTagsList} />
         <Route exact path="/blog" component={BlogHome} />
         <Route exact path="/blog/:slug/:id" component={Blog} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/reset-password" component={ResetPassword} />
-        <Route exact path="/forget-password" component={ForgetPassword} />
-        <Route exact path="/reset-email" component={ResetEmail} />
         <Route exact path="/hacker/signup">
           <SignUp setParentData={setParentData} />
         </Route>

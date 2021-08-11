@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { WhiteLogo } from "../assets/index";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import { handleSetUserToken, handleGetUserToken } from "./Blog/actions/index";
+import Navbar from "./Blog/components/layout/Navbar";
 import { dvApiUrl } from "../api/Constants";
+import { handleSetUserToken } from "./Blog/actions/index";
+import { WhiteLogo } from "../assets/index";
 
-const Login = () => {
+const Login = props => {
   const [isLoadding, setIsLoadding] = useState(false);
   const [status, setStatus] = useState(null);
   const [credentials, setCredentials] = useState({
@@ -68,52 +69,55 @@ const Login = () => {
   };
 
   return (
-    <main className="component-wrapper login-wrapper">
-      <div className="container home">
-        <div className="row">
-          <div className="col-md-6 mx-auto p-4 bg-black rounded">
-            <img className="login-logo d-block mx-auto" src={WhiteLogo} alt="Logo" />
-            <h3 className="text-center py-4">تسجيل الدخول</h3>
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="usernameOrEmail">إسم المستخدم</label>
-                <input type="text" name="username" value={credentials.username} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input" id="usernameOrEmail" aria-describedby="emailHelp" required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputPassword1">كلمة المرور</label>
-                <input name="password" type="password" value={credentials.password} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input" id="passwordInput" required />
-              </div>
-              <div className="form-group py-1">
-                <Link className="text-lightgreen" to="/forget-password">
-                  نسيت كلمة المرور
-                </Link>
-              </div>
-              <button type="submit" className="btn btn-lightgreen mx-auto d-block btn-lg">
-                تسجيل الدخول
-              </button>
-              {isLoadding ? (
-                <div className="spinner-border d-block mx-auto text-success mt-4 mb-1" role="status">
-                  <span className="sr-only">Loading...</span>
+    <>
+      <Navbar currentPathname={props.location.pathname} />
+      <main className="component-wrapper login-wrapper">
+        <div className="container home">
+          <div className="row">
+            <div className="col-md-6 mx-auto p-4 bg-black rounded">
+              <img className="login-logo d-block mx-auto" src={WhiteLogo} alt="Logo" />
+              <h3 className="text-center py-4">تسجيل الدخول</h3>
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="usernameOrEmail">إسم المستخدم</label>
+                  <input type="text" name="username" value={credentials.username} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input" id="usernameOrEmail" aria-describedby="emailHelp" required />
                 </div>
-              ) : null}
-              {status ? (
-                <div className={`alert alert-${status.type} mt-4 text-center`} role="alert">
-                  {status.message}
+                <div className="form-group">
+                  <label htmlFor="exampleInputPassword1">كلمة المرور</label>
+                  <input name="password" type="password" value={credentials.password} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input" id="passwordInput" required />
                 </div>
-              ) : (
-                ""
-              )}
-              <p className="text-center py-3">
-                إنشاء حساب جديد؟{" "}
-                <Link to="/signup" className="text-lightgreen">
-                  إنشاء
-                </Link>
-              </p>
-            </form>
+                <div className="form-group py-1">
+                  <Link className="text-lightgreen" to="/forget-password">
+                    نسيت كلمة المرور
+                  </Link>
+                </div>
+                <button type="submit" className="btn btn-lightgreen mx-auto d-block btn-lg">
+                  تسجيل الدخول
+                </button>
+                {isLoadding ? (
+                  <div className="spinner-border d-block mx-auto text-success mt-4 mb-1" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                ) : null}
+                {status ? (
+                  <div className={`alert alert-${status.type} mt-4 text-center`} role="alert">
+                    {status.message}
+                  </div>
+                ) : (
+                  ""
+                )}
+                <p className="text-center py-3">
+                  إنشاء حساب جديد؟{" "}
+                  <Link to="/signup" className="text-lightgreen">
+                    إنشاء
+                  </Link>
+                </p>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 };
 

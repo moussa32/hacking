@@ -1,0 +1,332 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { dvApiUrl } from "../../../api/Constants";
+import Footer from "./layout/Footer";
+import Spinner from "../../../shared/components/Spinner";
+import { AiOutlineDollarCircle } from "react-icons/ai";
+import { handleBadgeColor } from "../../../shared/utils/handleBadgeColor";
+import ProgramHeader from "./ProgramPageLayout/ProgramHeader";
+import ProgramSidebar from "./ProgramPageLayout/ProgramSidebar";
+import ProgramMenu from "./ProgramPageLayout/ProgramMenu";
+import WarningNotifection from "../../../shared/components/WarningNotifection";
+
+function ProgramPage(props) {
+  const { match } = props;
+  const [programInfo, setProgramInfo] = useState(null);
+  const [isProgramAvailable, setIsProgramAvailable] = useState(false);
+  const [isLoadding, setIsLoadding] = useState(false);
+
+  useEffect(() => {
+    if (match.params.id) {
+      axios
+        .get(`${dvApiUrl}/programs/${match.params.id}/`)
+        .then(res => {
+          setProgramInfo(res.data);
+          setIsLoadding(true);
+          setIsProgramAvailable(true);
+        })
+        .catch(error => {
+          if (error.response.status === 500) {
+            setIsLoadding(true);
+            setIsProgramAvailable(false);
+            console.log("هذا البرنامج غير موجود");
+          }
+        });
+    }
+  }, [match.params.id]);
+
+  const handleNoData = () => {
+    return (
+      <div className="alert alert-warning text-center w-100" role="alert">
+        لا توجد اي بيانات
+      </div>
+    );
+  };
+
+  return (
+    <>
+      {isLoadding ? (
+        <>
+          {isProgramAvailable ? (
+            <div className="jumbotron jumbotron-fluid text-center pb-4 bg-second rounded">
+              <div className="container-fluid">
+                <ProgramHeader headerInfo={programInfo} />
+                <ProgramMenu />
+                <div className="row p-4 bg-black mt-2">
+                  <div className="col-md-9">
+                    <div className="tab-content" id="myTabContent">
+                      <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div className="jumbotron bg-second jumbotron-fluid">الرئيسية</div>
+                        <div className="jumbotron jumbotron-fluid bg-second py-4">
+                          <div className="container">
+                            <h3 className="text-lightgreen text-right my-4">النطاقات</h3>
+                            {programInfo.in_scope_assets.length > 0
+                              ? programInfo.in_scope_assets.map(asset => {
+                                  return (
+                                    <div key={asset.id} className="jumbotron bg-black pb-4 program-home-tab-section">
+                                      <div className="row flex-row-reverse">
+                                        <div className="col-md-3">
+                                          <h3 className="text-left text-lightgreen">{asset.type.charAt(0).toUpperCase() + asset.type.slice(1)}</h3>
+                                        </div>
+                                        <div className="col-md-9 text-left">
+                                          <a className="" href={asset.url}>
+                                            {asset.url}
+                                          </a>
+                                          <p className="lead text-muted">{asset.description}</p>
+                                        </div>
+                                        <div className="col-md-6 align-items-center; justify-content-between bg-second py-2 px-4 rounded d-flex flex-row-reverse ml-auto">
+                                          <div className="d-flex flex-row align-items-center">
+                                            <span className={`badge badge-${handleBadgeColor(asset.level)} inscope-assets-list`}></span>
+                                            <p className="mb-0 mr-3">مستوى</p>
+                                          </div>
+                                          <div className="inscope-assets-info">
+                                            <span className="inscope-assets-type rounded p-2">
+                                              <AiOutlineDollarCircle size={"1.7rem"} className={asset.paid ? "text-lightgreen" : "text-danger"} />
+                                            </span>
+                                            {asset.paid ? "مدفوع" : "غير مدفوع"}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  );
+                                })
+                              : handleNoData()}
+
+                            {programInfo.out_scope_assets && programInfo.out_scope_assets.length > 0 ? (
+                              <>
+                                <h3 className="text-lightgreen text-right my-4">خارج النطاق</h3>
+                                {programInfo.out_scope_assets.map(() => {
+                                  return (
+                                    <div className="jumbotron bg-black program-home-tab-section">
+                                      <div className="row flex-row-reverse">
+                                        <div className="col-md-3">
+                                          <h3 className="text-left text-lightgreen">Domain</h3>
+                                        </div>
+                                        <div className="col-md-9 text-left">
+                                          <a className="" href="https://www.paypal.com/eg/home">
+                                            https://www.paypal.com/eg/home
+                                          </a>
+                                          <p className="lead text-muted">But I must explain to you how all this mistaken</p>
+                                          <p className="lead text-muted">But I must explain to you how all this mistaken</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </>
+                            ) : null}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="tab-pane fade" id="rewards" role="tabpanel" aria-labelledby="rewards-tab">
+                        <div className="row">
+                          {programInfo.bounty_bars && programInfo.bounty_bars.length > 0
+                            ? programInfo.bounty_bars.map(bar => {
+                                return (
+                                  <div className="col-md-6 py-3">
+                                    <div className="card bg-second">
+                                      <div className="card-body">
+                                        <h5 className="card-title">
+                                          <span className={`badge badge-${handleBadgeColor(bar.level)} program-bountry-bars`}></span> {bar.level}
+                                        </h5>
+                                        <p className="program-bountry-bars-value mt-4 font-weight-normal">{bar.amount}$</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              })
+                            : handleNoData()}
+                        </div>
+                      </div>
+                      <div className="tab-pane fade" id="programActivity" role="tabpanel" aria-labelledby="programActivity-tab">
+                        {handleNoData()}
+                        {/* <div className="row pb-4">
+                      <div className="col-md-12 mb-3">
+                        <div className="card border border-secondary bg-transparent">
+                          <div className="card-body program-activity-log-item py-3">
+                            <span className="rounded-circle p-2 text-white d-block">1</span>
+                            <img src="https://bugbounty.pythonanywhere.com//media/programs/logos/Bug.png" className="d-block top-hackers-image mx-4" alt="..." />
+                            <h5 className="program-activity-log-info lead">عبر دينا إلى paypal</h5>
+                            <p className="align-self-center lead">منذ 3 أيام</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-12 mb-3">
+                        <div className="card border border-secondary bg-transparent">
+                          <div className="card-body program-activity-log-item py-3">
+                            <span className="rounded-circle p-2 text-white d-block">2</span>
+                            <img src="https://bugbounty.pythonanywhere.com//media/programs/logos/Bug.png" className="d-block top-hackers-image mx-4" alt="..." />
+                            <h5 className="program-activity-log-info lead">عبر دينا إلى paypal</h5>
+                            <p className="align-self-center lead">منذ 20 أيام</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-12 mb-3">
+                        <div className="card border border-secondary bg-transparent">
+                          <div className="card-body program-activity-log-item py-3">
+                            <span className="rounded-circle p-2 text-white d-block">3</span>
+                            <img src="https://bugbounty.pythonanywhere.com//media/programs/logos/Bug.png" className="d-block top-hackers-image mx-4" alt="..." />
+                            <h5 className="program-activity-log-info lead">عبر دينا إلى paypal</h5>
+                            <p className="align-self-center lead">منذ 9 أيام</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div> */}
+                      </div>
+                      <div className="tab-pane fade" id="ads" role="tabpanel" aria-labelledby="ads-tab">
+                        {programInfo.announcements && programInfo.announcements.length > 0
+                          ? programInfo.announcements.map(announcement => {
+                              return (
+                                <div key={announcement.id} className="jumbotron bg-second py-4 program-home-tab-section text-right">
+                                  <div className="row">
+                                    <div className="col-md-6 ml-auto">
+                                      <p className="lead bg-black p-2 rounded d-flex justify-content-between">{`${new Date(announcement.created).toISOString().slice(0, 19).replace("T", " ")}`}</p>
+                                    </div>
+                                    <div className="col-md-12 ml-auto">
+                                      <h3 className="text-lightgreen">{announcement.title}</h3>
+                                      {announcement.body}
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })
+                          : handleNoData()}
+                      </div>
+                      <div className="tab-pane fade" id="thanksBoard" role="tabpanel" aria-labelledby="thanksBoard-tab">
+                        <div className="row pb-4">
+                          {programInfo.thanked_hackers.length > 0
+                            ? programInfo.thanked_hackers.map(hacker => {
+                                return (
+                                  <div className="col-md-12 mb-3">
+                                    <div className="card bg-second border-0">
+                                      <div className="card-body d-flex align-items-center py-3">
+                                        <span className="badge badge-success rounded-circle p-2 text-white d-block">1</span>
+                                        <div className="media mr-4">
+                                          <img src="https://i.pinimg.com/474x/b1/19/4f/b1194f6671a741f9b2d52c550324c630.jpg" className="d-block align-self-start top-hackers-image ml-4" alt="..." />
+                                          <div className="media-body align-self-center">
+                                            <h5 className="mt-0">دينا</h5>
+                                          </div>
+                                        </div>
+                                        <p className="align-self-center mr-auto pl-3 my-0">900 نقطة</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              })
+                            : handleNoData()}
+                        </div>
+                      </div>
+                      <div className="tab-pane fade" id="admins" role="tabpanel" aria-labelledby="admins-tab">
+                        {handleNoData()}
+                        {/* <div className="row pb-4">
+                      <div className="col-md-12 mb-3">
+                        <div className="card bg-second border-0">
+                          <div className="card-body d-flex align-items-center py-3">
+                            <span className="badge badge-success rounded-circle p-2 text-white d-block">1</span>
+                            <div className="media mr-4">
+                              <img src="https://i.pinimg.com/474x/b1/19/4f/b1194f6671a741f9b2d52c550324c630.jpg" className="d-block align-self-start top-hackers-image ml-4" alt="..." />
+                              <div className="media-body align-self-center">
+                                <h5 className="mt-0">دينا</h5>
+                              </div>
+                            </div>
+                            <button className="btn btn-lightgreen text-left px-4 mr-auto" data-toggle="modal" data-target="#contactProgramAdmin">
+                              <FaTelegramPlane size={"1.2rem"} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-12 mb-3">
+                        <div className="card bg-second border-0">
+                          <div className="card-body d-flex align-items-center py-3">
+                            <span className="badge badge-success rounded-circle p-2 text-white d-block">2</span>
+                            <div className="media mr-4">
+                              <img src="https://littlelioness.net/wp-content/uploads/2021/05/Hacker.jpg" className="d-block align-self-start top-hackers-image ml-4" alt="..." />
+                              <div className="media-body align-self-center">
+                                <h5 className="mt-0">دينا</h5>
+                              </div>
+                            </div>
+                            <button className="btn btn-lightgreen text-left px-4 mr-auto" data-toggle="modal" data-target="#contactProgramAdmin">
+                              <FaTelegramPlane size={"1.2rem"} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-12 mb-3">
+                        <div className="card bg-second border-0">
+                          <div className="card-body d-flex align-items-center py-3">
+                            <span className="badge badge-success rounded-circle p-2 text-white d-block">3</span>
+                            <div className="media mr-4">
+                              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw5_pau5zA6WulJM-FOoA0JvHBkKaY2QYGPQ&usqp=CAU" className="d-block align-self-start top-hackers-image ml-4" alt="..." />
+                              <div className="media-body align-self-center">
+                                <h5 className="mt-0">دينا</h5>
+                              </div>
+                            </div>
+                            <button className="btn btn-lightgreen text-left px-4 mr-auto" data-toggle="modal" data-target="#contactProgramAdmin">
+                              <FaTelegramPlane size={"1.2rem"} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div> */}
+                        <div className="modal fade" id="contactProgramAdmin" tabIndex="-1" aria-labelledby="contactProgramAdmin" aria-hidden="true">
+                          <div className="modal-dialog">
+                            <div className="modal-content text-dark">
+                              <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">
+                                  رسالة جديدة إلى @omer
+                                </h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div className="modal-body">
+                                <form>
+                                  <div className="form-group">
+                                    <label htmlFor="recipient-name" className="text-right">
+                                      المرسل إليه:
+                                    </label>
+                                    <input type="text" className="form-control" id="recipient-name" />
+                                  </div>
+                                  <div className="form-group">
+                                    <label htmlFor="message-text" className="text-right">
+                                      نص الرسالة:
+                                    </label>
+                                    <textarea className="form-control" id="message-text"></textarea>
+                                  </div>
+                                </form>
+                              </div>
+                              <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">
+                                  إغلاق
+                                </button>
+                                <button type="button" className="btn btn-lightgreen py-2">
+                                  إرسال رسالة
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-3">
+                    <ProgramSidebar sidebarInfo={programInfo} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="available-margin overflow-hidden">
+              <WarningNotifection isTitle={true} title={"لم يتم العثور على هذا البرنامج"} message={"قد تكون كتبت رابط البرنامج بشكل خاطئ او لم يعد هذا البرنامج متاحًا"} />
+              <Footer />
+            </div>
+          )}
+        </>
+      ) : (
+        <Spinner></Spinner>
+      )}
+    </>
+  );
+}
+
+export default ProgramPage;

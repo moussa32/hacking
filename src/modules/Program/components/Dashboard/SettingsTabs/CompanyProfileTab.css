@@ -18,15 +18,17 @@
 }
 
 .custom-file-input:lang(en) ~ .custom-file-label::after {
-  content: "تغيير الصورة";
   color: #fff;
 }
 
 .custom-file-label::after {
   right: 0;
-  content: "تغيير الصورة";
   border-radius: 0 0.25rem 0.25rem 0;
   width: 100%;
   text-align: center;
   background: var(--lightGreen);
+}
+
+.select-profile-image-label::after {
+  content: "اختر الصورة" !important;
 }

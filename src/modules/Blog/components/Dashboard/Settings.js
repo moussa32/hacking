@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-router-dom";
 import ProfileTab from "./SettingsTabs/ProfileTab";
 import SkillsTab from "./SettingsTabs/SkillsTab.js";
 import PasswordTab from "./SettingsTabs/PasswordTab";
@@ -11,10 +12,10 @@ import AuthenticationTab from "./SettingsTabs/AuthenticationTab";
 import AccountPreferencesTab from "./SettingsTabs/AccountPreferencesTab.js";
 import InvitationPreferencesTab from "./SettingsTabs/InvitationPreferencesTab.js";
 import SessionTab from "./SettingsTabs/SessionTab.js";
-
 import "./Settings.css";
 
 const Settings = () => {
+  const [activeTab, setActiveTab] = useState("profile");
   const pills = [
     { type: "profile", lable: "الصفحة الشخصية" },
     { type: "password", lable: "كلمة المرور" },
@@ -30,86 +31,50 @@ const Settings = () => {
     { type: "session", lable: "الجلسات" },
   ];
   const token = localStorage.getItem("accessToken");
+  let currentPath = useParams().id;
+
+  useEffect(() => {
+    setActiveTab(currentPath);
+  }, [currentPath]);
 
   return (
-    <div className="container settings-container">
-      <div className="row bg-second p-3">
-        <div className="col-md-3 bg-black p-3 text-center">
-          <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <h2>الإعدادات</h2>
-            {pills.map((pill, index) => {
-              if (index == 0) {
+    <Router>
+      <div className="container settings-container">
+        <div className="row bg-second p-3">
+          <div className="col-md-3 bg-black p-3 text-center">
+            <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <h2>الإعدادات</h2>
+              {pills.map((pill, index) => {
                 return (
-                  <a key={index} className="nav-link setting-tab-link active" id={`v-pills-${pill.type}-tab`} data-toggle="pill" href={`#v-pills-${pill.type}`} role="tab" aria-controls={`v-pills-${pill.type}`} aria-selected="false">
+                  <Link key={index} className={`nav-link setting-tab-link ${activeTab === pill.type ? "active" : ""}`} id={pill.type} onClick={() => setActiveTab(pill.type)} to={`/dashboard/settings/${pill.type}`}>
                     {pill.lable}
-                  </a>
+                  </Link>
                 );
-              } else {
-                return (
-                  <a className="nav-link setting-tab-link" id={`v-pills-${pill.type}-tab`} data-toggle="pill" href={`#v-pills-${pill.type}`} role="tab" aria-controls={`v-pills-${pill.type}`} aria-selected="false">
-                    {pill.lable}
-                  </a>
-                );
-              }
-            })}
+              })}
+            </div>
           </div>
-        </div>
-        <div className="col-md-9 tab-body">
-          <div className="tab-content" id="v-pills-tabContent">
-            <div className="tab-pane fade active show bg-black" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-              <h2 className="text-center py-4">{pills[0].lable}</h2>
-              <ProfileTab />
-            </div>
-            <div className="tab-pane fade bg-black" id="v-pills-password" role="tabpanel" aria-labelledby="v-pills-password-tab">
-              <h2 className="text-center pt-4 pb-2">{pills[1].lable}</h2>
-              <small className="d-block text-center pb-4">تغيير كلمة المرور</small>
-              <PasswordTab />
-            </div>
-            <div className="tab-pane fade bg-black" id="v-pills-skills" role="tabpanel" aria-labelledby="v-pills-skills-tab">
-              <h2 className="text-center pt-4 pb-2">{pills[2].lable}</h2>
-              <SkillsTab />
-            </div>
-            <div className="tab-pane fade bg-black" id="v-pills-email" role="tabpanel" aria-labelledby="v-pills-email-tab">
-              <h2 className="text-center pt-4 pb-2">{pills[3].lable}</h2>
-              <small className="d-block text-center pb-4">تغيير بريدك الالكتروني</small>
-              <EmailTab />
-            </div>
-            <div className="tab-pane fade bg-black" id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">
-              <h2 className="text-center py-4">{pills[4].lable}</h2>
-              <PaymentTab />
-            </div>
-            <div className="tab-pane fade bg-black" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
-              <h2 className="text-center py-4">{pills[5].lable}</h2>
-              <NotificationsTab />
-            </div>
-            <div className="tab-pane fade bg-black" id="v-pills-points" role="tabpanel" aria-labelledby="v-pills-points-tab">
-              <h2 className="text-center py-4">{pills[6].lable}</h2>
-              <PointsTab />
-            </div>
-            <div className="tab-pane fade bg-black" id="v-pills-deactivate" role="tabpanel" aria-labelledby="v-pills-deactivate-tab">
-              <h2 className="text-center py-4">{pills[7].lable}</h2>
-              <DeactivateTab />
-            </div>
-            <div className="tab-pane fade bg-black" id="v-pills-authentication" role="tabpanel" aria-labelledby="v-pills-authentication-tab">
-              <h2 className="text-center py-4">{pills[8].label}</h2>
-              <AuthenticationTab />
-            </div>
-            <div className="tab-pane fade bg-black" id="v-pills-account-preferences" role="tabpanel" aria-labelledby="v-pills-account-preferences-tab">
-              <h2 className="text-center py-4">{pills[9].lable}</h2>
-              <AccountPreferencesTab />
-            </div>
-            <div className="tab-pane fade bg-black" id="v-pills-invitation-preferences" role="tabpanel" aria-labelledby="v-pills-invitation-preferences-tab">
-              <h2 className="text-center py-4">{pills[10].lable}</h2>
-              <InvitationPreferencesTab />
-            </div>
-            <div className="tab-pane fade bg-black" id="v-pills-session" role="tabpanel" aria-labelledby="v-pills-session-tab">
-              <h2 className="text-center py-4">{pills[11].lable}</h2>
-              <SessionTab />
+          <div className="col-md-9 tab-body">
+            <div className="tab-content bg-black py-4" id="v-pills-tabContent">
+              <Switch>
+                <Route path={`/dashboard/settings/${pills[0].type}`} component={ProfileTab} />
+                <Route path={`/dashboard/settings/${pills[1].type}`} component={PasswordTab} />
+                <Route path={`/dashboard/settings/${pills[2].type}`} component={SkillsTab} />
+                <Route path={`/dashboard/settings/${pills[3].type}`} component={EmailTab} />
+                <Route path={`/dashboard/settings/${pills[4].type}`} component={PaymentTab} />
+                <Route path={`/dashboard/settings/${pills[5].type}`} component={NotificationsTab} />
+                <Route path={`/dashboard/settings/${pills[6].type}`} component={PointsTab} />
+                <Route path={`/dashboard/settings/${pills[7].type}`} component={DeactivateTab} />
+                <Route path={`/dashboard/settings/${pills[8].type}`} component={AuthenticationTab} />
+                <Route path={`/dashboard/settings/${pills[9].type}`} component={AccountPreferencesTab} />
+                <Route path={`/dashboard/settings/${pills[10].type}`} component={InvitationPreferencesTab} />
+                <Route path={`/dashboard/settings/${pills[11].type}`} component={SessionTab} />
+                <Route path={`/dashboard/settings/`} component={ProfileTab} />
+              </Switch>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Router>
   );
 };
 

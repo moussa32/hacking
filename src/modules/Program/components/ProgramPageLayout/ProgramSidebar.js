@@ -38,7 +38,8 @@ const ProgramSidebar = ({ sidebarInfo }) => {
         </div>
       </div>
       <div className="jumbotron bg-second p-3 text-right">
-        <h5 className="text-lightgreen mb-4">أشخاص</h5>
+        <p className="text-center p-0">لم يتوفر اي بيانات بعد</p>
+        {/* <h5 className="text-lightgreen mb-4">أشخاص</h5>
         <div className="top-hackers-section">
           <div className="media">
             <img src="https://i.pinimg.com/474x/b1/19/4f/b1194f6671a741f9b2d52c550324c630.jpg" className="align-self-start top-hackers-image ml-3" alt="..." />
@@ -66,7 +67,7 @@ const ProgramSidebar = ({ sidebarInfo }) => {
           <a className="nav-link text-center my-3 program-nav-link text-lightgreen" data-toggle="tab" href="#admins" role="tab" aria-controls="admins" aria-selected="false">
             كل الاشخاص <FaArrowCircleLeft className="text-secondary" />
           </a>
-        </div>
+        </div> */}
       </div>
     </>
   );

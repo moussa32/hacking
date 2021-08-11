@@ -1,24 +1,39 @@
 import React, { useState, useEffect } from "react";
+import { EditorState, convertToRaw, ContentState, convertFromHTML } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import { Markup } from "interweave";
+import axios from "axios";
+import draftToHtml from "draftjs-to-html";
+import { CustomContentStateConverter } from "../../../../../shared/utils/CustomContentStateConverter";
 import { getCompanyPolicy, putCompanyPolicy } from "../../../../../api/ProgramAPI/ProgramSettingsApi";
 import { getNewTokens } from "../../../../../api/RefreshTokenApi";
-import ReactMde from "react-mde";
-import * as Showdown from "showdown";
-import "react-mde/lib/styles/css/react-mde-all.css";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./CompanyPoliceTab.css";
 
-function CompanyPolicyTab() {
-  const [policy, setPolicy] = useState({ policy: "" });
+const CompanyPolicyTab = () => {
+  const [content, setContent] = useState("");
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [isLoadding, setIsLoadding] = useState(false);
-  const [selectedTab, setSelectedTab] = useState("write");
   const [status, setStatus] = useState(null);
-  const [value, setValue] = useState("**Hello world!!!**");
 
   const token = localStorage.getItem("accessToken");
+
+  const onEditorStateChange = editorState => {
+    let convertedEditorStateToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    setEditorState(editorState);
+    setContent(convertedEditorStateToHtml);
+    console.log(convertedEditorStateToHtml);
+  };
 
   useEffect(() => {
     getCompanyPolicy(token)
       .then(res => {
-        setPolicy({ policy: res.data.policy });
+        setContent(res.data.policy);
+        const htmlFromApi = res.data.policy;
+
+        const blocksFromHTML = convertFromHTML(htmlFromApi);
+        const initContent = ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap);
+        setEditorState(EditorState.createWithContent(CustomContentStateConverter(initContent)));
       })
       .catch(error => {
         if (error.response.status === 401) {
@@ -28,18 +43,11 @@ function CompanyPolicyTab() {
       });
   }, []);
 
-  const converter = new Showdown.Converter({
-    tables: true,
-    simplifiedAutoLink: true,
-    strikethrough: true,
-    tasklists: true,
-  });
-
   const handlePutCompanyPolicy = () => {
     setIsLoadding(true);
     setStatus(null);
 
-    putCompanyPolicy(token, policy)
+    putCompanyPolicy(token, { policy: content })
       .then(res => {
         setIsLoadding(false);
         setStatus({ type: "success", message: "تم تحديث سياسات البرنامج بنجاح." });
@@ -58,8 +66,30 @@ function CompanyPolicyTab() {
       <div className="row">
         <div className="col-md-11 mx-auto">
           <div className="form-group">
-            <ReactMde value={policy.policy} onChange={e => setPolicy({ policy: e })} selectedTab={selectedTab} onTabChange={setSelectedTab} />
-            <textarea value={policy.policy} onChange={e => setPolicy({ policy: e.target.value })} className="form-control p-3 custom-input border-0" id="summary" rows="6" name="summary"></textarea>
+            <Editor
+              editorState={editorState}
+              wrapperClassName="wrapper-class"
+              editorClassName="editor-class"
+              onEditorStateChange={onEditorStateChange}
+              toolbar={{
+                image: {
+                  previewImage: true,
+                  uploadEnabled: true,
+                  uploadCallback: e => {
+                    axios.get("https://api.imgur.com/3/gallery/hot/viral/0").then(response => console.log(response));
+                    return new Promise((resolve, reject) => {
+                      resolve({ data: { link: "http://dummy_image_src.com" } });
+                    });
+                  },
+                  alt: { present: true, mandatory: true },
+                  inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg,image/webp",
+                },
+              }}
+            />
+            <div className="content-view mt-3">
+              <Markup className={"content-view"} content={content} />
+            </div>
+            {/* <textarea disabled value={content} onChange={e => setContent(e.target.value)} className="form-control p-3 custom-input border-0" id="summary" rows="6" name="summary"></textarea> */}
           </div>
           <button className="btn btn-lightgreen w-50 btn-block mx-auto my-4" onClick={handlePutCompanyPolicy}>
             اضافة
@@ -78,6 +108,6 @@ function CompanyPolicyTab() {
       </div>
     </>
   );
-}
+};
 
 export default CompanyPolicyTab;

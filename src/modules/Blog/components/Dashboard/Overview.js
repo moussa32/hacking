@@ -30,7 +30,8 @@ const Overview = props => {
         <Route exact path="/notfound" component={NotFound} />
         <Route exact path={`${match.path}/activity`} component={Activity} />
         <Route exact path={`${match.path}/leaderboard`} component={Leaderboard} />
-        <Route exact path={`${match.path}/settings`} component={Settings} />
+        <Route exact path={`/dashboard/settings`} component={Settings} />
+        <Route exact path="/dashboard/settings/:id" component={Settings} />
         <Route exact path={`${match.path}`} component={Main} />
         <Redirect to="/notfound" />
       </Switch>

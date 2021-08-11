@@ -1,6 +1,15 @@
 import axios from "axios";
 import { dvApiUrl } from "./Constants";
 
+export const getHackerAvatar = async token => {
+  const res = await axios.get(`${dvApiUrl}/hackers/dashboard/settings/set-avater/`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res;
+};
+
 export const putHackerAvatar = async (token, newHackerAvatar) => {
   const res = await axios.put(`${dvApiUrl}/hackers/dashboard/settings/set-avater/`, newHackerAvatar, {
     headers: {

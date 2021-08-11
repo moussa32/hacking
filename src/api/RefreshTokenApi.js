@@ -1,5 +1,6 @@
 import axios from "axios";
 import { dvApiUrl } from "./Constants";
+import { useHistory } from "react-router-dom";
 import { handleSetUserToken } from "../modules/Blog/actions/index";
 
 export const getNewTokens = async oldRefreshToken => {
@@ -16,13 +17,14 @@ export const getNewTokens = async oldRefreshToken => {
     .then(res => {
       handleSetUserToken("accessToken", res.data.access);
       handleSetUserToken("refreshToken", res.data.refresh);
-      console.log("تم تحديث الاكسس توكن");
       window.location.reload();
     })
     .catch(error => {
       if (error.response.status === 401) {
         localStorage.clear();
+        useHistory().push("/login");
       }
     });
+
   return res;
 };
