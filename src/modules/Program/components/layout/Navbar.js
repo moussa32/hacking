@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
-import axios from "axios";
 import { MdEmail } from "react-icons/md";
 import { BsBellFill, BsFillGearFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";

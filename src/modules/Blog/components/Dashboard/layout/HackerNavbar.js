@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
 import { handleRemoveUserToken } from "../../../actions/index";
-import { getNewTokens } from "../../../../../api/RefreshTokenApi";
 import { getHackerNavbar } from "../../../../../api/HackerNavbarApi";
 import { MdEmail } from "react-icons/md";
 import { BsBellFill, BsFillGearFill } from "react-icons/bs";
@@ -10,7 +8,6 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FaUserAlt, FaSignOutAlt } from "react-icons/fa";
 import { dvbaseUrl } from "../../../../../api/Constants";
 import { DefaultAvatar } from "../../../../../assets/index";
-import { dvApiUrl } from "../../../../../api/Constants";
 
 import { WhiteLogo } from "../../../../../assets/index";
 

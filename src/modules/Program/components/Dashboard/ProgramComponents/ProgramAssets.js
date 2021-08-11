@@ -18,7 +18,6 @@ function ProgramAssets() {
 
   useEffect(() => {
     getProgramReportsAsset(localStorage.getItem("accessToken")).then(res => {
-      console.log(res.data);
       res.data.map(point => {
         reportsAssetData.labels.push(point.url);
         reportsAssetData.datasets[0].data.push(point.reports_count);

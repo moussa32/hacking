@@ -117,16 +117,16 @@ const AvailablePrograms = props => {
                       <div className="container px-4">
                         <Swiper {...params}>
                           <div>
-                            <img className="slider-image img-fluid" src="https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg" />
+                            <img className="slider-image img-fluid" src="https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg" alt="slider" />
                           </div>
                           <div>
                             <img className="slider-image img-fluid" src="https://www.technipages.com/wp-content/uploads/2019/07/Cover-600x371.jpg" />
                           </div>
                           <div>
-                            <img className="slider-image img-fluid" src="https://images.ctfassets.net/hrltx12pl8hq/66lRNN2kfHcVSUMrmrcKxf/76b78071032586ff9766d8eb51592f21/free-nature-images.jpg?fit=fill&w=840&h=350" />
+                            <img className="slider-image img-fluid" src="https://images.ctfassets.net/hrltx12pl8hq/66lRNN2kfHcVSUMrmrcKxf/76b78071032586ff9766d8eb51592f21/free-nature-images.jpg?fit=fill&w=840&h=350" alt="slider" />
                           </div>
                           <div>
-                            <img className="slider-image img-fluid" src="https://bingvsdevportalprodgbl.blob.core.windows.net/demo-images/9b3b22ca-d065-40a9-b5d8-2296beb8c717.jpeg" />
+                            <img className="slider-image img-fluid" src="https://bingvsdevportalprodgbl.blob.core.windows.net/demo-images/9b3b22ca-d065-40a9-b5d8-2296beb8c717.jpeg" alt="slider" />
                           </div>
                           <div>Slide 5</div>
                         </Swiper>
@@ -185,7 +185,7 @@ const AvailablePrograms = props => {
                                       </div>
                                       <div className="card-body d-flex flex-row-reverse justify-content-between align-items-center py-0">
                                         <h3 className="card-title badge-name my-3 text-left text-capitalize">{program.company_name}</h3>
-                                        {program.status == "opened" ? (
+                                        {program.status === "opened" ? (
                                           <span>
                                             <FaDollarSign size={"1.2rem"} color={"#009cde"} />
                                           </span>

@@ -92,7 +92,6 @@ const Main = ({ dispatch }) => {
 };
 
 const mapStateToProps = ({ program }) => {
-  console.log(program);
   return {
     userInfo: program.programInfo,
     compaynName: program.programInfo.company_name,

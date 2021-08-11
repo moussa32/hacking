@@ -4,7 +4,6 @@ import { getProgramWeakness } from "../../../../../api/ProgramAPI/ProgramWeaknes
 import { GiBrokenShield } from "react-icons/gi";
 
 function ProgramWeakPoints() {
-  const [isLoadding, setIsLoadding] = useState(true);
   const [doughnutChartData, setDoughnutChartData] = useState({
     labels: [],
     datasets: [

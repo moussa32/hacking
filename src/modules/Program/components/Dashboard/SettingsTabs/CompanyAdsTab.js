@@ -11,7 +11,6 @@ function CompanyAdsTab() {
   const [currentAdToDelete, setCurrentAdToDelete] = useState(null);
   const [currentAdToEdit, setCurrentAdToEdit] = useState({ title: "", body: "" });
   const [currentAd, setCurrentAd] = useState(null);
-  const [status, setStatus] = useState(null);
   const [modalStatus, setModalStatus] = useState(null);
   const [isLoadding, setIsLoadding] = useState(false);
   const [trip, setTrip] = useState("ADS");
@@ -43,7 +42,6 @@ function CompanyAdsTab() {
       })
       .catch(error => {
         if (error.response.status === 401) {
-          setStatus({ type: "danger", message: "جاري تحديث جلستك" });
           getNewTokens(localStorage.getItem("reFreshtoken"));
         }
       });

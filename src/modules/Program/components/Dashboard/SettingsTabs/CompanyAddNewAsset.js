@@ -66,6 +66,12 @@ function CompanyAddNewAsset({ owner }) {
     if (!newAsset.descriptionError) {
       descriptionError = "يجب كتابة وصف للنطاق";
     }
+
+    if (descriptionError) {
+      setStatus({ type: "danger", message: descriptionError });
+      return false;
+    }
+
     setStatus({});
     return true;
   };

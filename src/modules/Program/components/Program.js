@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Switch, Route, Redirect, withRouter, useRouteMatch } from "react-router";
+import { Switch, Route, Redirect, withRouter } from "react-router";
 
 import NotFound from "../../../shared/components/NotFound";
 import SignupProgram from "./Registerition/SignupProgram";
@@ -14,13 +14,12 @@ import Settings from "./Dashboard/Settings.js";
 import Navbar from "./layout/Navbar";
 import MainNavbar from "../../../modules/Blog/components/layout/Navbar";
 import { handleGetProgram } from "../actions";
-import { useHistory } from "react-router-dom";
 
 const Program = ({ location, dispatch }) => {
   useEffect(() => {
     dispatch(handleGetProgram(localStorage.getItem("accessToken")));
   }, [dispatch]);
-  const history = useHistory();
+
   return (
     <>
       {localStorage.getItem("accessToken") ? <Navbar currentPathname={location.pathname} /> : <MainNavbar currentPathname={location.pathname} />}
@@ -30,17 +29,11 @@ const Program = ({ location, dispatch }) => {
         <Route exact path="/program/email-confirmation" component={EmailConfirmation} />
         <Route exact path="/program/verify-email" component={VerifyEmail} />
         <Route exact path="/program/:id/:slug" component={ProgramPage} />
-        {!localStorage.getItem("accessToken") ? (
-          <Redirect to="/login" />
-        ) : (
-          <>
-            <Route exact path="/program/dashboard" component={Main} />
-            <Route exact path="/program/dashboard/activity" component={Activity} />
-            <Route exact path="/program/dashboard/settings" component={Settings} />
-            <Route exact path="/program/dashboard/settings/:id" component={Settings} />
-            <Route exact path="/program/dashboard/leaderboard" component={Leaderboard} />
-          </>
-        )}
+        <Route exact path="/program/dashboard" component={Main} />
+        <Route exact path="/program/dashboard/activity" component={Activity} />
+        <Route exact path="/program/dashboard/settings" component={Settings} />
+        <Route exact path="/program/dashboard/settings/:id" component={Settings} />
+        <Route exact path="/program/dashboard/leaderboard" component={Leaderboard} />
         <Redirect to="/notfound" />
       </Switch>
     </>

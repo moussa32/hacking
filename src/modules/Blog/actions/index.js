@@ -1,8 +1,8 @@
-import {GET_CATEGORIES, GET_BLOGS, GET_PAGINATION, GET_BLOG, GET_HOME_ADS, GET_BLOG_AD, GET_USER_INFO} from "./types";
-import {getCategoriesList, getBlogsList, getBlogDetails} from "../../../api/BlogsApi";
-import {getHackerInfo} from "../../../api/DashboardApi";
-import {getAllHomeAds, getSharedAd} from "../../../api/AdsApi";
-import {getNewTokens} from "../../../api/RefreshTokenApi";
+import { GET_CATEGORIES, GET_BLOGS, GET_PAGINATION, GET_BLOG, GET_HOME_ADS, GET_BLOG_AD, GET_USER_INFO } from "./types";
+import { getCategoriesList, getBlogsList, getBlogDetails } from "../../../api/BlogsApi";
+import { getHackerInfo } from "../../../api/DashboardApi";
+import { getAllHomeAds, getSharedAd } from "../../../api/AdsApi";
+import { getNewTokens } from "../../../api/RefreshTokenApi";
 // import { showLoading, hideLoading } from "react-redux-loading";
 
 export function getCategories(categories) {
@@ -22,14 +22,14 @@ export function getBlogs(blogs) {
 export function getPagination(info) {
   return {
     type: GET_PAGINATION,
-    pagination: {...info},
+    pagination: { ...info },
   };
 }
 
 export function getUserInfo(hackerInfo) {
   return {
     type: GET_USER_INFO,
-    userInfo: {...hackerInfo},
+    userInfo: { ...hackerInfo },
   };
 }
 
@@ -43,68 +43,68 @@ export function getHomeAds(ads) {
 export function getBlog(blog) {
   return {
     type: GET_BLOG,
-    blog: {...blog},
+    blog: { ...blog },
   };
 }
 
 export function getBlogAd(ad) {
   return {
     type: GET_BLOG_AD,
-    blogAd: {...ad},
+    blogAd: { ...ad },
   };
 }
 
 export function handleGetCategories() {
-  return (dispatch) => {
+  return dispatch => {
     return getCategoriesList()
-      .then((res) => res.data)
-      .then((categories) => dispatch(getCategories(categories)));
+      .then(res => res.data)
+      .then(categories => dispatch(getCategories(categories)));
   };
 }
 
 export function handleGetBlogs(fetchPageNumber) {
-  return (dispatch) => {
+  return dispatch => {
     return getBlogsList(fetchPageNumber)
-      .then((res) => res.data)
-      .then((blogs) => dispatch(getBlogs(blogs.results)));
+      .then(res => res.data)
+      .then(blogs => dispatch(getBlogs(blogs.results)));
   };
 }
 
 export function handleGetBlog(id) {
-  return (dispatch) => {
+  return dispatch => {
     return getBlogDetails(id)
-      .then((res) => res.data)
-      .then((blog) => dispatch(getBlog(blog)));
+      .then(res => res.data)
+      .then(blog => dispatch(getBlog(blog)));
   };
 }
 
 export function handleGetHomeAds() {
-  return (dispatch) => {
+  return dispatch => {
     return getAllHomeAds()
-      .then((res) => res.data)
-      .then((ads) => dispatch(getHomeAds(ads)));
+      .then(res => res.data)
+      .then(ads => dispatch(getHomeAds(ads)));
   };
 }
 
 export function handleGetPagination(currentPageNumber) {
-  return (dispatch) => {
+  return dispatch => {
     return getBlogsList(currentPageNumber)
-      .then((res) => res.data)
-      .then((pag) => {
-        dispatch(getPagination({currentPage: currentPageNumber, count: pag.count, next: pag.next, prev: pag.previous}));
+      .then(res => res.data)
+      .then(pag => {
+        dispatch(getPagination({ currentPage: currentPageNumber, count: pag.count, next: pag.next, prev: pag.previous }));
       });
   };
 }
 
 export function handleGetUserInfo(token) {
-  return (dispatch) => {
+  return dispatch => {
     return getHackerInfo(token)
-      .then((user) => user.data)
-      .then((hackerInfo) => {
+      .then(user => user.data)
+      .then(hackerInfo => {
         dispatch(getUserInfo(hackerInfo));
       })
       .catch(function (error) {
-        if (error.response.status == 401) {
+        if (error.response.status === 401) {
           const reFreshtoken = handleGetUserToken("refreshToken");
           getNewTokens(reFreshtoken);
         }
@@ -113,10 +113,10 @@ export function handleGetUserInfo(token) {
 }
 
 export function handleGetBlogAd() {
-  return (dispatch) => {
+  return dispatch => {
     return getSharedAd()
-      .then((res) => res.data)
-      .then((ad) => dispatch(getBlogAd(ad)));
+      .then(res => res.data)
+      .then(ad => dispatch(getBlogAd(ad)));
   };
 }
 

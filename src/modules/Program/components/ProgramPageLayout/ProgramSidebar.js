@@ -1,5 +1,5 @@
 import React from "react";
-import { FaArrowCircleLeft } from "react-icons/fa";
+// import { FaArrowCircleLeft } from "react-icons/fa";
 
 const ProgramSidebar = ({ sidebarInfo }) => {
   return (

@@ -6,7 +6,7 @@ const ProgramHeader = ({ headerInfo }) => {
     <div className="row p-4 bg-black">
       <div className="col-md-3">
         <img className="program-logo" src={`${dvbaseUrl}/${headerInfo.logo}`} alt={headerInfo.company_name} />
-        <a className="d-block text-center mt-3 text-break" href={headerInfo.url} target="_blank">
+        <a className="d-block text-center mt-3 text-break" href={headerInfo.url} target="_blank" rel="noopener noreferrer">
           {headerInfo.url}
         </a>
       </div>

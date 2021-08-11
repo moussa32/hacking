@@ -30,7 +30,6 @@ const Settings = () => {
     { type: "invitation-preferences", lable: "تفضيلات الدعوة" },
     { type: "session", lable: "الجلسات" },
   ];
-  const token = localStorage.getItem("accessToken");
   let currentPath = useParams().id;
 
   useEffect(() => {
