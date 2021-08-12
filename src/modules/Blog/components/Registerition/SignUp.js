@@ -91,6 +91,15 @@ const SignUp = ({ setParentData }) => {
       return false;
     }
 
+    if (signUpData.username.length < 4) {
+      usernameError = "يجب ان يكون اسم المستخدم اكبر من 4 أحرف";
+    }
+
+    if (usernameError) {
+      setStatus({ usernameError });
+      return false;
+    }
+
     if (!signUpData.email) {
       emailError = "مطلوب";
     }
@@ -164,11 +173,11 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (signUpData.password !== signUpData.rePassword) {
-      passwordError = "يجب ان تكون كلمة المرور متطابقة";
+      rePasswordError = "يجب ان تكون كلمة المرور متطابقة";
     }
 
-    if (passwordError) {
-      setStatus({ passwordError });
+    if (rePasswordError) {
+      setStatus({ rePasswordError });
       return false;
     }
 

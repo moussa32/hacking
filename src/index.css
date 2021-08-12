@@ -826,7 +826,7 @@ blockquote:nth-of-type(even) footer:after {
 .login-username-icon {
   position: absolute;
   right: 13px;
-  top: 17%;
+  top: 26%;
   bottom: 25%;
   z-index: 50;
 }
@@ -1369,4 +1369,17 @@ table th {
   max-height: 250px;
   padding: 1rem;
   border-radius: 20px;
+}
+
+/*Home page*/
+.btn-join-us {
+  background: rgb(0 0 0 / 24%);
+  padding: 1rem 3rem;
+  font-size: 2rem;
+  margin: auto 0;
+}
+
+.btn-join-us:hover {
+  box-shadow: 0 0 3px 4px var(--lightGreen);
+  color: var(--lightGreen);
 }

@@ -54,6 +54,15 @@ const SignupProgram = ({ location }) => {
       return false;
     }
 
+    if (formData.username.length < 4) {
+      usernameError = "يجب ان لا يقل اسم المستخدم عن 4 أحرف";
+    }
+
+    if (usernameError) {
+      setStatus({ usernameError });
+      return false;
+    }
+
     if (!formData.email) {
       emailError = "هذا الحقل مطلوب";
     }
@@ -304,7 +313,7 @@ const SignupProgram = ({ location }) => {
               <img src={Logo} alt="Hacking Technology" className="signup-logo d-block mx-auto" />
               <div className="signup-info jumbotron jumbotron-fluid text-center">
                 <h2>نحو خدمات آمنة وتجربة مستخدم سلسة</h2>
-                <p className="lead">مرحباً بك في Hacking Technology حيث يتواجد خبراء مستعدون دوماً لدعم أعمالك وتطوير تجربة مستخدم سلسة وآمنة من خلال خدمات اكتشاف الثغرات الأمنية في المواقع الالكترونية والتطبيقات وإنشاء تقارير الأمن السيراني</p>
+                <p className="lead">مرحباً بك في Hacking Technology حيث يتواجد خبراء مستعدون دوماً لدعم أعمالك وتطوير تجربة مستخدم سلسة وآمنة من خلال خدمات اكتشاف الثغرات الأمنية في المواقع الالكترونية والتطبيقات وإنشاء تقارير الأمن السيبراني</p>
               </div>
             </div>
           </div>

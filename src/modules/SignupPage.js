@@ -5,9 +5,9 @@ import { BsBuilding } from "react-icons/bs";
 import Spinner from "../shared/components/Spinner";
 import Footer from "./Program/components/layout/Footer";
 import Navbar from "../modules/Blog/components/layout/Navbar";
+import { FaHandshake } from "react-icons/fa";
 
 import "./SignupPage.css";
-import Services from "../shared/components/StaticContent/Services";
 
 const SignupPage = props => {
   const [loadded, setLoadded] = useState(false);
@@ -23,7 +23,12 @@ const SignupPage = props => {
           <>
             <div className="container-fluid home available-margin">
               <div className="row">
-                <Services />
+                <div className="col-md-12 text-center mb-4">
+                  <div className="signuppage-slogan">
+                    <FaHandshake className={"text-lightgreen"} size={"6rem"} />
+                    <p className="lead">قم بتأمين تطبيقاتك من خلال الاختبار المستمر تحت مظلة Hacking Technology البيضاء. تشجع Hacking Technology الشركات والمؤسسات من كافة القطاعات على تأمين نشاطاتها بعيداً عن تدخلات القبعات السوداء التي قد تضر بالأصول.</p>
+                  </div>
+                </div>
                 <div className="col-md-4 mx-auto">
                   <Link className="text-white text-decoration-none" to="/program/signup">
                     <div className="card border-0 signup-card">

@@ -52,17 +52,17 @@ const SkillsTab = () => {
     <div className="row">
       {skills.map(skill => {
         return (
-          <div key={skill.id} className="col-md-10 mx-auto mb-4">
+          <div key={skill.id} className="col-md-11 mx-auto mb-4">
             <div className="card border-0 bg-second">
-              <div className="card-body d-flex">
+              <div className="card-body skill-card d-flex">
                 <p className="my-auto">
                   {skill.rating}/{maxCount}
                 </p>
                 <div className="form-check form-check-inline">
                   <ReactRating fullSymbol={["rating"]} initialRating={skill.rating} step={2} stop={10} onChange={e => handleRating(e, skill.name, skill.id)} />
                 </div>
-                <div className="form-check form-check-inline mr-auto">
-                  <label className="form-check-label mr-2 text-lightgreen lead mb-0">{skill.name}</label>
+                <div className="form-check form-check-inline skill-name">
+                  <label className="form-check-label pr-0 mr-2 text-lightgreen lead mb-0">{skill.name}</label>
                 </div>
               </div>
             </div>

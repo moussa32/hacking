@@ -87,7 +87,7 @@ const Login = props => {
                   <label htmlFor="usernameOrEmail">اسم المستخدم</label>
                   <div className="input-group mb-3">
                     <div className="input-group-append position-relative">
-                      <FaUserAlt size={"1.5rem"} className="text-muted login-username-icon" />
+                      <FaUserAlt size={"1.1rem"} className="text-muted login-username-icon" />
                     </div>
                     <input type="text" name="username" placeholder="اسم المستخدم او البريد الالكتروني" value={credentials.username} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input input-with-icon" id="usernameOrEmail" aria-describedby="emailHelp" required />
                   </div>
@@ -96,7 +96,7 @@ const Login = props => {
                   <label htmlFor="exampleInputPassword1">كلمة المرور</label>
                   <div className="input-group mb-3">
                     <div className="input-group-append position-relative">
-                      <FaKey size={"1.5rem"} className="text-muted login-username-icon" />
+                      <FaKey size={"1.1rem"} className="text-muted login-username-icon" />
                     </div>
                     <input name="password" type="password" placeholder="كلمة المرور" value={credentials.password} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input input-with-icon" id="passwordInput" required />
                   </div>

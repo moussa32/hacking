@@ -6,3 +6,8 @@
   height: 30px;
   background-color: var(--lightGreen);
 }
+
+.skill-name {
+  text-align: left;
+  margin-right: auto;
+}
