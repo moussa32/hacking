@@ -4,6 +4,15 @@
   background-attachment: fixed;
   background-size: cover;
 }
+
+.services-card {
+  background: rgb(0 0 0 / 24%);
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 0 1px 1px var(--lightGreen);
+  height: 100%;
+}
+
 .signup-card {
   background: linear-gradient(180deg, var(--lightGreen), rgb(8 186 137 / 66%), rgb(49 49 49 / 33%));
   transition: 0.8s;

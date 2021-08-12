@@ -3,6 +3,7 @@ import Typist from "react-typist";
 import { Transition } from "react-transition-group";
 import { MainIllust } from "../../../assets";
 import Spinner from "../../../shared/components/Spinner";
+import Services from "../../../shared/components/StaticContent/Services";
 
 const Main = () => {
   const [loaded, setLoaded] = useState(false);
@@ -54,6 +55,7 @@ const Main = () => {
         ) : (
           <Spinner></Spinner>
         )}
+        <Services />
       </div>
     </div>
   );

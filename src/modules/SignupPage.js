@@ -5,7 +5,9 @@ import { BsBuilding } from "react-icons/bs";
 import Spinner from "../shared/components/Spinner";
 import Footer from "./Program/components/layout/Footer";
 import Navbar from "../modules/Blog/components/layout/Navbar";
+
 import "./SignupPage.css";
+import Services from "../shared/components/StaticContent/Services";
 
 const SignupPage = props => {
   const [loadded, setLoadded] = useState(false);
@@ -21,6 +23,7 @@ const SignupPage = props => {
           <>
             <div className="container-fluid home available-margin">
               <div className="row">
+                <Services />
                 <div className="col-md-4 mx-auto">
                   <Link className="text-white text-decoration-none" to="/program/signup">
                     <div className="card border-0 signup-card">
