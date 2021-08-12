@@ -213,7 +213,13 @@ const SignUp = ({ setParentData }) => {
           const errorArray = error.response.data;
           if (error.response.status === 400) {
             console.log(errorArray);
-
+            if (error.response.data.username) {
+              setStatus({ usernameError: error.response.data.username });
+            } else if (error.response.data.email) {
+              setStatus({ emailError: error.response.data.email });
+            } else if (error.response.status === 500) {
+              setStatus({ type: "danger", message: "هناك مشكلة في الخادم في الوقت الحالي برجاء المحاولة في وقت لاحق" });
+            }
             for (const [key, value] of Object.entries(errorArray)) {
               setStatus({ ...status, key: value });
               console.log(status);

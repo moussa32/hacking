@@ -14,7 +14,7 @@ import "./AvailablePrograms.css";
 
 const AvailablePrograms = props => {
   const [initPrograms, setInitPrograms] = useState(null);
-  const [ads, setAds] = useState([]);
+  const [programAds, setProgramAds] = useState(null);
   const [programs, setPrograms] = useState(null);
   const [programType, setProgramType] = useState(null);
   const [loadded, setLoadded] = useState(false);
@@ -73,7 +73,7 @@ const AvailablePrograms = props => {
 
   useEffect(() => {
     getAvailableProgramAds().then(res => {
-      setAds(res.data);
+      setProgramAds(res.data);
       console.log(res.data);
     });
     allAvailablePrograms.then(item => {
@@ -121,19 +121,22 @@ const AvailablePrograms = props => {
                     <div className="jumbotron jumbotron-fluid bg-black rounded py-1">
                       <div className="container px-4">
                         <Swiper {...params}>
-                          <>
-                            {ads.map(ad => {
-                              return (
-                                <div key={ad.id} className="carousel-item">
-                                  <img src={ad.image} className="d-block w-100" alt={ad.title} />
-                                  <div className="carousel-caption d-none d-md-block">
-                                    <h4>{ad.title}</h4>
-                                    <p className="lead">{ad.description}</p>
-                                  </div>
+                          {programAds.map(ad => {
+                            return (
+                              <div key={ad.id}>
+                                <img src={ad.image} className="d-block w-100" alt={ad.title} />
+                                <div className="carousel-caption d-none d-md-block">
+                                  <h4>{ad.title}</h4>
+                                  <p className="lead">{ad.description.length > 150 ? ad.description.substring(0, 150) + " ......." : ad.description}</p>
+                                  {ad.ad_link && (
+                                    <a href={ad.ad_link} target="_blank" className="btn btn-lightgreen">
+                                      قراءة المزيد
+                                    </a>
+                                  )}
                                 </div>
-                              );
-                            })}
-                          </>
+                              </div>
+                            );
+                          })}
                         </Swiper>
                       </div>
                     </div>
