@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { FaDollarSign } from "react-icons/fa";
 import Spinner from "../shared/components/Spinner";
 import Swiper from "react-id-swiper";
-import { getAvailablePrograms, getAvailableProgramsByPram } from "../api/AvailableProgramsApi";
+import { getAvailableProgramAds, getAvailablePrograms, getAvailableProgramsByPram } from "../api/AvailableProgramsApi";
 import { getNewTokens } from "../api/RefreshTokenApi";
 import CustomSelect from "../shared/components/FormFields/CustomSelect";
 import Footer from "./Program/components/layout/Footer";
@@ -14,6 +14,7 @@ import "./AvailablePrograms.css";
 
 const AvailablePrograms = props => {
   const [initPrograms, setInitPrograms] = useState(null);
+  const [ads, setAds] = useState([]);
   const [programs, setPrograms] = useState(null);
   const [programType, setProgramType] = useState(null);
   const [loadded, setLoadded] = useState(false);
@@ -71,6 +72,10 @@ const AvailablePrograms = props => {
   }, [programType]);
 
   useEffect(() => {
+    getAvailableProgramAds().then(res => {
+      setAds(res.data);
+      console.log(res.data);
+    });
     allAvailablePrograms.then(item => {
       setPrograms(item.data);
       setInitPrograms(item.data);
@@ -116,19 +121,19 @@ const AvailablePrograms = props => {
                     <div className="jumbotron jumbotron-fluid bg-black rounded py-1">
                       <div className="container px-4">
                         <Swiper {...params}>
-                          <div>
-                            <img className="slider-image img-fluid" src="https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg" alt="slider" />
-                          </div>
-                          <div>
-                            <img className="slider-image img-fluid" src="https://www.technipages.com/wp-content/uploads/2019/07/Cover-600x371.jpg" />
-                          </div>
-                          <div>
-                            <img className="slider-image img-fluid" src="https://images.ctfassets.net/hrltx12pl8hq/66lRNN2kfHcVSUMrmrcKxf/76b78071032586ff9766d8eb51592f21/free-nature-images.jpg?fit=fill&w=840&h=350" alt="slider" />
-                          </div>
-                          <div>
-                            <img className="slider-image img-fluid" src="https://bingvsdevportalprodgbl.blob.core.windows.net/demo-images/9b3b22ca-d065-40a9-b5d8-2296beb8c717.jpeg" alt="slider" />
-                          </div>
-                          <div>Slide 5</div>
+                          <>
+                            {ads.map(ad => {
+                              return (
+                                <div key={ad.id} className="carousel-item">
+                                  <img src={ad.image} className="d-block w-100" alt={ad.title} />
+                                  <div className="carousel-caption d-none d-md-block">
+                                    <h4>{ad.title}</h4>
+                                    <p className="lead">{ad.description}</p>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </>
                         </Swiper>
                       </div>
                     </div>

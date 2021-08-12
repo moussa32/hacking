@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
 import ReactRating from "react-rating";
 import { getHackerSkills, putHackerSkills } from "../../../../../api/HackerSettingsApi";
 import "./SkillsTab.css";
@@ -8,6 +7,8 @@ import { getNewTokens } from "../../../../../api/RefreshTokenApi";
 const SkillsTab = () => {
   const [skills, setSkills] = useState([{ name: "html", rating: 2 }]);
   const [modifiedSkills, setModifiedSkills] = useState([]);
+  const [isLoadding, setIsLoadding] = useState(false);
+  const [status, setStatus] = useState(null);
   const maxCount = 10;
   const token = localStorage.getItem("accessToken");
 
@@ -24,13 +25,27 @@ const SkillsTab = () => {
       })
     );
     setModifiedSkills([...modifiedSkills, { id: skillID, name: skillName, rating: newRating }]);
-    putHackerSkills(token, modifiedSkills)
-      .then(res => {})
-      .catch(error => {
-        if (error.response.status === 401) {
-          getNewTokens(localStorage.getItem("refreshToken"));
-        }
-      });
+  };
+
+  const handleChangeSkills = () => {
+    setIsLoadding(true);
+    setStatus(null);
+    if (modifiedSkills.length > 0) {
+      putHackerSkills(token, modifiedSkills)
+        .then(res => {
+          setIsLoadding(false);
+          setStatus({ type: "success", message: "تم تحديث مهارتك بنجاح" });
+        })
+        .catch(error => {
+          setIsLoadding(false);
+          if (error.response.status === 401) {
+            getNewTokens(localStorage.getItem("refreshToken"));
+          }
+        });
+    } else {
+      setIsLoadding(false);
+      setStatus({ type: "danger", message: "لم يتم تعديل او تغيير اي مهارة بعد" });
+    }
   };
 
   return (
@@ -54,12 +69,27 @@ const SkillsTab = () => {
           </div>
         );
       })}
+      <div className="col-md-12">
+        <button className="btn btn-lightgreen mx-auto px-4 py-2 d-block" onClick={handleChangeSkills}>
+          تحديث المهارات
+        </button>
+      </div>
+      <div className="col-md-8 mx-auto">
+        {isLoadding ? (
+          <div className="spinner-border d-block mx-auto text-success mt-4 mb-1" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        ) : null}
+        {status ? (
+          <div className={`alert alert-${status.type} mt-4 text-center`} role="alert">
+            {status.message}
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };
 
-const mapStateToProps = ({}) => {
-  return {};
-};
-
-export default connect(mapStateToProps)(SkillsTab);
+export default SkillsTab;

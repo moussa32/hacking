@@ -7,11 +7,11 @@ const ProgramSidebar = ({ sidebarInfo }) => {
       <div className="jumbotron bg-second p-3 text-right mb-3">
         <h5 className="text-lightgreen mb-4">إحصائيات البرنامج</h5>
         <div className="stat-section">
-          <h4 className="small muted lead">إجمالي المدفوع</h4>
+          <h4 className="small muted lead">إجمالي المدفوعات</h4>
           <p className="p-2 bg-black rounded text-center stat-value lead">${sidebarInfo.payings}</p>
         </div>
         <div className="stat-section">
-          <h4 className="small muted lead">أكبر مكافأة</h4>
+          <h4 className="small muted lead">المكافأة الأعلى قيمة</h4>
           <p className="p-2 bg-black rounded text-center stat-value lead">
             $
             {sidebarInfo.bounty_bars && sidebarInfo.bounty_bars.length > 0
@@ -26,20 +26,20 @@ const ProgramSidebar = ({ sidebarInfo }) => {
         </div>
         <div className="stat-section">
           <h4 className="small muted lead">عدد التقارير المسلمة</h4>
-          <p className="p-2 bg-black rounded text-center stat-value lead">100</p>
+          <p className="p-2 bg-black rounded text-center stat-value lead">{sidebarInfo.all_reports_count}</p>
         </div>
         <div className="stat-section">
-          <h4 className="small muted lead">عدد التقارير المحلوله</h4>
+          <h4 className="small muted lead">عدد التقارير المنتهية</h4>
           <p className="p-2 bg-black rounded text-center stat-value lead">{sidebarInfo.resolved_reports_count}</p>
         </div>
         <div className="stat-section">
-          <h4 className="small muted lead">اشخاص تم شكرهم</h4>
+          <h4 className="small muted lead">خبراء تم مكافأتهم</h4>
           <p className="p-2 bg-black rounded text-center stat-value lead">{sidebarInfo.thanked_hackers_count}</p>
         </div>
       </div>
       <div className="jumbotron bg-second p-3 text-right">
         <p className="text-center p-0">لم يتوفر اي بيانات بعد</p>
-        {/* <h5 className="text-lightgreen mb-4">أشخاص</h5>
+        {/* <h5 className="text-lightgreen mb-4">خبراء</h5>
         <div className="top-hackers-section">
           <div className="media">
             <img src="https://i.pinimg.com/474x/b1/19/4f/b1194f6671a741f9b2d52c550324c630.jpg" className="align-self-start top-hackers-image ml-3" alt="..." />
@@ -65,7 +65,7 @@ const ProgramSidebar = ({ sidebarInfo }) => {
         </div>
         <div className="nav-item" role="presentation">
           <a className="nav-link text-center my-3 program-nav-link text-lightgreen" data-toggle="tab" href="#admins" role="tab" aria-controls="admins" aria-selected="false">
-            كل الاشخاص <FaArrowCircleLeft className="text-secondary" />
+            كل الخبراء <FaArrowCircleLeft className="text-secondary" />
           </a>
         </div> */}
       </div>

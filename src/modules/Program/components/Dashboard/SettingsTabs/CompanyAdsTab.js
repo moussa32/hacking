@@ -81,7 +81,7 @@ function CompanyAdsTab() {
         <>
           <div className="mx-auto mb-4 rounded">
             <button className="btn btn-lightgreen d-block mr-auto" onClick={() => setTrip("addAD")}>
-              اضافة اعلانات جديدة
+              إضافة إعلانات جديدة
             </button>
           </div>
           <div className="jumbotron bg-second py-4 px-3 text-right">

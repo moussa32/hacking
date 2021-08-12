@@ -11,18 +11,17 @@ const FeaturedBlogs = ({ categories }) => {
   const [featuredBlogs, setFeaturedBlogs] = useState([]);
 
   useEffect(() => {
-    getFeaturedBlogs()
-      .then(res => {
-        setFeaturedBlogs(res.data);
-      })
-  }, [featuredBlogs])
+    getFeaturedBlogs().then(res => {
+      setFeaturedBlogs(res.data);
+    });
+  }, []);
 
   const params = {
     spaceBetween: 10,
     centeredSlides: true,
     autoplay: {
       delay: 5000,
-      disableOnInteraction: true
+      disableOnInteraction: true,
     },
     pagination: {
       el: ".swiper-pagination",
@@ -43,14 +42,7 @@ const FeaturedBlogs = ({ categories }) => {
         <Swiper {...params}>
           {featuredBlogs.map((currentBlog, index) => (
             <div className="slide carousel-inner" key={index}>
-              <BlogCard
-                blog={currentBlog}
-                category={
-                  categories.filter(
-                    (category) => category.id === currentBlog.category
-                  )[0]
-                }
-              />
+              <BlogCard blog={currentBlog} category={categories.filter(category => category.id === currentBlog.category)[0]} />
             </div>
           ))}
         </Swiper>

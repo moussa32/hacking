@@ -8,7 +8,7 @@ const PaymentTab = () => {
         <div className="col-md-6">
           <h4>الأرباح</h4>
           <a href="/#" className="text-lightgreen">
-            ارسال ملف CSV عبر البريد الالكتروني
+            إرسال ملف CSV عبر البريد الالكتروني
           </a>
         </div>
         <div className="col-md-6 text-left">

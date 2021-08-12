@@ -1,6 +1,6 @@
 import axios from "axios";
 import { dvApiUrl } from "./Constants";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { handleSetUserToken } from "../modules/Blog/actions/index";
 
 export const getNewTokens = async oldRefreshToken => {
@@ -20,10 +20,7 @@ export const getNewTokens = async oldRefreshToken => {
       window.location.reload();
     })
     .catch(error => {
-      if (error.response.status === 401) {
-        localStorage.clear();
-        useHistory().push("/login");
-      }
+      console.log(error);
     });
 
   return res;

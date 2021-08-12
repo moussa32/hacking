@@ -64,7 +64,7 @@ const Navbar = ({ currentPathname }) => {
           </li>
           <li className={`nav-item ${activeTab === "signup" ? "active" : ""}`} id="signup">
             <Link className="nav-link" to="/signup">
-              إنضم إلينا
+              انضم إلينا
             </Link>
           </li>
         </ul>

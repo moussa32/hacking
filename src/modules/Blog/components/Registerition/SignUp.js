@@ -242,7 +242,7 @@ const SignUp = ({ setParentData }) => {
                   ) : null}
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="secondName">الاسم الثاني</label>
+                  <label for="secondName">الاسم الأخير</label>
                   <input type="text" className="form-control custom-input" name="lastName" id="lastName" onChange={onTyping} />
                   {status.lastNameError ? (
                     <div class="mt-2 alert alert-danger custom-danger-alert" role="alert">
@@ -261,7 +261,7 @@ const SignUp = ({ setParentData }) => {
                 ) : null}
               </div>
               <div className="form-group">
-                <label for="email">البريد الإلكتروني</label>
+                <label for="email">البريد الالكتروني</label>
                 <input type="email" className="form-control custom-input" name="email" id="email" onChange={onTyping} />
                 {status.emailError ? (
                   <div class="mt-2 alert alert-danger" role="alert">
@@ -338,7 +338,9 @@ const SignUp = ({ setParentData }) => {
                     <small>مزيج من الأحرف الكبيرة والصغيرة والأرقام والأحرف الخاصة</small>
                   </li>
                   <li className="sugesstion-password-item">
-                    <small>أحرف على الأقل أو أكثر من 8</small>
+                    <small>
+                      <span className="ml-1">8</span> خانات على الأقل
+                    </small>
                   </li>
                   <li className="sugesstion-password-item">
                     <small>مزيج من الكلمات العشوائية</small>

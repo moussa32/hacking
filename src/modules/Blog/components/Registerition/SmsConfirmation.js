@@ -209,12 +209,12 @@ const SmsConfirmation = () => {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb bg-black">
               <li className="breadcrumb-item py-1">
-                <FaCheckCircle className="check-progress ml-2" size={"1.5em"} /> التحقق من البريد الإلكتروني
+                <FaCheckCircle className="check-progress ml-2" size={"1.5em"} /> التحقق من البريد الالكتروني
               </li>
             </ol>
           </nav>
           <div className="jumbotron jumbotron-fluid bg-black rounded pt-4">
-            <label className="d-block text-right box-title">التحقق من الموبيل</label>
+            <label className="d-block text-right box-title">التحقق من رقم الهاتف</label>
             <div className="container">
               <div className="row">
                 <div className="col-md-6 mx-auto px-4">
@@ -240,7 +240,7 @@ const SmsConfirmation = () => {
                 </div>
               </div>
               <button onClick={onSend} className="btn btn-lightgreen my-4 d-block mx-auto">
-                إرسال
+                تأكيد
               </button>
               <small className="d-block">
                 لم تتلق الرمز؟{" "}

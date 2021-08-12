@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 import "./AccountPreferencesTab.css";
 
 const AccountPreferencesTab = () => {
   return (
     <>
       <div className="row mx-2">
-        <h4 class="mr-3 mb-3">أظهر الارباح</h4>
+        <h4 class="mr-3 mb-3">إظهار الأرباح</h4>
         <div className="col-md-12">
           <div className="jumbotron jumbotron-fluid bg-second py-4 mb-1">
             <div className="container">
@@ -16,14 +16,14 @@ const AccountPreferencesTab = () => {
                     <span class="checkmark"></span>
                     <label className="form-check-label" for="show-profit">
                       أظهر
-                  </label>
+                    </label>
                   </div>
                   <div className="form-check">
                     <input className="custom-checkbox" type="checkbox" value="hide" id="hide-profit" />
                     <span class="checkmark"></span>
                     <label className="form-check-label" for="hide-profit">
                       أخفي
-                  </label>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -50,14 +50,14 @@ const AccountPreferencesTab = () => {
                     <span class="checkmark"></span>
                     <label className="form-check-label" for="theme-dark">
                       غامق
-                  </label>
+                    </label>
                   </div>
                   <div className="form-check">
                     <input className="custom-checkbox" type="checkbox" value="auto" id="theme-auto" />
                     <span class="checkmark"></span>
                     <label className="form-check-label" for="theme-auto">
                       تلقائي
-                  </label>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -67,6 +67,6 @@ const AccountPreferencesTab = () => {
       </div>
     </>
   );
-}
+};
 
 export default AccountPreferencesTab;

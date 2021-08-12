@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./AuthenticationTab.css";
 
 const InvitationPreferencesTab = () => {
@@ -36,6 +36,6 @@ const InvitationPreferencesTab = () => {
       </div>
     </>
   );
-}
+};
 
 export default InvitationPreferencesTab;

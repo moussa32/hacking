@@ -97,7 +97,7 @@ const CompanyAssetsTab = () => {
         <div className="row">
           <div className="col-md-12 mx-auto mb-4 rounded add-domain-container">
             <button className="btn btn-lightgreen d-block mr-auto" onClick={() => setStep("addAsset")}>
-              اضافة نطاقات جديدة
+              إضافة نطاقات جديدة
             </button>
           </div>
           <div className="col-md-11 bg-second mx-auto mb-4 p-3 rounded">

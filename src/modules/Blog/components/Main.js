@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Typist from 'react-typist';
+import Typist from "react-typist";
 import { Transition } from "react-transition-group";
 import { MainIllust } from "../../../assets";
 import Spinner from "../../../shared/components/Spinner";
@@ -30,13 +30,13 @@ const Main = () => {
           <div className="col-12 col-md-6 d-flex flex-column text-center justify-content-center align-items-center p-5">
             <div className="type-writer py-4 px-0">
               <Typist avgTypingDelay={140} onTypingDone={() => setInProp(true)}>
-                انتظرونا قريبا...
-                    <br />
-                    Coming Soon...
+                انتظرونا قريباً...
+                <br />
+                Coming Soon...
               </Typist>
             </div>
             <Transition in={inProp} timeout={500}>
-              {(state) => (
+              {state => (
                 <div
                   style={{
                     ...defaultStyle,
@@ -44,10 +44,8 @@ const Main = () => {
                   }}
                 >
                   {" "}
-                  <p className="h5">
-                    نعتذر عن استقبال المثليين وندعم القضية الفلسطينية
-                  </p>
-                  <p className="h3">,We don't serve Homosexuals</p>
+                  <p className="h5">نعتذر عن استقبال المثليين وندعم القضية الفلسطينية</p>
+                  <p className="h3">We don't serve Homosexuals</p>
                   <p className="h3">We support the Palestinian Issue</p>
                 </div>
               )}

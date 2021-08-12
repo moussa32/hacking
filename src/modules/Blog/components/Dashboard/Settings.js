@@ -22,7 +22,7 @@ const Settings = () => {
     { type: "skills", lable: "المهارات" },
     { type: "email", lable: "البريد الالكتروني" },
     { type: "payment", lable: "الدفع" },
-    { type: "notifications", lable: "الاشعارات" },
+    { type: "notifications", lable: "الإشعارات" },
     { type: "points", lable: "النقاط" },
     { type: "deactivate", lable: "تعطيل الحساب" },
     { type: "authentication", lable: "المصادقة" },

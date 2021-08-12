@@ -97,7 +97,7 @@ const HackerActivity = () => {
                               ) : (
                                 <div className="report-status d-flex align-items-center">
                                   <span className="badge badge-pill badge-success report-alert"></span>
-                                  <span>محلول</span>
+                                  <span>منتهي</span>
                                 </div>
                               )}
                               {checkUserLevel(report.level.name)}

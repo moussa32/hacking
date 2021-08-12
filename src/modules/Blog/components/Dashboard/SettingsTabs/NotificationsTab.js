@@ -10,7 +10,7 @@ const NotificationsTab = () => {
             <div className="col-md-12 mx-auto">
               <div className="card bg-second border-0 mx-4">
                 <div className="card-body d-flex align-items-center">
-                  <p className="m-0 mr-3 flex-fill">تقريرات جديدة</p>
+                  <p className="m-0 mr-3 flex-fill">تقرير جديد</p>
                   <div className="form-check form-check-inline align-self-center mb-0 p-0">
                     <input className="form-check-input settings-checkbox" name="noNewReports" type="checkbox" id="noNewReports" value="none" />
                     <label className="form-check-label mr-2" htmlFor="noNewReports">

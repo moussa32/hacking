@@ -4,7 +4,9 @@ import axios from "axios";
 import Navbar from "./Blog/components/layout/Navbar";
 import { dvApiUrl } from "../api/Constants";
 import { handleSetUserToken } from "./Blog/actions/index";
-import { WhiteLogo } from "../assets/index";
+import { GreenLogo } from "../assets/index";
+import { FaUserAlt, FaKey } from "react-icons/fa";
+import { GoKey } from "react-icons/go";
 
 const Login = props => {
   const [isLoadding, setIsLoadding] = useState(false);
@@ -22,6 +24,7 @@ const Login = props => {
     setIsLoadding(true);
 
     if (!credentials.username || !credentials.password) {
+      setIsLoadding(false);
       setStatus({ type: "danger", message: "برجاء عدم ترك اي حقل فارغ" });
       return "";
     } else {
@@ -56,6 +59,8 @@ const Login = props => {
               setStatus({ type: "danger", message: "تحقق من البيانات المدخلة" });
             } else if (error.response.status === 429) {
               setStatus({ type: "danger", message: " لقد سجلت بيانات الدخول بشكل خاطئ العديد من المرات أنتظر دقيقة" });
+            } else if (error.response.status === 500) {
+              setStatus({ type: "danger", message: "هناك مشكلة في الخادم برجاء تسجيل الدخول في وقت لاحق" });
             }
           }
         });
@@ -72,19 +77,29 @@ const Login = props => {
     <>
       <Navbar currentPathname={props.location.pathname} />
       <main className="component-wrapper login-wrapper">
-        <div className="container home">
+        <div className="container">
           <div className="row">
-            <div className="col-md-6 mx-auto p-4 bg-black rounded">
-              <img className="login-logo d-block mx-auto" src={WhiteLogo} alt="Logo" />
+            <div className="col-md-6 mx-auto p-4 login-form-wrapper rounded">
+              <img className="login-logo d-block mx-auto" src={GreenLogo} alt="Logo" />
               <h3 className="text-center py-4">تسجيل الدخول</h3>
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label htmlFor="usernameOrEmail">إسم المستخدم</label>
-                  <input type="text" name="username" value={credentials.username} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input" id="usernameOrEmail" aria-describedby="emailHelp" required />
+                  <label htmlFor="usernameOrEmail">اسم المستخدم</label>
+                  <div className="input-group mb-3">
+                    <div className="input-group-append position-relative">
+                      <FaUserAlt size={"1.5rem"} className="text-muted login-username-icon" />
+                    </div>
+                    <input type="text" name="username" placeholder="اسم المستخدم او البريد الالكتروني" value={credentials.username} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input input-with-icon" id="usernameOrEmail" aria-describedby="emailHelp" required />
+                  </div>
                 </div>
                 <div className="form-group">
                   <label htmlFor="exampleInputPassword1">كلمة المرور</label>
-                  <input name="password" type="password" value={credentials.password} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input" id="passwordInput" required />
+                  <div className="input-group mb-3">
+                    <div className="input-group-append position-relative">
+                      <FaKey size={"1.5rem"} className="text-muted login-username-icon" />
+                    </div>
+                    <input name="password" type="password" placeholder="كلمة المرور" value={credentials.password} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input input-with-icon" id="passwordInput" required />
+                  </div>
                 </div>
                 <div className="form-group py-1">
                   <Link className="text-lightgreen" to="/forget-password">
@@ -107,9 +122,8 @@ const Login = props => {
                   ""
                 )}
                 <p className="text-center py-3">
-                  إنشاء حساب جديد؟{" "}
                   <Link to="/signup" className="text-lightgreen">
-                    إنشاء
+                    إنشاء حساب جديد؟
                   </Link>
                 </p>
               </form>

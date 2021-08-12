@@ -67,7 +67,7 @@ function CompanyAddNewAd({ author, program }) {
                 <label className="form-check-label">غير مفعل</label>
               </div>
               <button type="submit" className="btn btn-lightgreen w-50 mx-auto d-block">
-                اضافة
+                إضافة
               </button>
             </form>
             {isLoadding ? (

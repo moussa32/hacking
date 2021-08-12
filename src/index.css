@@ -16,7 +16,7 @@ body {
   text-align: right;
   font-size: 1rem;
   color: var(--white);
-  background: transparent linear-gradient(180deg, #161616 0%, #313131 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(180deg, #161616 0%, #313131 100%) 0% 0% no-repeat padding-box !important;
 }
 
 code {
@@ -373,6 +373,20 @@ li.media:hover {
   word-break: break-word;
 }
 
+@media screen and (max-width: 576px) {
+  .blog-wrapper > .container-fluid {
+    padding: 0;
+  }
+  .blog-container .body {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .blog-container .body > div > p > span,
+  .blog-container .body > div > ul > li > span {
+    font-size: 14px !important;
+  }
+}
+
 pre {
   text-align: left;
   direction: ltr;
@@ -444,6 +458,7 @@ section.filtered-by-tag {
   background-size: cover;
   min-height: 100vh;
   padding-bottom: 2rem;
+  padding-top: 3.6rem;
 }
 
 .utl-wrapper {
@@ -794,9 +809,35 @@ blockquote:nth-of-type(even) footer:after {
   background: url("./assets/backs/terms-cover.svg") center/cover;
 }
 
+.login-wrapper > .container {
+  transition: 1s;
+  margin-top: 3rem;
+}
+
+.login-form-wrapper {
+  background-color: rgb(0 0 0 / 36%);
+}
+
+.login-form-wrapper:hover {
+  transition: 1s;
+  box-shadow: 0 0 13px 4px rgb(101 246 172 / 43%);
+}
+
+.login-username-icon {
+  position: absolute;
+  right: 13px;
+  top: 17%;
+  bottom: 25%;
+  z-index: 50;
+}
+
+.input-with-icon {
+  padding-right: 3rem !important;
+}
+
 .component-wrapper {
   padding-top: 2rem;
-  min-height: 120vh;
+  min-height: 100vh;
 }
 
 .custom-input {
@@ -1280,4 +1321,17 @@ table th {
 }
 .right-addon input {
   padding-right: 30px;
+}
+
+/*Policy Images*/
+.content-view {
+  text-align: right;
+  padding: 0 2rem;
+}
+
+.content-view ~ img {
+  width: auto !important;
+  max-height: 250px;
+  padding: 1rem;
+  border-radius: 20px;
 }

@@ -180,7 +180,7 @@ const Footer = () => {
         <div className="row mt-3">
           <div className="col">
             <p className="text-center">
-              حقوق النشر <span className="text-lightgreen">2021</span> بواسطة هاكنج
+              حقوق النشر <span className="text-lightgreen">2021</span> بواسطة Hacking Technology
             </p>
           </div>
         </div>

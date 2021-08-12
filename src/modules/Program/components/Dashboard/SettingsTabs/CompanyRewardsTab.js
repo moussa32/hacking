@@ -110,7 +110,7 @@ const CompanyRewardsTab = () => {
             );
           })}
           <button type="submit" className="btn btn-lightgreen d-block w-50 mx-auto">
-            اضافة المكافأت
+            إضافة المكافآت
           </button>
         </div>
         {isLoadding ? (

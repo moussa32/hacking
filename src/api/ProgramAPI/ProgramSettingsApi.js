@@ -55,6 +55,15 @@ export const putCompanyPolicy = async (userAccessToken, updatedPolicy) => {
   return res;
 };
 
+export const postCompanyPolicyImage = async (userAccessToken, policyImage) => {
+  const res = await axios.post(`${dvApiUrl}/programs/policy-image/`, policyImage, {
+    headers: {
+      Authorization: `Bearer ${userAccessToken}`,
+    },
+  });
+  return res;
+};
+
 export const getCompanyRewards = async userAccessToken => {
   const res = await axios.get(`${dvApiUrl}/programs/dashboard/settings/rewards`, {
     headers: {

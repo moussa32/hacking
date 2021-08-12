@@ -17,8 +17,9 @@ import { getProgram } from "../../../../api/ProgramAPI/ProgramInfo";
 import { getNewTokens } from "../../../../api/RefreshTokenApi";
 import ProgramReportsState from "./ProgramComponents/ProgramReportsState";
 import WarningNotifection from "../../../../shared/components/WarningNotifection";
+import Navbar from "../layout/Navbar";
 
-const Main = ({ dispatch }) => {
+const Main = ({ location }) => {
   const [user, setUser] = useState({});
   const [isLoadded, setIsLoadded] = useState(false);
   const [status, setStatus] = useState(null);
@@ -41,6 +42,7 @@ const Main = ({ dispatch }) => {
 
   return (
     <>
+      <Navbar currentPathname={location.pathname} />
       <div className="component-wrapper">
         <div className="container-fluid home">
           {status ? (

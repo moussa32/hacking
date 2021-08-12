@@ -22,18 +22,17 @@ const Program = ({ location, dispatch }) => {
 
   return (
     <>
-      {localStorage.getItem("accessToken") ? <Navbar currentPathname={location.pathname} /> : <MainNavbar currentPathname={location.pathname} />}
       <Switch>
         <Route exact path="/not-found" component={NotFound} />
         <Route exact path="/program/signup" component={SignupProgram} />
         <Route exact path="/program/email-confirmation" component={EmailConfirmation} />
         <Route exact path="/program/verify-email" component={VerifyEmail} />
-        <Route exact path="/program/:id/:slug" component={ProgramPage} />
         <Route exact path="/program/dashboard" component={Main} />
         <Route exact path="/program/dashboard/activity" component={Activity} />
         <Route exact path="/program/dashboard/settings" component={Settings} />
         <Route exact path="/program/dashboard/settings/:id" component={Settings} />
         <Route exact path="/program/dashboard/leaderboard" component={Leaderboard} />
+        <Route exact path="/program/:id/:slug" component={ProgramPage} />
         <Redirect to="/notfound" />
       </Switch>
     </>

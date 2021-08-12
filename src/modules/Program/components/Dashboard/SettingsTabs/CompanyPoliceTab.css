@@ -19,14 +19,6 @@
   color: #fff !important;
 }
 
-.content-view > div > img,
-.content-view > div > p > img,
-.content-view > div > div > img {
-  width: 100% !important;
-  padding: 1rem;
-  border-radius: 20px;
-}
-
 .rdw-image-imagewrapper > img {
   width: auto;
   max-height: 250px;

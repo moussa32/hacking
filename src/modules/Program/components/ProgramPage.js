@@ -8,10 +8,14 @@ import { handleBadgeColor } from "../../../shared/utils/handleBadgeColor";
 import ProgramHeader from "./ProgramPageLayout/ProgramHeader";
 import ProgramSidebar from "./ProgramPageLayout/ProgramSidebar";
 import ProgramMenu from "./ProgramPageLayout/ProgramMenu";
+import { Markup } from "interweave";
 import WarningNotifection from "../../../shared/components/WarningNotifection";
+import HackerNavbar from "../../Blog/components/Dashboard/layout/HackerNavbar";
+import ProgramNavbar from "./layout/Navbar";
+import MainNavbar from "../../Blog/components/layout/Navbar";
 
 function ProgramPage(props) {
-  const { match } = props;
+  const { match, location } = props;
   const [programInfo, setProgramInfo] = useState(null);
   const [isProgramAvailable, setIsProgramAvailable] = useState(false);
   const [isLoadding, setIsLoadding] = useState(false);
@@ -21,6 +25,7 @@ function ProgramPage(props) {
       axios
         .get(`${dvApiUrl}/programs/${match.params.id}/`)
         .then(res => {
+          console.log(res.data);
           setProgramInfo(res.data);
           setIsLoadding(true);
           setIsProgramAvailable(true);
@@ -35,6 +40,18 @@ function ProgramPage(props) {
     }
   }, [match.params.id]);
 
+  const handleNavbar = () => {
+    let userType = localStorage.getItem("type");
+
+    if (userType === "hacker") {
+      return <HackerNavbar currentPathname={location.pathname} />;
+    } else if (userType === "program") {
+      return <ProgramNavbar currentPathname={location.pathname} />;
+    } else {
+      return <MainNavbar currentPathname={location.pathname} />;
+    }
+  };
+
   const handleNoData = () => {
     return (
       <div className="alert alert-warning text-center w-100" role="alert">
@@ -45,6 +62,7 @@ function ProgramPage(props) {
 
   return (
     <>
+      {handleNavbar()}
       {isLoadding ? (
         <>
           {isProgramAvailable ? (
@@ -56,7 +74,11 @@ function ProgramPage(props) {
                   <div className="col-md-9">
                     <div className="tab-content" id="myTabContent">
                       <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div className="jumbotron bg-second jumbotron-fluid">الرئيسية</div>
+                        <div className="jumbotron bg-second jumbotron-fluid">
+                          <div className="content-view">
+                            <Markup content={programInfo.policy} />
+                          </div>
+                        </div>
                         <div className="jumbotron jumbotron-fluid bg-second py-4">
                           <div className="container">
                             <h3 className="text-lightgreen text-right my-4">النطاقات</h3>

@@ -43,7 +43,7 @@ const ResetEmail = () => {
         <div className="col-md-12">
           <div className="alert alert-danger settings-alert" role="alert">
             <h4 className="alert-heading">تنبيه</h4>
-            <p>في حالة تغييرك البريد الالكتروني سيتوقف العمل بالبريد القديم والحديث لمدة 24 ساعة تبدا من تاريخ اثبات ملكية البريد الجديد.</p>
+            <p>في حالة تغييرك البريد الالكتروني سيتوقف العمل بالبريد القديم والحديث لمدة 24 ساعة تبدأ من تاريخ إثبات ملكية البريد الجديد.</p>
           </div>
         </div>
       </div>
@@ -58,13 +58,13 @@ const ResetEmail = () => {
             </div>
             <div className="form-group">
               <label htmlFor="email" className="mb-3">
-                البريد الإلكتروني الجديد:
+                البريد الالكتروني الجديد:
               </label>
               <input type="email" placeholder="example@gmail.com" className="form-control custom-input border-0" id="new_email" onChange={e => setCredentials({ ...credentials, new_email: e.target.value })} />
               <small className="form-text text-muted">سيصلك رابط تأكيد إلى بريدك الإلكتروني الحالي.</small>
             </div>
             <button type="submit" className="btn btn-settings d-block mx-auto settings-submit-button">
-              تغيير البريد الإلكتروني
+              تغيير البريد الالكتروني
             </button>
             {isLoadding && (
               <div className="spinner-border d-block mx-auto text-success mt-4 mb-1" role="status">

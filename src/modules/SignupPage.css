@@ -3,7 +3,6 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  padding-bottom: 2rem;
 }
 .signup-card {
   background: linear-gradient(180deg, var(--lightGreen), rgb(8 186 137 / 66%), rgb(49 49 49 / 33%));

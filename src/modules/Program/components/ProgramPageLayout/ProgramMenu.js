@@ -22,7 +22,7 @@ const ProgramMenu = () => {
           </li>
           <li className="nav-item" role="presentation">
             <a className="nav-link program-nav-link text-lightgreen" id="ads-tab" data-toggle="tab" href="#ads" role="tab" aria-controls="ads" aria-selected="false">
-              الاعلانات
+              الإعلانات
             </a>
           </li>
           <li className="nav-item" role="presentation">

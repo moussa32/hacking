@@ -88,6 +88,8 @@ const Navbar = ({ currentPathname }) => {
                 </Link>
               </li>
             </ul>
+          </div>
+          <ul className="navbar-nav">
             <ul className="navbar-nav mr-auto sub-hacker-list">
               <li className="nav-item nav-icon" id="messages">
                 <Link className="nav-link disabled" to={`${match.path}/leaderboard`}>
@@ -118,7 +120,7 @@ const Navbar = ({ currentPathname }) => {
                 </div>
               </li>
             </ul>
-          </div>
+          </ul>
         </nav>
       ) : null}
     </>

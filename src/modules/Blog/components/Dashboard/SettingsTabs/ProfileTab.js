@@ -154,7 +154,7 @@ const ProfileTab = () => {
               <input type="text" value={profile.first_name} className="form-control custom-input border-0" name="first_name" id="firstName" onChange={handleInput} />
             </div>
             <div className="form-group">
-              <label htmlFor="lastName">الاسم الاخير</label>
+              <label htmlFor="lastName">الاسم الأخير</label>
               <input type="text" value={profile.last_name} className="form-control custom-input border-0" name="last_name" id="lastName" onChange={handleInput} />
             </div>
             <div className="form-group">
@@ -162,7 +162,7 @@ const ProfileTab = () => {
               <CountryDropdown value={profile.country} className="form-control custom-input country-input border-0" value={profile.country} name="country" onChange={handleCountryInput} />
             </div>
             <div className="form-group">
-              <label htmlFor="linkedin">Linkedin</label>
+              <label htmlFor="linkedin">LinkedIn</label>
               <input type="text" value={profile.hacker.linkedin} className="form-control custom-input border-0" name="linkedin" id="linkedin" onChange={handleInput} />
             </div>
             <div className="form-group">

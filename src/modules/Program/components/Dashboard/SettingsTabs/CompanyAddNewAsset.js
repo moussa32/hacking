@@ -169,7 +169,7 @@ function CompanyAddNewAsset({ owner }) {
                 <textarea className="form-control p-3 custom-input border-0" id="summary" rows="6" name="description" onChange={e => setNewAsset({ ...newAsset, description: e.target.value })} required></textarea>
               </div>
               <button type="submit" className="btn btn-lightgreen w-50 mx-auto d-block">
-                اضافة
+                إضافة
               </button>
             </form>
             {isLoadding ? (
