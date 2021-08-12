@@ -63,15 +63,6 @@ function CompanyAddNewAsset({ owner }) {
       return false;
     }
 
-    if (!newAsset.description) {
-      descriptionError = "يجب كتابة وصف للنطاق";
-    }
-
-    if (descriptionError) {
-      setStatus({ type: "danger", message: descriptionError });
-      return false;
-    }
-
     setStatus({});
     return true;
   };
@@ -166,7 +157,7 @@ function CompanyAddNewAsset({ owner }) {
                 <label htmlFor="assetType" className="col-form-label text-lightgreen">
                   الوصف :
                 </label>
-                <textarea className="form-control p-3 custom-input border-0" id="summary" rows="6" name="description" onChange={e => setNewAsset({ ...newAsset, description: e.target.value })} required></textarea>
+                <textarea className="form-control p-3 custom-input border-0" id="summary" rows="6" name="description" onChange={e => setNewAsset({ ...newAsset, description: e.target.value })}></textarea>
               </div>
               <button type="submit" className="btn btn-lightgreen w-50 mx-auto d-block">
                 إضافة
