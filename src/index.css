@@ -1371,7 +1371,24 @@ table th {
   border-radius: 20px;
 }
 
-/*Home page*/
+.services-title {
+  display: flex;
+  flex-direction: row;
+}
+.services-title:before,
+.services-title:after {
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid;
+  margin: auto 1rem;
+}
+.services-title:before {
+  margin-right: 10px;
+}
+.services-title:after {
+  margin-left: 10px;
+}
+
 .btn-join-us {
   background: rgb(0 0 0 / 24%);
   padding: 1rem 3rem;

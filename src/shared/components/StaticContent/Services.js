@@ -19,6 +19,7 @@ const Services = () => {
             </a>
           </div>
         </div>
+        <h2 className="services-title">ما يميزنا</h2>
         <div className="row justify-content-around">
           <div className="col-md-5 mt-4">
             <div className="services-card">

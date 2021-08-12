@@ -63,7 +63,7 @@ function CompanyAddNewAsset({ owner }) {
       return false;
     }
 
-    if (!newAsset.descriptionError) {
+    if (!newAsset.description) {
       descriptionError = "يجب كتابة وصف للنطاق";
     }
 
