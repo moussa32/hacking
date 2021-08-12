@@ -970,7 +970,36 @@ blockquote:nth-of-type(even) footer:after {
   margin: 0.5rem 0;
 }
 .sub-hacker-list {
-  margin-left: 4rem;
+  flex-direction: row;
+}
+
+@media screen and (max-width: 371px) {
+  .sub-hacker-list {
+    justify-content: center;
+    margin: 0 auto;
+  }
+}
+
+.navbar {
+  align-items: baseline;
+}
+.navbar-nav .dropdown-menu {
+  position: absolute;
+}
+
+@media screen and (min-width: 371px) {
+  .navbar-user-toggler {
+    order: 3;
+  }
+  .sub-hacker-list {
+    order: 2;
+  }
+}
+
+@media screen and (min-width: 435px) {
+  .sub-hacker-list {
+    margin-left: 4rem;
+  }
 }
 
 .nav-icon {
@@ -1035,7 +1064,13 @@ blockquote:nth-of-type(even) footer:after {
 }
 
 .dbmain {
-  margin-top: 6rem;
+  margin-top: 3.3rem;
+}
+
+@media screen and (max-width: 371px) {
+  .dbmain {
+    margin-top: 6rem;
+  }
 }
 
 .hacker-image {

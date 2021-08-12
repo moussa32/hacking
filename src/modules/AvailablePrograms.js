@@ -52,7 +52,6 @@ const AvailablePrograms = props => {
       })
       .catch(error => {
         if (error.response.status === 400) {
-          console.log(error.response.data.program_assets__type[0]);
         } else if (error.response.status === 401) {
           getNewTokens(reFreshtoken);
         }
@@ -74,7 +73,6 @@ const AvailablePrograms = props => {
   useEffect(() => {
     getAvailableProgramAds().then(res => {
       setProgramAds(res.data);
-      console.log(res.data);
     });
     allAvailablePrograms.then(item => {
       setPrograms(item.data);
