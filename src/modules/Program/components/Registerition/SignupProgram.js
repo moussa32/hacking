@@ -118,7 +118,7 @@ const SignupProgram = ({ location }) => {
     }
 
     if (formData.password.length < 8) {
-      passwordError = "يجب ان تكون كلمة المرور أكبر من 8 أحرف";
+      passwordError = "يجب ان تكون كلمة المرور أكثر من 8 أحرف";
     }
 
     if (passwordError) {

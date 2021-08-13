@@ -100,8 +100,8 @@ const CompanyPolicyTab = () => {
     <>
       <h3 className="text-lightgreen p-4">تفاصيل</h3>
       <div className="row">
-        <div className="col-md-11 mx-auto">
-          <div className="form-group">
+        <div className="col-md-12">
+          <div className="form-group px-2">
             <JoditEditor
               ref={editor}
               value={content}

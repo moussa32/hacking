@@ -54,12 +54,15 @@ const SkillsTab = () => {
         return (
           <div key={skill.id} className="col-md-11 mx-auto mb-4">
             <div className="card border-0 bg-second">
-              <div className="card-body skill-card d-flex flex-wrap">
-                <p className="my-auto">
-                  {skill.rating}/{maxCount}
-                </p>
-                <div className="pr-4">
+              <div className="card-body skill-card d-flex flex-wrap-reverse">
+                <div className="d-flex align-items-center flex-wrap">
+                  <p className="mx-2 my-auto lead">
+                    {skill.rating}/{maxCount}
+                  </p>
                   <ReactRating fullSymbol={["rating"]} initialRating={skill.rating} step={2} stop={10} onChange={e => handleRating(e, skill.name, skill.id)} />
+                  <button className="btn btn-danger mr-2" onClick={e => handleRating(0, skill.name, skill.id)}>
+                    تفريغ
+                  </button>
                 </div>
                 <div className="skill-name">
                   <label className="pr-0 mr-2 text-lightgreen lead mb-0">{skill.name}</label>

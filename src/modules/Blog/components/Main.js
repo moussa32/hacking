@@ -28,31 +28,32 @@ const Main = () => {
           <img src={MainIllust} alt="home" onLoad={() => setLoaded(true)} />
         </div>
         {loaded ? (
-          <div className="col-12 col-md-6 d-flex flex-column text-center justify-content-center align-items-center p-5">
-            <div className="type-writer py-4 px-0">
-              <Typist avgTypingDelay={140} onTypingDone={() => setInProp(true)}>
-                انتظرونا قريباً...
-                <br />
-                Coming Soon...
-              </Typist>
-            </div>
-            <Transition in={inProp} timeout={500}>
-              {state => (
-                <div
-                  style={{
-                    ...defaultStyle,
-                    ...transitionStyles[state],
-                  }}
-                >
-                  {" "}
-                  <p className="h5">نعتذر عن استقبال المثليين وندعم القضية الفلسطينية</p>
-                  <p className="h3">We don't serve Homosexuals</p>
-                  <p className="h3">We support the Palestinian Issue</p>
-                </div>
-              )}
-            </Transition>
-          </div>
+          <></>
         ) : (
+          // <div className="col-12 col-md-6 d-flex flex-column text-center justify-content-center align-items-center p-5">
+          //   <div className="type-writer py-4 px-0">
+          //     <Typist avgTypingDelay={140} onTypingDone={() => setInProp(true)}>
+          //       انتظرونا قريباً...
+          //       <br />
+          //       Coming Soon...
+          //     </Typist>
+          //   </div>
+          //   <Transition in={inProp} timeout={500}>
+          //     {state => (
+          //       <div
+          //         style={{
+          //           ...defaultStyle,
+          //           ...transitionStyles[state],
+          //         }}
+          //       >
+          //         {" "}
+          //         <p className="h5">نعتذر عن استقبال المثليين وندعم القضية الفلسطينية</p>
+          //         <p className="h3">We don't serve Homosexuals</p>
+          //         <p className="h3">We support the Palestinian Issue</p>
+          //       </div>
+          //     )}
+          //   </Transition>
+          // </div>
           <Spinner></Spinner>
         )}
         <Services />

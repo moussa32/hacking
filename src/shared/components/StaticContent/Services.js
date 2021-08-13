@@ -8,7 +8,7 @@ const Services = () => {
   return (
     <div className="col-md-12 mb-4">
       <div className="text-center">
-        <h1 className="mb-4">Hacking technology</h1>
+        <h1 className=" services-heading">Hacking Technology</h1>
         <div className="row">
           <div className="col-md-6">
             <p className="lead">قم بتأمين تطبيقاتك من خلال الاختبار المستمر تحت مظلة Hacking Technology البيضاء. تشجع Hacking Technology الشركات والمؤسسات من كافة القطاعات على تأمين نشاطاتها بعيداً عن تدخلات القبعات السوداء التي قد تضر بالأصول.</p>

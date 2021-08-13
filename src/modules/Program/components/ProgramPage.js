@@ -3,7 +3,7 @@ import axios from "axios";
 import { dvApiUrl } from "../../../api/Constants";
 import Footer from "./layout/Footer";
 import Spinner from "../../../shared/components/Spinner";
-import { AiOutlineDollarCircle } from "react-icons/ai";
+import { AiOutlineDollarCircle, AiFillClockCircle } from "react-icons/ai";
 import { handleBadgeColor } from "../../../shared/utils/handleBadgeColor";
 import ProgramHeader from "./ProgramPageLayout/ProgramHeader";
 import ProgramSidebar from "./ProgramPageLayout/ProgramSidebar";
@@ -117,19 +117,16 @@ function ProgramPage(props) {
                             {programInfo.out_scope_assets && programInfo.out_scope_assets.length > 0 ? (
                               <>
                                 <h3 className="text-lightgreen text-right my-4">خارج النطاق</h3>
-                                {programInfo.out_scope_assets.map(() => {
+                                {programInfo.out_scope_assets.map(asset => {
                                   return (
-                                    <div className="jumbotron bg-black program-home-tab-section">
+                                    <div key={asset.id} className="jumbotron bg-black program-home-tab-section">
                                       <div className="row flex-row-reverse">
                                         <div className="col-md-3">
-                                          <h3 className="text-left text-lightgreen">Domain</h3>
+                                          <h3 className="text-left text-lightgreen">{asset.type}</h3>
                                         </div>
                                         <div className="col-md-9 text-left">
-                                          <a className="" href="https://www.paypal.com/eg/home">
-                                            https://www.paypal.com/eg/home
-                                          </a>
-                                          <p className="lead text-muted">But I must explain to you how all this mistaken</p>
-                                          <p className="lead text-muted">But I must explain to you how all this mistaken</p>
+                                          <a href={asset.url}>{asset.url}</a>
+                                          <p className="lead text-muted">{asset.description}</p>
                                         </div>
                                       </div>
                                     </div>
@@ -201,12 +198,12 @@ function ProgramPage(props) {
                               return (
                                 <div key={announcement.id} className="jumbotron bg-second py-4 program-home-tab-section text-right">
                                   <div className="row">
-                                    <div className="col-md-6 ml-auto">
-                                      <p className="lead bg-black p-2 rounded d-flex justify-content-between">{`${new Date(announcement.created).toISOString().slice(0, 19).replace("T", " ")}`}</p>
-                                    </div>
                                     <div className="col-md-12 ml-auto">
                                       <h3 className="text-lightgreen">{announcement.title}</h3>
-                                      {announcement.body}
+                                      <p className="p-2 d-flex align-items-center">
+                                        <AiFillClockCircle className="text-lightgreen ml-1" /> {`${new Date(announcement.created).toISOString().slice(0, 19).replace("T", " ")}`}
+                                      </p>
+                                      <p className="bg-black p-3 rounded mb-0">{announcement.body}</p>
                                     </div>
                                   </div>
                                 </div>

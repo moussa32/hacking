@@ -92,7 +92,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (signUpData.username.length < 4) {
-      usernameError = "يجب ان يكون اسم المستخدم اكبر من 4 أحرف";
+      usernameError = "يجب ان يكون اسم المستخدم أكثر من 4 أحرف";
     }
 
     if (usernameError) {
@@ -164,7 +164,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (signUpData.password.length < 8) {
-      passwordError = "يجب ان تكون كلمة المرور أكبر من 8 أحرف";
+      passwordError = "يجب ان تكون كلمة المرور أكثر من 8 أحرف";
     }
 
     if (passwordError) {

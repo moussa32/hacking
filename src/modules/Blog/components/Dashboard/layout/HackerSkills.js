@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { GiSkills } from "react-icons/gi";
 
 const HackerSkills = ({ skills }) => {
   const [availableSkills, setAvailableSkills] = useState([]);
 
-  skills.map(skill => {
-    if (skill.rating !== 0) {
-      setAvailableSkills([...availableSkills], skill);
-    }
-  });
+  useEffect(() => {
+    let avaSkills = [];
+    skills.map(skill => {
+      if (skill.rating !== 0) {
+        avaSkills.push(skill);
+      }
+      setAvailableSkills(avaSkills);
+    });
+  }, []);
 
-  console.log(skills);
   return (
     <>
       <div className="jumbotron jumbotron-fluid bg-black rounded py-4">
@@ -19,9 +22,9 @@ const HackerSkills = ({ skills }) => {
           <h2 className="section-title text-right">{skills.length < 0 ? "" : <GiSkills className="section-icon mb-1 ml-2" size={"2rem"} />}المهارات</h2>
           <div className="section-container mt-4">
             {availableSkills.length > 0 ? (
-              availableSkills.map(availableSkill => {
+              availableSkills.map((availableSkill, index) => {
                 return (
-                  <div className="col-md-12 skill-body py-4">
+                  <div key={index} className="col-md-12 skill-body py-4">
                     <div className="row align-items-center skill-container">
                       <div className="col-md-4">
                         <h4 className="hacker-skill-name m-0 text-left pl-2">{availableSkill.name}</h4>

@@ -11,7 +11,7 @@ function CompanyAddNewAsset({ owner }) {
     paid: "",
     type: "",
     in_scope: "",
-    level: 1,
+    level: 2,
     url: "",
     description: "",
   });
@@ -82,7 +82,9 @@ function CompanyAddNewAsset({ owner }) {
         })
         .catch(error => {
           if (error.response.status === 400) {
+            setIsLoadding(false);
             console.log(error.response);
+            setStatus({ type: "danger", message: "تأكد ان وصف النطاق لا يزيد عن 300 حرف" });
           } else if (error.response.status === 401) {
             getNewTokens(localStorage.getItem("refreshToken"));
           }
@@ -135,7 +137,7 @@ function CompanyAddNewAsset({ owner }) {
                 <label htmlFor="assetType" className="col-form-label text-lightgreen">
                   الرابط:
                 </label>
-                <input type="url" className="form-control border-0 custom-input" placeholder="ex:https://google.com" onChange={e => setNewAsset({ ...newAsset, url: e.target.value })} required />
+                <input type="text" className="form-control border-0 custom-input" placeholder="ex:https://google.com" onChange={e => setNewAsset({ ...newAsset, url: e.target.value })} required />
               </div>
               <div className="form-group rounded">
                 <label className="col-form-label text-lightgreen">المستوى:</label>

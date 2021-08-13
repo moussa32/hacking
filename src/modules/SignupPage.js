@@ -36,10 +36,10 @@ const SignupPage = props => {
                         <BsBuilding className="mb-4" size={"4rem"} />
                         <h2 className="card-title signup-title">شركة</h2>
                         <ul className="text-right">
-                          <li className="lead">اختبر منتجاتك وخدماتك الالكترونية</li>
-                          <li className="lead">اكتشف نقاط الضعف</li>
-                          <li className="lead">أمِّن أعمالك</li>
-                          <li className="lead">نافس بقوة</li>
+                          <li className="lead">أختبر مِنصاتَكَ السّحابيّة وخَدماتكْ الألكترونية</li>
+                          <li className="lead">أعْرِفْ مَوطِئ الخلَل ونقاطَ الضّعفْ</li>
+                          <li className="lead">كُنْ آمناً وبعيداً عن أصحابْ القُبَعات السوداءْ</li>
+                          <li className="lead">قللْ تكلُفة حمايتكَ بمُسَاعدةِ بَرنامجْنا الخاص.</li>
                         </ul>
                       </div>
                     </div>
@@ -52,9 +52,10 @@ const SignupPage = props => {
                         <FaHackerrank className="mb-4" size={"4rem"} />
                         <h2 className="card-title signup-title">باحث أمني</h2>
                         <ul className="text-right">
-                          <li className="lead">حقِّق دخلاً</li>
-                          <li className="lead">طَوِّر مهاراتك</li>
-                          <li className="lead">انضم لمجتمع عالمي</li>
+                          <li className="lead">أَثْبتْ نَفسكْ</li>
+                          <li className="lead">طَوِّر مَهاراتَكْ واصْقِلْ خُبْراتَك</li>
+                          <li className="lead">إحصَلْ على مُكَافْآتْ نَقدْيّةَ و جَوائِزْ قَيّمةَ</li>
+                          <li className="lead">إنضَمْ إلىْ أَكبر مُجتَمعْ خُبَراءْ أَمنْ المَعْلوماتْ.</li>
                         </ul>
                       </div>
                     </div>

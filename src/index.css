@@ -25,8 +25,8 @@ code {
 
 table td,
 table th {
-  border-bottom: 1px solid var(--lightGreen);
-  padding: 20px;
+  border: 1px solid var(--lightGreen);
+  padding: 10px;
 }
 
 table caption {
@@ -1180,11 +1180,6 @@ blockquote:nth-of-type(even) footer:after {
   letter-spacing: 1px;
 }
 
-table td,
-table th {
-  border: none;
-}
-
 .table td,
 .table th {
   border-top: 0;
@@ -1371,7 +1366,15 @@ table th {
   border-radius: 20px;
 }
 
+.services-heading {
+  font-family: system-ui;
+  text-decoration: underline;
+  text-decoration-color: var(--lightGreen);
+  margin-bottom: 4rem;
+}
+
 .services-title {
+  margin-top: 4rem;
   display: flex;
   flex-direction: row;
 }
