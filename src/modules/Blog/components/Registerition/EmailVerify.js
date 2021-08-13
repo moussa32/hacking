@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { ResendEmailConfirmation } from "../../../../api/ResendEmailConfirmation";
 import { handleSetUserToken, handleGetUserToken } from "../../actions";
 import { useHistory } from "react-router-dom";
 import { dvApiUrl } from "../../../../api/Constants";
 
 const EmailVerify = () => {
-  const [valid, setValid] = useState({
-    token: "",
-    error: "",
-    success: "",
-    isValid: false,
-    isLoadding: true,
+  const [status, setStatus] = useState({
+    type: "",
+    message: "",
   });
+  const [isLoadding, setIsLoadding] = useState(false);
+  const [isTokenNotVaild, setIsTokenNotVaild] = useState(false);
   {
     /*Manage routing in ture conditions*/
   }
@@ -27,8 +27,16 @@ const EmailVerify = () => {
     handleSetUserToken("accessToken", tokenFromURL);
   };
 
+  const onReSendEmail = () => {
+    ResendEmailConfirmation(localStorage.getItem("accessToken")).then(res => {
+      setIsLoadding(true);
+      setStatus({ type: "success", message: "تم إعادة إرسال رمز جديد إلى بريدك الإلكتروني بنجاح" });
+    });
+  };
+
   useEffect(() => {
     verifyUserToken();
+    setIsLoadding(true);
 
     const getUnAuth = handleGetUserToken("accessToken");
     const isPhoneNumberFromURL = location.split("=")[1].split("&")[0].toLowerCase();
@@ -40,7 +48,8 @@ const EmailVerify = () => {
         },
       })
       .then(res => {
-        setValid({ ...valid, error: "", success: "تم تفعيل بريدك الإلكتروني بنجاح جاري تحويلك" });
+        setIsLoadding(false);
+        setStatus({ type: "success", message: "تم تفعيل بريدك الإلكتروني بنجاح جاري تحويلك" });
         if (isPhoneNumberFromURL === "true") {
           setTimeout(() => {
             history.push("/dashboard");
@@ -52,13 +61,17 @@ const EmailVerify = () => {
         }
       })
       .catch(function (error) {
+        setIsLoadding(false);
         if (error.response) {
           if (error.response.status === 400) {
-            setValid({ ...valid, error: "لا يوجد بريد إلكتروني مرتبط بهذا الرمز" });
+            setStatus({ type: "success", message: "لا يوجد بريد إلكتروني مرتبط بهذا الرمز" });
 
             setTimeout(() => {
               history.push("/email-confirmation");
             }, 3000);
+          } else if (error.response.status === 401) {
+            setStatus({ type: "danger", message: "لقد انتهت فترة الرمز برجاء طلب رمز اخر" });
+            setIsTokenNotVaild(true);
           }
         }
       });
@@ -73,19 +86,22 @@ const EmailVerify = () => {
             <div className="container">
               <div className="row">
                 <div className="col-md-6 mx-auto">
-                  {valid.error ? (
-                    <div class="alert alert-danger mt-4 text-center" role="alert">
-                      {valid.error}
+                  {isLoadding && (
+                    <div className="spinner-border d-block mx-auto text-success mt-4 mb-1" role="status">
+                      <span className="sr-only">Loading...</span>
                     </div>
-                  ) : (
-                    ""
                   )}
-                  {valid.success ? (
-                    <div class="alert alert-success mt-4 text-center" role="alert">
-                      {valid.success}
+                  {status && (
+                    <div className={`alert alert-${status.type} mt-4 text-center`} role="alert">
+                      {status.message}
                     </div>
-                  ) : (
-                    ""
+                  )}
+                  {isTokenNotVaild && (
+                    <small>
+                      <button className="text-lightgreen d-block mx-auto pt-3 bg-transparent border-0" onClick={onReSendEmail}>
+                        إعادة إرسال البريد الالكتروني
+                      </button>
+                    </small>
                   )}
                 </div>
               </div>

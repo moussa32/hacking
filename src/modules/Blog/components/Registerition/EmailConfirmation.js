@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { EmailConfirmationImage } from "../../../../assets/index";
+import { ResendEmailConfirmation } from "../../../../api/ResendEmailConfirmation";
 import { handleGetUserToken, handleSetUserToken } from "../../actions";
 
 const Confirmation = ({ emailData }) => {
@@ -9,16 +9,7 @@ const Confirmation = ({ emailData }) => {
   const [status, setStatus] = useState({});
 
   const onReSendEmail = () => {
-    axios
-      .post(
-        "https://bugbounty.pythonanywhere.com/api/v1/auth/hackers/resend-email/",
-        { token: token },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+    ResendEmailConfirmation(token)
       .then(res => {
         console.log(res.data);
         handleSetUserToken("accessToken", res.data.access_token);
