@@ -28,10 +28,20 @@ const EmailVerify = () => {
   };
 
   const onReSendEmail = () => {
-    ResendEmailConfirmation(localStorage.getItem("accessToken")).then(res => {
-      setIsLoadding(true);
-      setStatus({ type: "success", message: "تم إعادة إرسال رمز جديد إلى بريدك الإلكتروني بنجاح" });
-    });
+    setIsLoadding(true);
+    ResendEmailConfirmation(localStorage.getItem("accessToken"))
+      .then(res => {
+        setIsLoadding(false);
+        console.log(res.data);
+        localStorage.setItem("accessToken", res.data.access_token);
+        setStatus({ type: "success", message: "تم إعادة إرسال رمز جديد إلى بريدك الإلكتروني بنجاح" });
+      })
+      .catch(error => {
+        setIsLoadding(false);
+        if (error.response.status === 401) {
+          setStatus({ type: "danger", message: "لا يمكن إعادة إرسال الرمز" });
+        }
+      });
   };
 
   useEffect(() => {

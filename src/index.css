@@ -1180,6 +1180,13 @@ blockquote:nth-of-type(even) footer:after {
   letter-spacing: 1px;
 }
 
+table {
+  border-collapse: collapse;
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
 .table td,
 .table th {
   border-top: 0;
@@ -1359,11 +1366,27 @@ blockquote:nth-of-type(even) footer:after {
   padding: 0 2rem;
 }
 
-.content-view ~ img {
+.content-view > div > p > img,
+.content-view > div > img {
   width: auto !important;
   max-height: 250px;
   padding: 1rem;
   border-radius: 20px;
+}
+
+@media screen and (max-width: 290px) {
+  .content-view > div > p > img,
+  .content-view > div > img {
+    max-height: 150px;
+    padding: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 291px) and (max-width: 350px) {
+  .content-view > div > p > img,
+  .content-view > div > img {
+    max-height: 180px;
+  }
 }
 
 .services-heading {

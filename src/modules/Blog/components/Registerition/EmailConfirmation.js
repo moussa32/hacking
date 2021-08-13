@@ -11,7 +11,6 @@ const Confirmation = ({ emailData }) => {
   const onReSendEmail = () => {
     ResendEmailConfirmation(token)
       .then(res => {
-        console.log(res.data);
         handleSetUserToken("accessToken", res.data.access_token);
         setStatus({ success: "تم إعادة إرسال رابط التفعيل بنجاح برجاء التأكد من بريد الإلكتروني" });
       })

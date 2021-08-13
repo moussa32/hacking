@@ -91,7 +91,7 @@ function ProgramPage(props) {
                                           <h3 className="text-left text-lightgreen">{asset.type.charAt(0).toUpperCase() + asset.type.slice(1)}</h3>
                                         </div>
                                         <div className="col-md-9 text-left">
-                                          <a className="" href={asset.url}>
+                                          <a className="text-break" href={asset.url}>
                                             {asset.url}
                                           </a>
                                           <p className="lead text-muted">{asset.description}</p>
@@ -125,7 +125,9 @@ function ProgramPage(props) {
                                           <h3 className="text-left text-lightgreen">{asset.type}</h3>
                                         </div>
                                         <div className="col-md-9 text-left">
-                                          <a href={asset.url}>{asset.url}</a>
+                                          <a className="text-break" href={asset.url}>
+                                            {asset.url}
+                                          </a>
                                           <p className="lead text-muted">{asset.description}</p>
                                         </div>
                                       </div>
