@@ -11,6 +11,7 @@ function CompanyAddNewAsset({ owner }) {
     paid: "",
     type: "",
     in_scope: "",
+    level: 1,
     url: "",
     description: "",
   });
@@ -25,7 +26,6 @@ function CompanyAddNewAsset({ owner }) {
     let typeError = "";
     let in_scopeError = "";
     let urlError = "";
-    let descriptionError = "";
 
     if (typeof newAsset.paid !== "boolean" || newAsset.paid === null) {
       paidError = "يجب أن تحدد ما إذا كان النطاق مدفوع او غير مدفوع";
@@ -76,6 +76,7 @@ function CompanyAddNewAsset({ owner }) {
     if (isValid) {
       postCompanyAssets(token, newAsset)
         .then(res => {
+          console.log(res);
           setIsLoadding(false);
           setStatus({ type: "success", message: "تم إضافة النطاق بناجح" });
         })
@@ -136,6 +137,16 @@ function CompanyAddNewAsset({ owner }) {
                 </label>
                 <input type="url" className="form-control border-0 custom-input" placeholder="ex:https://google.com" onChange={e => setNewAsset({ ...newAsset, url: e.target.value })} required />
               </div>
+              <div className="form-group rounded">
+                <label className="col-form-label text-lightgreen">المستوى:</label>
+                <select className="form-control custom-input rounded-0 border-0 py-0" placeholder="المستويات" onChange={e => setNewAsset({ ...newAsset, level: e.target.value })} required>
+                  <option value={2}>منخفض</option>
+                  <option value={3}>متوسط</option>
+                  <option value={4}>عالي</option>
+                  <option value={5}>ضروري</option>
+                </select>
+              </div>
+
               <div className="form-group rounded">
                 <label htmlFor="assetType" className="col-form-label text-lightgreen">
                   قابل للتسليم:
