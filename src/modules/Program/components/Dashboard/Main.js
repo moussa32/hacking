@@ -30,6 +30,7 @@ const Main = ({ location }) => {
         let responseData = res.data;
         setUser(responseData);
         setIsLoadded(true);
+        console.log(res.data);
       })
       .catch(error => {
         if (error.response.status === 401) {
@@ -69,6 +70,17 @@ const Main = ({ location }) => {
                   </div>
                   <div className="jumbotron jumbotron-fluid text-center col-10 py-4 bg-second dbmain rounded">
                     <div className="container-fluid">
+                      {user.is_active === false ? (
+                        <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                          <strong>هذا البرنامج غير مفعل بعد</strong> لا يتم تفعيل البرنامج إلا بعد ان تتواصل إدارة الموقع مع صاحب البرنامج
+                          <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      ) : (
+                        <p>dsadas</p>
+                      )}
+
                       <ProgramInfo userInfo={user} />
                       <ProgramStat balance={user.balance} payings={user.payings} />
                       <ProgramReports />

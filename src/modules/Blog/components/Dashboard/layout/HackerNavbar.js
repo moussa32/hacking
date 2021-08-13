@@ -37,7 +37,6 @@ const HackerNavbar = props => {
     getHackerNavbar(token).then(res => {
       setLoadded(true);
       setNavbarInfo(res.data);
-      console.log(res.data);
     });
   }, []);
 

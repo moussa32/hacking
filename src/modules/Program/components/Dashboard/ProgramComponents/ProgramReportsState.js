@@ -29,7 +29,6 @@ const ProgramReportsState = () => {
     getProgramReportsStateApi(token)
       .then(res => {
         Chart.defaults.global.defaultFontColor = "#fff";
-        console.log(res.data);
         //Is there any data return from the server hide default icon
         if (res.data.length !== 0) {
           setIsData(true);

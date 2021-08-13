@@ -119,22 +119,24 @@ const AvailablePrograms = props => {
                     <div className="jumbotron jumbotron-fluid bg-black rounded py-1">
                       <div className="container px-4">
                         <Swiper {...params}>
-                          {programAds.map(ad => {
-                            return (
-                              <div key={ad.id}>
-                                <img src={ad.image} className="d-block w-100" alt={ad.title} />
-                                <div className="carousel-caption d-none d-md-block">
-                                  <h4>{ad.title}</h4>
-                                  <p className="lead">{ad.description.length > 150 ? ad.description.substring(0, 150) + " ......." : ad.description}</p>
-                                  {ad.ad_link && (
-                                    <a href={ad.ad_link} target="_blank" className="btn btn-lightgreen">
-                                      قراءة المزيد
-                                    </a>
-                                  )}
-                                </div>
-                              </div>
-                            );
-                          })}
+                          {programAds && programAds.length > 0
+                            ? programAds.map(ad => {
+                                return (
+                                  <div key={ad.id}>
+                                    <img src={ad.image} className="d-block w-100" alt={ad.title} />
+                                    <div className="carousel-caption d-none d-md-block">
+                                      <h4>{ad.title}</h4>
+                                      <p className="lead">{ad.description.length > 150 ? ad.description.substring(0, 150) + " ......." : ad.description}</p>
+                                      {ad.ad_link && (
+                                        <a href={ad.ad_link} target="_blank" className="btn btn-lightgreen">
+                                          قراءة المزيد
+                                        </a>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })
+                            : null}
                         </Swiper>
                       </div>
                     </div>
