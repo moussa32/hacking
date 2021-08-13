@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { EditorState, convertToRaw, ContentState, convertFromHTML } from "draft-js";
-import { dvbaseUrl } from "../../../../../api/Constants";
+import { dvApiUrl, dvbaseUrl } from "../../../../../api/Constants";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Editor } from "react-draft-wysiwyg";
+import JoditEditor from "jodit-react";
 import { Markup } from "interweave";
 import draftToHtml from "draftjs-to-html";
 import { CustomContentStateConverter } from "../../../../../shared/utils/CustomContentStateConverter";
@@ -25,6 +28,12 @@ const CompanyPolicyTab = () => {
     console.log(convertedEditorStateToHtml);
   };
 
+  const handleCkeditorState = (event, editor) => {
+    const data = editor.getData();
+    setContent(data);
+    console.log(data);
+  };
+
   useEffect(() => {
     getCompanyPolicy(token)
       .then(res => {
@@ -38,7 +47,7 @@ const CompanyPolicyTab = () => {
       .catch(error => {
         if (error.response.status === 401) {
           setStatus({ type: "danger", message: "جاري تحديث جلستك" });
-          getNewTokens(localStorage.getItem("reFreshtoken"));
+          getNewTokens(localStorage.getItem("refreshToken"));
         }
       });
   }, []);
@@ -75,6 +84,17 @@ const CompanyPolicyTab = () => {
         });
     });
   };
+  const relativePathURL = dvApiUrl;
+
+  const editor = useRef(null);
+  const config = {
+    readonly: false, // all options from https://xdsoft.net/jodit/doc/
+    enableDragAndDropFileToEditor: true,
+    uploader: {
+      insertImageAsBase64URI: true,
+    },
+    placeholder: "ابدأ الكتابة الأن ....",
+  };
 
   return (
     <>
@@ -82,7 +102,16 @@ const CompanyPolicyTab = () => {
       <div className="row">
         <div className="col-md-11 mx-auto">
           <div className="form-group">
-            <Editor
+            <JoditEditor
+              ref={editor}
+              value={content}
+              config={config}
+              tabIndex={1} // tabIndex of textarea
+              onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+              onChange={newContent => {}}
+            />
+            {/* <CKEditor editor={ClassicEditor} data={content} onChange={handleCkeditorState} /> */}
+            {/* <Editor
               editorState={editorState}
               wrapperClassName="wrapper-class"
               editorClassName="editor-class"
@@ -96,7 +125,7 @@ const CompanyPolicyTab = () => {
                   inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg,image/webp",
                 },
               }}
-            />
+            /> */}
             <div className="content-view mt-3">
               <Markup className={"content-view"} content={content} />
             </div>

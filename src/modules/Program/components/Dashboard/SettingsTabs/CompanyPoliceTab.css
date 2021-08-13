@@ -24,3 +24,17 @@
   max-height: 250px;
   display: block;
 }
+
+.ck-content {
+  min-height: 400px;
+  color: black;
+}
+
+.jodit-workplace {
+  min-height: 300px !important;
+}
+
+.jodit-container,
+.jodit-drag-and-drop__file-box {
+  color: #000;
+}
