@@ -78,6 +78,7 @@ const AvailablePrograms = props => {
       setPrograms(item.data);
       setInitPrograms(item.data);
       setLoadded(true);
+      console.log(item.data);
     });
   }, []);
 
@@ -201,7 +202,20 @@ const AvailablePrograms = props => {
                                       </div>
                                       <div className="card-body py-2 d-flex flex-row-reverse justify-content-between program-text">
                                         <p className="text-lightgreen card-text">
-                                          ${program.payings} - ${program.balance}
+                                          $
+                                          {Math.min.apply(
+                                            Math,
+                                            program.bounty_bars.map(function (o) {
+                                              return o.amount;
+                                            })
+                                          )}{" "}
+                                          - $
+                                          {Math.max.apply(
+                                            Math,
+                                            program.bounty_bars.map(function (o) {
+                                              return o.amount;
+                                            })
+                                          )}
                                         </p>
                                         <p className="card-text">{convertDate(program.launch_date)}</p>
                                       </div>
