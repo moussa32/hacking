@@ -47,11 +47,19 @@ const Settings = ({ location }) => {
               <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <h2>الإعدادات</h2>
                 {pills.map((pill, index) => {
-                  return (
-                    <Link key={index} className={`nav-link setting-tab-link ${activeTab === pill.type ? "active" : ""}`} id={pill.type} onClick={() => setActiveTab(pill.type)} to={`/program/dashboard/settings/${pill.type}`}>
-                      {pill.lable}
-                    </Link>
-                  );
+                  if (index > 4 && index !== 9 && index !== 8) {
+                    return (
+                      <Link key={index} className={`nav-link setting-tab-link disabled ${activeTab === pill.type ? "active" : ""}`} id={pill.type} onClick={() => setActiveTab(pill.type)} to={`/program/dashboard/settings/${pill.type}`}>
+                        {pill.lable}
+                      </Link>
+                    );
+                  } else {
+                    return (
+                      <Link key={index} className={`nav-link setting-tab-link ${activeTab === pill.type ? "active" : ""}`} id={pill.type} onClick={() => setActiveTab(pill.type)} to={`/program/dashboard/settings/${pill.type}`}>
+                        {pill.lable}
+                      </Link>
+                    );
+                  }
                 })}
               </div>
             </div>
