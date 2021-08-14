@@ -159,7 +159,7 @@ const ProfileTab = () => {
             </div>
             <div className="form-group">
               <label htmlFor="country">الدولة</label>
-              <CountryDropdown value={profile.country} className="form-control custom-input country-input border-0" value={profile.country} name="country" onChange={handleCountryInput} />
+              <CountryDropdown blacklist={["IL"]} value={profile.country} className="form-control custom-input country-input border-0" value={profile.country} name="country" onChange={handleCountryInput} />
             </div>
             <div className="form-group">
               <label htmlFor="linkedin">LinkedIn</label>

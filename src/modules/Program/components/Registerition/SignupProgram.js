@@ -217,7 +217,7 @@ const SignupProgram = ({ location }) => {
                   <label htmlFor="rcrs-country" className="d-block">
                     الدولة
                   </label>
-                  <CountryDropdown value={formData.country} id="rcrs-country" className="form-control custom-input country-input" defaultOptionLabel={""} onChange={val => setFormData({ ...formData, country: val })} />
+                  <CountryDropdown blacklist={["IL"]} value={formData.country} id="rcrs-country" className="form-control custom-input country-input" defaultOptionLabel={""} onChange={val => setFormData({ ...formData, country: val })} />
                 </div>
                 {status.countryError ? (
                   <div className="mt-2 alert alert-danger custom-danger-alert" role="alert">
@@ -228,7 +228,7 @@ const SignupProgram = ({ location }) => {
                   <label htmlFor="" className="d-block">
                     رقم الهاتف
                   </label>
-                  <PhoneInput country={"kw"} name="phone_number" localization={ar} enableSearch={true} inputClass={"w-100"} containerStyle={{ borderRadius: "5px", border: "1px #ddd solid" }} onChange={number => setFormData({ ...formData, phoneNumber: number })} />
+                  <PhoneInput excludeCountries={"il"} country={"kw"} name="phone_number" localization={ar} enableSearch={true} inputClass={"w-100"} containerStyle={{ borderRadius: "5px", border: "1px #ddd solid" }} onChange={number => setFormData({ ...formData, phoneNumber: number })} />
                 </div>
                 {status.phoneNumberError ? (
                   <div className="mt-2 alert alert-danger custom-danger-alert" role="alert">

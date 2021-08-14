@@ -321,7 +321,7 @@ const SignUp = ({ setParentData }) => {
               </div>
               <div className="form-group">
                 <label for="exampleFormControlSelect1">الدولة</label>
-                <CountryDropdown value={signUpData.country} className="form-control custom-input country-input" name="country" onChange={onSetCountry} />
+                <CountryDropdown blacklist={["IL"]} value={signUpData.country} className="form-control custom-input country-input" name="country" onChange={onSetCountry} />
                 {status.countryError ? (
                   <div class="mt-2 alert alert-danger" role="alert">
                     {status.countryError}

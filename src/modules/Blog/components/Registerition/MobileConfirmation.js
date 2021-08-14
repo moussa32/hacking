@@ -96,6 +96,7 @@ const MobileConfirmation = () => {
                     name="phone_number"
                     localization={ar}
                     enableSearch={true}
+                    excludeCountries={"il"}
                     onChange={e => {
                       handlePhoneNumber(e);
                     }}
