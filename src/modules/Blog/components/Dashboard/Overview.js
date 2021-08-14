@@ -8,6 +8,7 @@ import Main from "./Main";
 import Activity from "./Activity";
 import Leaderboard from "./Leaderboard";
 import Settings from "./Settings";
+import Footer from "../../../Program/components/layout/Footer";
 import { handleGetUserToken } from "../../actions/index";
 
 const Overview = props => {
@@ -35,6 +36,7 @@ const Overview = props => {
         <Route exact path={`${match.path}`} component={Main} />
         <Redirect to="/notfound" />
       </Switch>
+      <Footer />
     </div>
   );
 };
