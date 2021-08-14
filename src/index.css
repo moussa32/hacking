@@ -1232,7 +1232,6 @@ table {
   height: 130px;
   border-radius: 54%;
   padding: 23px;
-  background: linear-gradient(0deg, rgb(9 69 121) 0%, rgba(0, 212, 255, 1) 100%);
   object-fit: cover;
 }
 
