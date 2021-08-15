@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { EmailConfirmationImage } from "../../../../assets/index";
+import Footer from "../layout/Footer";
 
 const EmailConfirmation = () => {
   const Email = localStorage.getItem("registerEmail");
@@ -70,6 +71,7 @@ const EmailConfirmation = () => {
           </div>
         </div>
       )}
+      <Footer />
     </main>
   );
 };

@@ -88,7 +88,7 @@ const EmailVerify = () => {
   }, []);
 
   return (
-    <main class="component-wrapper">
+    <main className="component-wrapper">
       <div className="container home">
         <div className="jumbotron text-center py-4 bg-second">
           <div className="jumbotron jumbotron-fluid bg-black rounded pt-4">

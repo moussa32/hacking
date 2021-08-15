@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Blog/components/layout/Navbar";
 import { dvApiUrl } from "../api/Constants";
-import { handleSetUserToken } from "./Blog/actions/index";
 import { GreenLogo } from "../assets/index";
 import { FaUserAlt, FaKey } from "react-icons/fa";
-import { GoKey } from "react-icons/go";
 
 const Login = props => {
   const [isLoadding, setIsLoadding] = useState(false);
@@ -16,6 +14,17 @@ const Login = props => {
     password: "",
     formIsValid: false,
   });
+
+  useEffect(() => {
+    if (localStorage.getItem("isAuthenticated") === "true") {
+      if (localStorage.getItem("type") === "hacker") {
+        window.location.pathname = "/dashboard";
+      } else if (localStorage.getItem("type") === "program") {
+        window.location.pathname = "/program/dashboard";
+      }
+    }
+  }, []);
+
   let history = useHistory();
   const redirectTimeOut = 3000;
 
@@ -28,17 +37,18 @@ const Login = props => {
       setStatus({ type: "danger", message: "برجاء عدم ترك اي حقل فارغ" });
       return "";
     } else {
-      setStatus({ type: "", message: "" });
-
+      setStatus({});
       axios
         .post(`${dvApiUrl}/auth/hackers/login/`, credentials)
         .then(res => {
-          handleSetUserToken("accessToken", res.data.access);
-          handleSetUserToken("refreshToken", res.data.refresh);
+          setIsLoadding(false);
           setStatus({ type: "success", message: "تم تسجيل الدخول بنجاح جاري تحويلك" });
+          localStorage.setItem("accessToken", res.data.access);
+          localStorage.setItem("refreshToken", res.data.refresh);
+          localStorage.setItem("isAuthenticated", "true");
+
           const userType = res.data.type;
           localStorage.setItem("type", userType);
-          setIsLoadding(false);
 
           if (userType === "hacker") {
             setTimeout(() => {

@@ -1,5 +1,18 @@
-.custom-danger-alert{
+.custom-danger-alert {
   font-size: 0.8rem;
-  padding: .65rem 0.5rem;
+  padding: 0.65rem 0.5rem;
   text-align: center;
+}
+
+.signup-radio-button {
+  width: 25px;
+  height: 25px;
+}
+
+.signup-error {
+  color: #dc3545;
+}
+
+.signup-error > a {
+  color: #ff0b22;
 }

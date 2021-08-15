@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { dvApiUrl } from "../../api/Constants";
+import Footer from "../../modules/Program/components/layout/Footer";
 
 const Verify = () => {
   const [status, setStatus] = useState({
@@ -91,6 +92,7 @@ const Verify = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 };

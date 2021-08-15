@@ -11,8 +11,6 @@ import Activity from "./Dashboard/Activity";
 import Leaderboard from "./Dashboard/Leaderboard";
 import ProgramPage from "./ProgramPage";
 import Settings from "./Dashboard/Settings.js";
-import Navbar from "./layout/Navbar";
-import MainNavbar from "../../../modules/Blog/components/layout/Navbar";
 import { handleGetProgram } from "../actions";
 
 const Program = ({ location, dispatch }) => {
@@ -27,7 +25,6 @@ const Program = ({ location, dispatch }) => {
         <Route exact path="/program/signup" component={SignupProgram} />
         <Route exact path="/program/email-confirmation" component={EmailConfirmation} />
         <Route exact path="/program/verify-email" component={VerifyEmail} />
-        <Route exact path="/program/dashboard" component={Main} />
         <Route exact path="/program/dashboard/activity" component={Activity} />
         <Route exact path="/program/dashboard/settings" component={Settings} />
         <Route exact path="/program/dashboard/settings/:id" component={Settings} />

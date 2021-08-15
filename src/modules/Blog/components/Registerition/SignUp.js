@@ -22,29 +22,16 @@ const SignUp = ({ setParentData }) => {
     rePassword: "",
     accept_rules: false,
   });
-  const [status, setStatus] = useState({
-    firstNameError: "",
-    lastNameError: "",
-    usernameError: "",
-    emailError: "",
-    genderError: "",
-    birthDateError: "",
-    countryError: "",
-    passwordError: "",
-    rePasswordError: "",
-    accept_rulesError: "",
-  });
+  const [status, setStatus] = useState({});
   const history = useHistory();
 
   const onTyping = e => {
     e.persist();
-    debugger;
     setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
     console.log(signUpData);
   };
 
   const onSetCountry = e => {
-    debugger;
     setSignUpData({ ...signUpData, country: e });
   };
 
@@ -52,141 +39,105 @@ const SignUp = ({ setParentData }) => {
     setSignUpData({ ...signUpData, accept_rules: e.target.checked });
   };
 
-  const handleValidation = () => {
-    let usernameError = "";
-    let firstNameError = "";
-    let lastNameError = "";
-    let emailError = "";
-    let genderError = "";
-    let birthDateError = "";
-    let countryError = "";
-    let passwordError = "";
-    let rePasswordError = "";
-    let accept_rulesError = "";
+  const formValidation = () => {
+    const formErrors = {
+      firstNameError: "",
+      lastNameError: "",
+      usernameError: "",
+      emailError: "",
+      genderError: "",
+      birthDateError: "",
+      countryError: "",
+      passwordError: "",
+      rePasswordError: "",
+      accept_rulesError: false,
+    };
+    const stringPattern = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    let isValid = true;
 
     if (!signUpData.firstName) {
-      firstNameError = "مطلوب";
+      formErrors.firstNameError = "هذا الحقل مطلوب";
+      isValid = false;
     }
 
-    if (firstNameError) {
-      setStatus({ firstNameError });
-      return false;
+    if (stringPattern.test(signUpData.firstName)) {
+      formErrors.firstNameError = "لا يمكن أن يحتوي الاسم على مسافات أو أحرف خاصة";
+      isValid = false;
     }
 
     if (!signUpData.lastName) {
-      lastNameError = "مطلوب";
+      formErrors.lastNameError = "هذا الحقل مطلوب";
+      isValid = false;
     }
 
-    if (lastNameError) {
-      setStatus({ lastNameError });
-      return false;
+    if (stringPattern.test(signUpData.lastName)) {
+      formErrors.lastNameError = "لا يمكن أن يحتوي الاسم على مسافات أو أحرف خاصة";
+      isValid = false;
     }
 
     if (!signUpData.username) {
-      usernameError = "مطلوب";
+      formErrors.usernameError = "هذا الحقل مطلوب";
+      isValid = false;
     }
 
-    if (usernameError) {
-      setStatus({ usernameError });
-      return false;
-    }
-
-    if (signUpData.username.length < 4) {
-      usernameError = "يجب ان يكون اسم المستخدم أكثر من 4 أحرف";
-    }
-
-    if (usernameError) {
-      setStatus({ usernameError });
-      return false;
+    if (stringPattern.test(signUpData.username)) {
+      formErrors.usernameError = "لا يمكن ان تستخدم اسم مستخدم يحتوي على مسافات او أحرف خاصة";
+      isValid = false;
     }
 
     if (!signUpData.email) {
-      emailError = "مطلوب";
-    }
-
-    if (emailError) {
-      setStatus({ emailError });
-      return false;
+      formErrors.emailError = "هذا الحقل مطلوب";
+      isValid = false;
     }
 
     if (!signUpData.gender) {
-      genderError = "مطلوب";
-    }
-
-    if (genderError) {
-      setStatus({ genderError });
-      return false;
+      formErrors.genderError = "هذا الحقل مطلوب";
+      isValid = false;
     }
 
     if (!signUpData.birthDate) {
-      birthDateError = "مطلوب";
-    }
-
-    if (birthDateError) {
-      setStatus({ birthDateError });
-      return false;
+      formErrors.birthDateError = "هذا الحقل مطلوب";
+      isValid = false;
     }
 
     if (!signUpData.country) {
-      countryError = "مطلوب";
-    }
-
-    if (countryError) {
-      setStatus({ countryError });
-      return false;
+      formErrors.countryError = "هذا الحقل مطلوب";
+      isValid = false;
     }
 
     if (!signUpData.password) {
-      passwordError = "مطلوب";
-    }
-
-    if (passwordError) {
-      setStatus({ passwordError });
-      return false;
-    }
-
-    if (!signUpData.rePassword) {
-      rePasswordError = "مطلوب";
-    }
-
-    if (rePasswordError) {
-      setStatus({ rePasswordError });
-      return false;
-    }
-
-    if (!signUpData.accept_rules) {
-      accept_rulesError = "مطلوب";
-    }
-
-    if (accept_rulesError) {
-      setStatus({ accept_rulesError });
-      return false;
+      formErrors.passwordError = "هذا الحقل مطلوب";
+      isValid = false;
     }
 
     if (signUpData.password.length < 8) {
-      passwordError = "يجب ان تكون كلمة المرور أكثر من 8 أحرف";
+      formErrors.passwordError = "يجب أن لا تقل كلمة المرور عن 8 خانات";
+      isValid = false;
     }
 
-    if (passwordError) {
-      setStatus({ passwordError });
-      return false;
+    if (!signUpData.rePassword) {
+      formErrors.rePasswordError = "هذا الحقل مطلوب";
+      isValid = false;
     }
 
     if (signUpData.password !== signUpData.rePassword) {
-      rePasswordError = "يجب ان تكون كلمة المرور متطابقة";
+      formErrors.passwordError = "يجب أن تكون كلمة المرور متطابقة";
+      formErrors.rePasswordError = "يجب أن تكون كلمة المرور متطابقة";
+      isValid = false;
     }
 
-    if (rePasswordError) {
-      setStatus({ rePasswordError });
-      return false;
+    if (!signUpData.accept_rules) {
+      formErrors.accept_rulesError = "يجب الموافقة على اتفاقية المستخدم وشروط الإستخدام لكي تستطيع التسجيل معانا";
+      isValid = false;
     }
 
-    return true;
+    setStatus(formErrors);
+    return isValid;
   };
 
   const Registration = e => {
     e.preventDefault();
-    const isValid = handleValidation();
+    const isValid = formValidation();
     console.log(isValid);
 
     if (isValid) {
@@ -221,18 +172,17 @@ const SignUp = ({ setParentData }) => {
         .catch(function (error) {
           const errorArray = error.response.data;
           if (error.response.status === 400) {
-            console.log(errorArray);
-            if (error.response.data.username) {
-              setStatus({ usernameError: error.response.data.username });
-            } else if (error.response.data.email) {
-              setStatus({ emailError: error.response.data.email });
+            if (errorArray.username) {
+              const usernameMessage = errorArray.username[0];
+              setStatus({ usernameError: usernameMessage });
+            } else if (errorArray.email) {
+              const emailMessage = errorArray.email[0];
+              setStatus({ emailError: emailMessage });
+              console.log(status);
             } else if (error.response.status === 500) {
               setStatus({ type: "danger", message: "هناك مشكلة في الخادم في الوقت الحالي برجاء المحاولة في وقت لاحق" });
             }
-            for (const [key, value] of Object.entries(errorArray)) {
-              setStatus({ ...status, key: value });
-              console.log(status);
-            }
+            console.log(status);
           }
         });
       return sendData;
@@ -248,103 +198,161 @@ const SignUp = ({ setParentData }) => {
             <form onSubmit={Registration}>
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <label for="firstName">الاسم الأول</label>
-                  <input type="text" className="form-control custom-input" value={signUpData.firstName} name="firstName" id="firstName" onChange={onTyping} />
-                  {status.firstNameError ? (
-                    <div class="mt-2 alert alert-danger custom-danger-alert" role="alert">
-                      {status.firstNameError}
-                    </div>
-                  ) : null}
+                  <label htmlFor="firstName">الاسم الأول</label>
+                  <input
+                    type="text"
+                    className={`form-control ${status.firstNameError ? "is-invalid" : ""} custom-input`}
+                    value={signUpData.firstName}
+                    name="firstName"
+                    id="firstName"
+                    onChange={e => {
+                      onTyping(e);
+                      setStatus({ ...status, firstNameError: "" });
+                    }}
+                  />
+                  {status.firstNameError ? <div className="invalid-feedback d-block mr-2">{status.firstNameError}</div> : null}
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="secondName">الاسم الأخير</label>
-                  <input type="text" className="form-control custom-input" name="lastName" id="lastName" onChange={onTyping} />
-                  {status.lastNameError ? (
-                    <div class="mt-2 alert alert-danger custom-danger-alert" role="alert">
-                      {status.lastNameError}
-                    </div>
-                  ) : null}
+                  <label htmlFor="secondName">الاسم الأخير</label>
+                  <input
+                    type="text"
+                    className={`form-control ${status.lastNameError ? "is-invalid" : ""} custom-input`}
+                    name="lastName"
+                    id="lastName"
+                    onChange={e => {
+                      onTyping(e);
+                      setStatus({ ...status, lastNameError: "" });
+                    }}
+                  />
+                  {status.lastNameError ? <div className="invalid-feedback d-block mr-2">{status.lastNameError}</div> : null}
                 </div>
               </div>
               <div className="form-group">
-                <label for="username">اسم المستخدم</label>
-                <input type="text" className="form-control custom-input" name="username" id="username" onChange={onTyping} />
-                {status.usernameError ? (
-                  <div class="mt-2 alert alert-danger" role="alert">
-                    {status.usernameError}
-                  </div>
-                ) : null}
+                <label htmlFor="username">اسم المستخدم</label>
+                <input
+                  type="text"
+                  className={`form-control ${status.usernameError ? "is-invalid" : ""} custom-input`}
+                  name="username"
+                  id="username"
+                  onChange={e => {
+                    onTyping(e);
+                    setStatus({ ...status, usernameError: "" });
+                  }}
+                />
+                {status.usernameError ? <div className="invalid-feedback d-block mr-2">{status.usernameError}</div> : null}
               </div>
               <div className="form-group">
-                <label for="email">البريد الالكتروني</label>
-                <input type="email" className="form-control custom-input" name="email" id="email" onChange={onTyping} />
-                {status.emailError ? (
-                  <div class="mt-2 alert alert-danger" role="alert">
-                    {status.emailError}
-                  </div>
-                ) : null}
+                <label htmlFor="email">البريد الالكتروني</label>
+                <input
+                  type="email"
+                  className={`form-control ${status.emailError ? "is-invalid" : ""} custom-input`}
+                  name="email"
+                  id="email"
+                  onChange={e => {
+                    onTyping(e);
+                    setStatus({ ...status, emailError: "" });
+                  }}
+                />
+                {status.emailError ? <div className="invalid-feedback d-block mr-2">{status.emailError}</div> : null}
               </div>
               <fieldset className="form-group row">
                 <legend className="col-form-label col-sm-2 float-sm-left pt-0">الجنس</legend>
-                <div className="col-sm-10 d-flex justify-content-md-end">
-                  <div className="form-check">
-                    <label className="form-check-label mr-4" for="femaleGender">
+                <div className="col-sm-10 d-flex justify-content-end">
+                  <div className="form-check d-flex align-items-center justify-content-end">
+                    <label className={`form-check-label ${status.genderError ? "signup-error" : ""} ml-4`} htmlFor="femaleGender">
                       أنثى
                     </label>
-                    <input className="form-check-input custom-input" type="radio" name="gender" id="femaleChose" value="female" onChange={onTyping} />
+                    <input
+                      className="form-check-input signup-radio-button custom-input"
+                      type="radio"
+                      name="gender"
+                      id="femaleChose"
+                      value="female"
+                      onChange={e => {
+                        onTyping(e);
+                        setStatus({ ...status, genderError: "" });
+                      }}
+                    />
                   </div>
-                  <div className="form-check">
-                    <label className="form-check-label mr-4" for="maleChose">
+                  <div className="form-check d-flex align-items-center justify-content-end">
+                    <label className={`form-check-label ${status.genderError ? "signup-error" : ""} ml-4`} htmlFor="maleChose">
                       ذكر
                     </label>
-                    <input className="form-check-input custom-input" type="radio" name="gender" id="maleChose" value="male" onChange={onTyping} />
+                    <input
+                      className="form-check-input signup-radio-button custom-input"
+                      type="radio"
+                      name="gender"
+                      id="maleChose"
+                      value="male"
+                      onChange={e => {
+                        onTyping(e);
+                        setStatus({ ...status, genderError: "" });
+                      }}
+                    />
                   </div>
+                  {status.genderError ? <div className="invalid-feedback d-block mr-3">{status.genderError}</div> : null}
                 </div>
               </fieldset>
-              {status.genderError ? (
-                <div class="mt-2 alert alert-danger" role="alert">
-                  {status.genderError}
-                </div>
-              ) : null}
               <div className="form-row">
                 <div className="form-group col-md-5">
-                  <label for="inputCity">تاريخ الميلاد</label>
+                  <label htmlFor="birthDate">تاريخ الميلاد</label>
                 </div>
                 <div className="form-group col-md-7">
-                  <input type="date" placeholder="تاريخ الميلاد" name="birthDate" className="form-control custom-input birthdate-input" id="dat" onChange={onTyping} />
+                  <input
+                    type="date"
+                    placeholder="تاريخ الميلاد"
+                    name="birthDate"
+                    className={`form-control ${status.birthDateError ? "is-invalid" : ""} custom-input birthdate-input`}
+                    id="birthDate"
+                    onChange={e => {
+                      onTyping(e);
+                      setStatus({ ...status, birthDateError: "" });
+                    }}
+                  />
+                  {status.birthDateError ? <div className="invalid-feedback d-block mr-2">{status.birthDateError}</div> : null}
                 </div>
-                {status.birthDateError ? (
-                  <div class="mt-2 alert alert-danger w-100 text-center" role="alert">
-                    {status.birthDateError}
-                  </div>
-                ) : null}
               </div>
               <div className="form-group">
-                <label for="exampleFormControlSelect1">الدولة</label>
-                <CountryDropdown blacklist={["IL"]} value={signUpData.country} className="form-control custom-input country-input" name="country" onChange={onSetCountry} />
-                {status.countryError ? (
-                  <div class="mt-2 alert alert-danger" role="alert">
-                    {status.countryError}
-                  </div>
-                ) : null}
+                <label htmlFor="country">الدولة</label>
+                <CountryDropdown
+                  blacklist={["IL"]}
+                  value={signUpData.country}
+                  className={`form-control ${status.countryError ? "is-invalid" : ""} custom-input country-input`}
+                  name="country"
+                  onChange={e => {
+                    onSetCountry(e);
+                    setStatus({ ...status, countryError: "" });
+                  }}
+                />
+                {status.countryError ? <div className="invalid-feedback d-block mr-2">{status.countryError}</div> : null}
               </div>
               <div className="form-group">
-                <label for="password">كلمة المرور</label>
-                <input type="password" className="form-control custom-input" name="password" id="password" onChange={onTyping} />
-                {status.passwordError ? (
-                  <div class="mt-2 alert alert-danger" role="alert">
-                    {status.passwordError}
-                  </div>
-                ) : null}
+                <label htmlFor="password">كلمة المرور</label>
+                <input
+                  type="password"
+                  className={`form-control ${status.passwordError ? "is-invalid" : ""} custom-input country-input`}
+                  name="password"
+                  id="password"
+                  onChange={e => {
+                    onTyping(e);
+                    setStatus({ ...status, passwordError: "" });
+                  }}
+                />
+                {status.passwordError ? <div className="invalid-feedback d-block mr-2">{status.passwordError}</div> : null}
               </div>
               <div className="form-group">
-                <label for="re-password">تأكيد كلمة المرور</label>
-                <input type="password" className="form-control custom-input" id="re-password" name="rePassword" onChange={onTyping} />
-                {status.rePasswordError ? (
-                  <div class="mt-2 alert alert-danger" role="alert">
-                    {status.rePasswordError}
-                  </div>
-                ) : null}
+                <label htmlFor="re-password">تأكيد كلمة المرور</label>
+                <input
+                  type="password"
+                  className={`form-control ${status.rePasswordError ? "is-invalid" : ""} custom-input country-input`}
+                  id="re-password"
+                  name="rePassword"
+                  onChange={e => {
+                    onTyping(e);
+                    setStatus({ ...status, rePasswordError: "" });
+                  }}
+                />
+                {status.rePasswordError ? <div className="invalid-feedback d-block mr-2">{status.rePasswordError}</div> : null}
               </div>
               <div className="form-group">
                 <label className="suggestion-password text-lightgreen">اقتراحات لكلمة مرور قوية</label>
@@ -363,8 +371,16 @@ const SignUp = ({ setParentData }) => {
                 </ul>
               </div>
               <div className="form-group">
-                <input className="form-check-input signup-checkbox bg-dark" name="accept_rules" type="checkbox" id="gridCheck1" onChange={e => handleCheck(e)} />
-                <label className="form-check-label signup-checkbox-label" for="gridCheck1">
+                <input
+                  className={`${status.accept_rulesError ? "signup-error" : ""} form-check-input signup-checkbox`}
+                  name="accept_rules"
+                  type="checkbox"
+                  onChange={e => {
+                    handleCheck(e);
+                    setStatus({ ...status, accept_rulesError: "" });
+                  }}
+                />
+                <label className={`${status.accept_rulesError ? "signup-error" : ""} form-check-label signup-checkbox-label`}>
                   موافق على{" "}
                   <Link to="/terms-of-use" className="text-lightgreen">
                     اتفاقية المستخدم
@@ -374,12 +390,8 @@ const SignUp = ({ setParentData }) => {
                     شروط الاستخدام
                   </Link>
                 </label>
+                {status.accept_rulesError ? <div className="invalid-feedback d-block mr-2">{status.accept_rulesError}</div> : null}
               </div>
-              {status.accept_rulesError ? (
-                <div class="mt-2 alert alert-danger text-center" role="alert">
-                  {status.accept_rulesError}
-                </div>
-              ) : null}
               <div className="form-row w-100">
                 <ReCAPTCHA theme="dark" className="blog-recaptcha mr-1" sitekey={BLOG_APP_CAPTCHA_KEY} />
               </div>
@@ -387,7 +399,7 @@ const SignUp = ({ setParentData }) => {
                 إنشاء حساب
               </button>
               {status.errorServer ? (
-                <div class="alert alert-danger mt-4 text-center" role="alert">
+                <div className="alert alert-danger mt-4 text-center" role="alert">
                   {status.errorServer}
                 </div>
               ) : (

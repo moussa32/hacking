@@ -21,13 +21,9 @@ const Overview = props => {
       <HackerNavbar currentPathname={props.location.pathname} />
       <ScrollToTop />
       <Switch>
-        {token ? (
-          <Route exact path="/dashboard">
-            <Main setParentData={setParentData} />
-          </Route>
-        ) : (
-          <Redirect to="/login" />
-        )}
+        <Route exact path="/dashboard">
+          <Main setParentData={setParentData} />
+        </Route>
         <Route exact path="/notfound" component={NotFound} />
         <Route exact path={`${match.path}/activity`} component={Activity} />
         <Route exact path={`${match.path}/leaderboard`} component={Leaderboard} />

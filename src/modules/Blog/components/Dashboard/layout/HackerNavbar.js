@@ -17,7 +17,6 @@ const HackerNavbar = props => {
   const [data, setData] = useState(null);
   const [loadded, setLoadded] = useState(null);
   const [activeTab, setActiveTab] = useState("main");
-
   const token = localStorage.getItem("accessToken");
   const history = useHistory();
 
@@ -44,6 +43,7 @@ const HackerNavbar = props => {
     handleRemoveUserToken("accessToken");
     handleRemoveUserToken("type");
     handleRemoveUserToken("refreshToken");
+    handleRemoveUserToken("isAuthenticated");
     history.push("/login");
   };
 
@@ -70,7 +70,7 @@ const HackerNavbar = props => {
             </li>
             <li className="nav-item dropdown">
               <button className="nav-link dropdown-toggle d-sm-inline-block border-0 bg-transparent" id="hacker-profile" data-toggle="dropdown" aria-expanded="false">
-                <img src={navbarInfo !== null && navbarInfo.hacker.avater !== null ? `${dvbaseUrl}/${navbarInfo.hacker.avater}` : `${DefaultAvatar}`} className="hacker-avatar img-fluid rounded-circle mr-1" alt={navbarInfo !== null && navbarInfo.username} />
+                <img src={navbarInfo !== null && navbarInfo.hacker.avater !== null ? `${dvbaseUrl}/${navbarInfo.hacker.avater}` : `${DefaultAvatar}`} className="hacker-avatar img-fluid rounded-circle mr-1" alt={navbarInfo !== null && navbarInfo.username ? navbarInfo.username : "مخترق"} />
                 <IoIosArrowDown className="text-lightgreen mr-2" size={"1.3rem"} />
               </button>
               <div className={`dropdown-menu text-right ml-3`}>
@@ -80,7 +80,7 @@ const HackerNavbar = props => {
                 <a className="dropdown-item hacker-options" href="/dashboard/settings">
                   <BsFillGearFill className="ml-2" /> الإعدادات
                 </a>
-                <button onClick={handleLogout} className="dropdown-item hacker-options border-0 bg-transparent" href="#">
+                <button onClick={handleLogout} className="dropdown-item hacker-options border-0 bg-transparent" href="/#">
                   <FaSignOutAlt className="ml-2" />
                   تسجيل الخروج
                 </button>
@@ -89,7 +89,7 @@ const HackerNavbar = props => {
           </ul>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul className="navbar-nav">
-              <li className={`nav-item ${activeTab === "activity" ? "active" : ""}`} id="activity" disable>
+              <li className={`nav-item ${activeTab === "activity" ? "active" : ""}`} id="activity">
                 <Link className="nav-link disabled" to="/dashboard/activity">
                   النشاط <span className="sr-only">(current)</span>
                 </Link>

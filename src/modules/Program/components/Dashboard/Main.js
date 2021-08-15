@@ -30,13 +30,16 @@ const Main = ({ location }) => {
         let responseData = res.data;
         setUser(responseData);
         setIsLoadded(true);
-        console.log(res.data);
       })
       .catch(error => {
+        setIsLoadded(false);
         if (error.response.status === 401) {
           getNewTokens(localStorage.getItem("refreshToken"));
         } else if (error.response.status === 403) {
           setStatus({ type: "danger", message: "لا يمكنك الدخول إلى لوحة التحكم بدون تفعيل بريدك الإلكتروني ورقم الهاتف" });
+          setTimeout(() => {
+            window.location.pathname = "program/email-confirmation";
+          }, 2000);
         }
       });
   }, []);
@@ -78,9 +81,8 @@ const Main = ({ location }) => {
                           </button>
                         </div>
                       ) : (
-                        <p>dsadas</p>
+                        ""
                       )}
-
                       <ProgramInfo userInfo={user} />
                       <ProgramStat balance={user.balance} payings={user.payings} />
                       <ProgramReports />

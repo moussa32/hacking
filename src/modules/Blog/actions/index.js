@@ -107,6 +107,11 @@ export function handleGetUserInfo(token) {
         if (error.response.status === 401) {
           const reFreshtoken = handleGetUserToken("refreshToken");
           getNewTokens(reFreshtoken);
+        } else if (error.response.status === 403) {
+          if (error.response.data.verification_step === "phone") {
+            window.location.pathname = "/mobile-confirmation";
+          }
+          console.log(error.response.data);
         }
       });
   };

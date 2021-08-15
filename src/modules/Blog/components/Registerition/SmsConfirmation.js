@@ -144,7 +144,7 @@ const SmsConfirmation = () => {
 
       smsCodeRequest
         .then(res => {
-          console.log(res.data);
+          localStorage.removeItem("phoneNumber");
           setStatus({ success: "لقد تم التأكد من رقمك بنجاح" });
           setIsRedirect(true);
           setTimeout(() => {
@@ -203,7 +203,7 @@ const SmsConfirmation = () => {
   };
 
   return (
-    <main class="component-wrapper">
+    <main className="component-wrapper">
       <div className="container home">
         <div className="jumbotron text-center py-4 bg-second">
           <nav aria-label="breadcrumb">
@@ -221,16 +221,16 @@ const SmsConfirmation = () => {
                   <p className="lead main-message">
                     الرجاء إدخال رمز التحقق الذي أرسلناه إلي <span className="message-phone">{userPhoneNumber}</span>
                   </p>
-                  <input type="text" className="form-control bg-white text-dark w-50 mx-auto text-center message-code" onChange={handleSmsCode} maxlength="6" placeholder="كود التحقق" />
+                  <input type="text" className="form-control bg-white text-dark w-50 mx-auto text-center message-code" onChange={handleSmsCode} maxLength="6" placeholder="كود التحقق" />
                   {status.error ? (
-                    <div class="alert alert-danger mt-4 text-center" role="alert">
+                    <div className="alert alert-danger mt-4 text-center" role="alert">
                       {status.error}
                     </div>
                   ) : (
                     ""
                   )}
                   {status.success ? (
-                    <div class="alert alert-success mt-4 text-center" role="alert">
+                    <div className="alert alert-success mt-4 text-center" role="alert">
                       {status.success}
                     </div>
                   ) : (

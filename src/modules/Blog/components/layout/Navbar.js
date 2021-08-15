@@ -6,6 +6,7 @@ import { GreenLogo } from "../../../../assets/index";
 const Navbar = ({ currentPathname }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
+  const isAuthenticated = localStorage.getItem("isAuthenticated");
 
   useEffect(() => {
     if (currentPathname.includes("/blog")) {
@@ -26,6 +27,15 @@ const Navbar = ({ currentPathname }) => {
   }, [currentPathname]);
 
   const toggle = () => setIsOpen(!isOpen);
+  const handleUserRouteLink = () => {
+    if (localStorage.getItem("type") === "hacker") {
+      return "dashboard";
+    } else if (localStorage.getItem("type") === "program") {
+      return "program/dashboard";
+    } else {
+      return "login";
+    }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark blog-nav">
@@ -70,8 +80,8 @@ const Navbar = ({ currentPathname }) => {
         </ul>
         <ul className="navbar-nav mr-auto">
           <li className={`nav-item ${activeTab === "login" ? "active" : ""}`} id="login">
-            <Link className="nav-link" to="/login">
-              {localStorage.getItem("accessToken") ? "لوحة التحكم" : "تسجيل الدخول"}
+            <Link className="nav-link" to={`/${handleUserRouteLink()}`}>
+              {isAuthenticated ? "لوحة التحكم" : "تسجيل الدخول"}
             </Link>
           </li>
         </ul>

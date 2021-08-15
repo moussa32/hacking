@@ -47,6 +47,7 @@ const Navbar = ({ currentPathname }) => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("type");
+    localStorage.removeItem("isAuthenticated");
     history.push("/login");
   };
 

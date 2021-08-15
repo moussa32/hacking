@@ -76,7 +76,7 @@ const MobileConfirmation = () => {
   };
 
   return (
-    <main class="component-wrapper">
+    <main className="component-wrapper">
       <div className="container home">
         <div className="jumbotron text-center py-4 bg-second">
           <nav aria-label="breadcrumb">
@@ -102,14 +102,14 @@ const MobileConfirmation = () => {
                     }}
                   />
                   {status.error ? (
-                    <div class="alert alert-danger mt-4 text-center" role="alert">
+                    <div className="alert alert-danger mt-4 text-center" role="alert">
                       {status.error}
                     </div>
                   ) : (
                     ""
                   )}
                   {status.success ? (
-                    <div class="alert alert-success mt-4 text-center" role="alert">
+                    <div className="alert alert-success mt-4 text-center" role="alert">
                       {status.success}
                     </div>
                   ) : (
