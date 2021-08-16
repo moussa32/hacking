@@ -52,7 +52,8 @@ const SignUp = ({ setParentData }) => {
       rePasswordError: "",
       accept_rulesError: false,
     };
-    const stringPattern = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const stringPattern = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     let isValid = true;
 
     if (!signUpData.firstName) {
@@ -80,6 +81,11 @@ const SignUp = ({ setParentData }) => {
       isValid = false;
     }
 
+    if (signUpData.username.length < 4) {
+      formErrors.usernameError = "يجب أن لا يقل اسم المستخدم عن 4 أحرف";
+      isValid = false;
+    }
+
     if (stringPattern.test(signUpData.username)) {
       formErrors.usernameError = "لا يمكن ان تستخدم اسم مستخدم يحتوي على مسافات او أحرف خاصة";
       isValid = false;
@@ -87,6 +93,11 @@ const SignUp = ({ setParentData }) => {
 
     if (!signUpData.email) {
       formErrors.emailError = "هذا الحقل مطلوب";
+      isValid = false;
+    }
+
+    if (!emailPattern.test(String(signUpData.email).toLowerCase())) {
+      formErrors.emailError = "يجب كتابة بريد إلكتروني صالح";
       isValid = false;
     }
 
@@ -173,12 +184,9 @@ const SignUp = ({ setParentData }) => {
           const errorArray = error.response.data;
           if (error.response.status === 400) {
             if (errorArray.username) {
-              const usernameMessage = errorArray.username[0];
-              setStatus({ usernameError: usernameMessage });
+              setStatus({ usernameError: "الاسم المستخدم هذا مسجل مسبقًا" });
             } else if (errorArray.email) {
-              const emailMessage = errorArray.email[0];
-              setStatus({ emailError: emailMessage });
-              console.log(status);
+              setStatus({ emailError: "" });
             } else if (error.response.status === 500) {
               setStatus({ type: "danger", message: "هناك مشكلة في الخادم في الوقت الحالي برجاء المحاولة في وقت لاحق" });
             }
@@ -244,7 +252,7 @@ const SignUp = ({ setParentData }) => {
               <div className="form-group">
                 <label htmlFor="email">البريد الالكتروني</label>
                 <input
-                  type="email"
+                  type="text"
                   className={`form-control ${status.emailError ? "is-invalid" : ""} custom-input`}
                   name="email"
                   id="email"
@@ -392,9 +400,9 @@ const SignUp = ({ setParentData }) => {
                 </label>
                 {status.accept_rulesError ? <div className="invalid-feedback d-block mr-2">{status.accept_rulesError}</div> : null}
               </div>
-              <div className="form-row w-100">
+              {/* <div className="form-row w-100">
                 <ReCAPTCHA theme="dark" className="blog-recaptcha mr-1" sitekey={BLOG_APP_CAPTCHA_KEY} />
-              </div>
+              </div> */}
               <button type="submit" className="btn btn-lightgreen mx-auto d-block btn-lg text-white my-4">
                 إنشاء حساب
               </button>
