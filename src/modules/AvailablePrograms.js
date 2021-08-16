@@ -115,7 +115,7 @@ const AvailablePrograms = props => {
           <div className="container-fluid home available-margin">
             <div className="container bg-second p-4">
               <div className="jumbotron jumbotron-fluid bg-black rounded py-1">
-                <div className="container px-4">
+                <div className="container p-4">
                   <Swiper {...params}>
                     {programAds && programAds.length > 0
                       ? programAds.map(ad => {

@@ -97,7 +97,7 @@ const SignUp = ({ setParentData }) => {
     }
 
     if (!emailPattern.test(String(signUpData.email).toLowerCase())) {
-      formErrors.emailError = "يجب كتابة بريد إلكتروني صالح";
+      formErrors.emailError = "يجب كتابة بريد إلكتروني صالح مسموح بـ (0 إلى 9) ومن (a - Z) و (. أو _)";
       isValid = false;
     }
 

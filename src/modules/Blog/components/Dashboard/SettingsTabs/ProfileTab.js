@@ -45,6 +45,7 @@ const ProfileTab = () => {
       });
     getHackerAvatar(token)
       .then(res => {
+        console.log(res.data);
         setAvatar(res.data.avater);
       })
       .catch(error => {

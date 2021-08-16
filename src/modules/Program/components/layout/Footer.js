@@ -9,7 +9,7 @@ import "./Footer.css";
 const Footer = () => {
   return (
     <footer className="footer mt-4 py-3 bg-second">
-      <div className="container">
+      <div className="container bg-black p-4">
         <div className="row">
           <div className="col-md-2">
             <img src={GreenLogo} width={45} height={45} alt="hacking tech" className="d-block mx-auto" title="hacking" />
