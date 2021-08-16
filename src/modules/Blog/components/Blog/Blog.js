@@ -61,9 +61,9 @@ const Blog = ({ blog, similarBlogs, categories, blogAd, dispatch, match }) => {
   );
 
   return (
-    blog !== null && (
-      <div className="blog-wrapper">
-        <div className="container-fluid home blog-wrapper">
+    <div className="blog-wrapper">
+      <div className="container-fluid home blog-wrapper">
+        {blog !== null && (
           <div className="container-fluid blog-container">
             <div className="title text-center">
               <h2>{blog.title}</h2>
@@ -104,9 +104,9 @@ const Blog = ({ blog, similarBlogs, categories, blogAd, dispatch, match }) => {
               </div>
             )}
           </div>
-        </div>
+        )}
       </div>
-    )
+    </div>
   );
 };
 
