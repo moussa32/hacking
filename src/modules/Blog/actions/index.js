@@ -110,8 +110,9 @@ export function handleGetUserInfo(token) {
         } else if (error.response.status === 403) {
           if (error.response.data.verification_step === "phone") {
             window.location.pathname = "/mobile-confirmation";
+          } else if (error.response.data.verification_step === "email") {
+            window.location.pathname = "/email-confirmation";
           }
-          console.log(error.response.data);
         }
       });
   };

@@ -3,8 +3,8 @@ import { EmailConfirmationImage } from "../../../../assets/index";
 import { ResendEmailConfirmation } from "../../../../api/ResendEmailConfirmation";
 import { handleGetUserToken, handleSetUserToken } from "../../actions";
 
-const Confirmation = ({ emailData }) => {
-  const hackerEmail = emailData.hacker_data.email;
+const Confirmation = () => {
+  const hackerEmail = localStorage.getItem("registerEmail");
   const token = handleGetUserToken("accessToken");
   const [status, setStatus] = useState({});
 
@@ -12,6 +12,7 @@ const Confirmation = ({ emailData }) => {
     ResendEmailConfirmation(token)
       .then(res => {
         handleSetUserToken("accessToken", res.data.access_token);
+        localStorage.removeItem("registerEmail");
         setStatus({ success: "تم إعادة إرسال رابط التفعيل بنجاح برجاء التأكد من بريد الإلكتروني" });
       })
       .catch(error => {

@@ -29,7 +29,6 @@ const Main = props => {
 
   useEffect(() => {
     dispatch(handleGetUserInfo(token));
-    console.log(hackerInfo);
     setData(hackerInfo);
   }, [dispatch]);
 

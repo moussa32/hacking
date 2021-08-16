@@ -42,9 +42,7 @@ const Home = props => {
         <Route exact path="/hacker/signup">
           <SignUp setParentData={setParentData} />
         </Route>
-        <Route exact path="/email-confirmation">
-          <EmailConfirmation emailData={parentData} />
-        </Route>
+        <Route exact path="/email-confirmation" component={EmailConfirmation} />
         <Route exact path="/mobile-confirmation">
           <MobileConfirmation setUserPhoneNumber={setUserPhoneNumber} />
         </Route>

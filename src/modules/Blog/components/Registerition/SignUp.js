@@ -168,14 +168,13 @@ const SignUp = ({ setParentData }) => {
 
       sendData
         .then(res => {
-          console.log(res.data);
-
           /*Send submited data to Home Component to handle it in next step*/
           setParentData(res.data);
 
           handleSetUserToken("refreshToken", res.data.tokens.refresh_token);
           handleSetUserToken("type", res.data.hacker_data.role);
           handleSetUserToken("accessToken", res.data.tokens.access_token);
+          handleSetUserToken("registerEmail", dataToBeSent.email);
 
           /*Redirect to next step*/
           history.push("/email-confirmation");
