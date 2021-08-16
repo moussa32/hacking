@@ -1040,22 +1040,9 @@ blockquote:nth-of-type(even) footer:after {
   padding: 25px 0;
 }
 
-.settings-button {
-  padding: 15px 42px !important;
-  padding-right: 23px !important;
-}
-
-.settings-button:hover > a > svg {
-  color: #fff;
-}
-
 .dbsidebar .nav-item:hover {
   background-color: var(--lightGreen);
   transition: 1.2s;
-}
-
-.settings-button a:hover {
-  color: #fff i !important;
 }
 
 .dbsidebar .nav-item a.active {
@@ -1338,6 +1325,35 @@ table {
     margin: 1rem 0;
     margin-left: auto;
   }
+}
+
+.settings-button {
+  padding: 15px 42px !important;
+  padding-right: 23px !important;
+}
+
+.settings-button:hover > a > svg {
+  color: #fff;
+}
+
+.settings-button a:hover {
+  color: #fff i !important;
+}
+
+.remove-profile-image {
+  display: block;
+  font-size: 2.5rem;
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  top: -25px;
+  right: 12px;
+  cursor: pointer;
+}
+
+.remove-profile-image:hover {
+  color: var(--red);
+  transition: 1s;
 }
 
 /* enable absolute positioning */

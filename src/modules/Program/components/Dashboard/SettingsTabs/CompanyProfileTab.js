@@ -66,6 +66,17 @@ const CompanyProfileTab = ({ companyLogo, companyName, companyUrl, companySummar
     }
   };
 
+  const handleRemoveProfileImage = () => {
+    const formatImage = new FormData();
+    formatImage.append("logo", DefaultAvatar);
+
+    putCompanyLogo(token, formatImage).then(res => {
+      setLogo(res.data.logo);
+      setNewLogo(null);
+      setNewLogoStatus({ isLoadding: false, type: "success", message: "تم تحديث صورتك بنجاح" });
+    });
+  };
+
   const newProfileSettings = e => {
     e.preventDefault();
     setStatus(null);
@@ -91,6 +102,9 @@ const CompanyProfileTab = ({ companyLogo, companyName, companyUrl, companySummar
     <>
       <div className="row">
         <div className="col-md-6 mx-auto mb-4">
+          <span className="remove-profile-image" onClick={handleRemoveProfileImage}>
+            &times;
+          </span>
           <img className="profile-image" src={logo !== null ? `${dvbaseUrl}${logo}` : DefaultAvatar} />
           <div className="custom-file mb-2">
             <input type="file" className="custom-file-input profile-image-input" id="customFile" onChange={avatarSelectedHandler} />

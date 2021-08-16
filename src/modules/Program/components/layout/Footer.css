@@ -6,3 +6,15 @@
     text-align: center;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .footer-social-icon {
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 830px) {
+  .footer-social-icon {
+    flex-wrap: wrap;
+  }
+}
