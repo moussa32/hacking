@@ -57,21 +57,6 @@ const Footer = () => {
                   المدونة
                 </a>
               </li>
-              <li>
-                <a className="text-white" href="/#">
-                  Stuff for developers
-                </a>
-              </li>
-              <li>
-                <a className="text-white" href="/#">
-                  Another one
-                </a>
-              </li>
-              <li>
-                <a className="text-white" href="/#">
-                  Last time
-                </a>
-              </li>
             </ul>
           </div>
           <div className="col-md-2 footer-list">
