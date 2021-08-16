@@ -186,7 +186,7 @@ const SignUp = ({ setParentData }) => {
             if (errorArray.username) {
               setStatus({ usernameError: "الاسم المستخدم هذا مسجل مسبقًا" });
             } else if (errorArray.email) {
-              setStatus({ emailError: "" });
+              setStatus({ emailError: "هذا البريد الإلكتروني مسجل من قبل" });
             } else if (error.response.status === 500) {
               setStatus({ type: "danger", message: "هناك مشكلة في الخادم في الوقت الحالي برجاء المحاولة في وقت لاحق" });
             }
