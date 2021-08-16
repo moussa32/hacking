@@ -28,7 +28,6 @@ const SignUp = ({ setParentData }) => {
   const onTyping = e => {
     e.persist();
     setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
-    console.log(signUpData);
   };
 
   const onSetCountry = e => {
@@ -149,7 +148,6 @@ const SignUp = ({ setParentData }) => {
   const Registration = e => {
     e.preventDefault();
     const isValid = formValidation();
-    console.log(isValid);
 
     if (isValid) {
       const dataToBeSent = {
@@ -189,7 +187,6 @@ const SignUp = ({ setParentData }) => {
             } else if (error.response.status === 500) {
               setStatus({ type: "danger", message: "هناك مشكلة في الخادم في الوقت الحالي برجاء المحاولة في وقت لاحق" });
             }
-            console.log(status);
           }
         });
       return sendData;
