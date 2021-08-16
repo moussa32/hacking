@@ -1009,12 +1009,6 @@ blockquote:nth-of-type(even) footer:after {
   }
 }
 
-@media screen and (min-width: 435px) {
-  .sub-hacker-list {
-    margin-left: 4rem;
-  }
-}
-
 .nav-icon {
   line-height: 2.6;
   margin: 0 0.8rem;
