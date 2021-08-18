@@ -67,10 +67,7 @@ const CompanyProfileTab = ({ companyLogo, companyName, companyUrl, companySummar
   };
 
   const handleRemoveProfileImage = () => {
-    const formatImage = new FormData();
-    formatImage.append("logo", null);
-
-    putCompanyLogo(token, null).then(res => {
+    putCompanyLogo(token, { logo: null }).then(res => {
       setLogo(res.data.logo);
       setNewLogo(null);
       setNewLogoStatus({ isLoadding: false, type: "success", message: "تم تحديث صورتك بنجاح" });

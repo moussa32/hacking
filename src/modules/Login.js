@@ -106,7 +106,7 @@ const Login = props => {
                   <label htmlFor="exampleInputPassword1">كلمة المرور</label>
                   <div className="input-group mb-3">
                     <div className="input-group-append position-relative">
-                      <FaKey size={"1.1rem"} className="text-muted custom-inpu-icon" />
+                      <FaKey size={"1.1rem"} className="text-muted custom-input-icon" />
                     </div>
                     <input name="password" type="password" placeholder="كلمة المرور" value={credentials.password} onChange={e => handleUserLoginInputs(e)} className="form-control custom-input input-with-icon" id="passwordInput" required />
                   </div>
