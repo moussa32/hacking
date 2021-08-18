@@ -823,7 +823,7 @@ blockquote:nth-of-type(even) footer:after {
   box-shadow: 0 0 13px 4px rgb(101 246 172 / 43%);
 }
 
-.login-username-icon {
+.custom-input-icon {
   position: absolute;
   right: 13px;
   top: 26%;
