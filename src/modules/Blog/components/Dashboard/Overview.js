@@ -6,7 +6,6 @@ import ScrollToTop from "../../../../shared/components/ScrollToTop";
 import NotFound from "./../../../../shared/components/NotFound";
 import Main from "./Main";
 import Activity from "./Activity";
-import Leaderboard from "./Leaderboard";
 import Settings from "./Settings";
 import Footer from "../../../Program/components/layout/Footer";
 import { handleGetUserToken } from "../../actions/index";
@@ -25,9 +24,8 @@ const Overview = props => {
           <Main setParentData={setParentData} />
         </Route>
         <Route exact path="/notfound" component={NotFound} />
-        <Route exact path={`${match.path}/activity`} component={Activity} />
-        <Route exact path={`${match.path}/leaderboard`} component={Leaderboard} />
-        <Route exact path={`/dashboard/settings`} component={Settings} />
+        <Route exact path="/activity" component={Activity} />
+        <Route exact path="/dashboard/settings" component={Settings} />
         <Route exact path="/dashboard/settings/:id" component={Settings} />
         <Route exact path={`${match.path}`} component={Main} />
         <Redirect to="/notfound" />

@@ -1,0 +1,51 @@
+.leaderboard-card {
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  border: 2px #101010 solid;
+}
+.leaderboard-user-id {
+  margin-right: 1rem;
+  flex: 0.25;
+}
+.leaderboard-user {
+  flex: 0.6;
+}
+.leaderboard-user > img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-left: 1rem;
+}
+.leaderboard-user-points {
+  flex: 0.15;
+  flex-basis: 35px;
+}
+
+.leaderboard-title {
+  align-items: center;
+}
+
+.leaderboard-title > p:nth-child(1) {
+  flex: 0.25;
+}
+
+.leaderboard-title > p:nth-child(2) {
+  flex: 0.6;
+}
+
+.leaderboard-title > p:nth-child(3) {
+  flex: 0.15;
+  flex-basis: 35px;
+}
+
+@media screen and (max-width: 350px) {
+  .leaderboard-user {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .leaderboard-title > p {
+    font-size: 1rem;
+  }
+}

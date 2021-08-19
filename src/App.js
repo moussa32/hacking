@@ -8,6 +8,7 @@ import ResetPassword from "./modules/Reset/ResetPassword";
 import ResetEmail from "./modules/Reset/ResetEmail";
 import ForgetPassword from "./modules/ForgetPassword";
 import Home from "./modules/Blog/components/Home/Home";
+import Leaderboard from "./modules/Leaderboard";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "./shared/components/ProtectedRoute";
 
@@ -19,6 +20,7 @@ function App() {
         <ProtectedRoute exact path="/program/dashboard" component={ProgramDashboard} />
         <Route path="/program/" component={ProgramRouteController} />
         <Route path="/available-programs" component={AvailablePrograms} />
+        <Route path="/leaderboard" component={Leaderboard} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignupPage} />
         <Route exact path="/reset-password" component={ResetPassword} />

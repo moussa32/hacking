@@ -26,7 +26,7 @@ const HackerNavbar = props => {
     } else if (currentPathname === `/available-programs`) {
       return setActiveTab("available-programs");
     } else if (currentPathname === "/leaderboard") {
-      setActiveTab(`dashboard/leaderboard`);
+      setActiveTab(`leaderboard`);
     } else {
       return setActiveTab("main");
     }
@@ -60,12 +60,12 @@ const HackerNavbar = props => {
             </button>
             <ul className="navbar-nav mr-auto sub-hacker-list">
               <li className="nav-item nav-icon" id="messages">
-                <Link className="nav-link disabled" to="/dashboard/leaderboard">
+                <Link className="nav-link disabled" to="/leaderboard">
                   <MdEmail className="text-lightgreen" size={"1.8rem"} />
                 </Link>
               </li>
               <li className="nav-item nav-icon" id="alerts">
-                <Link className="nav-link disabled" to="/dashboard/leaderboard">
+                <Link className="nav-link disabled" to="/leaderboard">
                   <BsBellFill className="text-lightgreen" size={"1.5rem"} />
                 </Link>
               </li>
@@ -106,7 +106,7 @@ const HackerNavbar = props => {
                   </Link>
                 </li>
                 <li className={`nav-item ${activeTab === "leaderboard" ? "active" : ""}`} id="leaderboard">
-                  <Link className="nav-link disabled" to="/dashboard/leaderboard">
+                  <Link className="nav-link disabled" to="/leaderboard">
                     لوحة القادة
                   </Link>
                 </li>

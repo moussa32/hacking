@@ -22,7 +22,7 @@ const Navbar = ({ currentPathname }) => {
       return setActiveTab("activity");
     } else if (currentPathname === "/available-programs") {
       return setActiveTab("available-programs");
-    } else if (currentPathname === "/program/dashboard/leaderboard") {
+    } else if (currentPathname === "/leaderboard") {
       setActiveTab("leaderboard");
     } else {
       return setActiveTab("main");
@@ -80,7 +80,7 @@ const Navbar = ({ currentPathname }) => {
                   </Link>
                 </li>
                 <li className={`nav-item ${activeTab === "leaderboard" ? "active" : ""}`} id="leaderboard" disabled>
-                  <Link className="nav-link disabled" to="/program/dashboard/leaderboard">
+                  <Link className="nav-link disabled" to="/leaderboard">
                     لوحة القادة
                   </Link>
                 </li>
