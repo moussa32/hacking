@@ -16,7 +16,8 @@ body {
   text-align: right;
   font-size: 1rem;
   color: var(--white);
-  background: transparent linear-gradient(180deg, #161616 0%, #313131 100%) 0% 0% no-repeat padding-box !important;
+  background: transparent linear-gradient(180deg, #161616 0%, #313131 100%) 0% 0% no-repeat
+    padding-box !important;
 }
 
 code {
@@ -130,7 +131,8 @@ li.media:hover {
 }
 
 .blog-card {
-  background: transparent linear-gradient(to right, #313131 0%, #161616 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(to right, #313131 0%, #161616 100%) 0% 0% no-repeat
+    padding-box;
   color: var(--white) !important;
   border-radius: 5px;
 }
@@ -449,7 +451,8 @@ section.filtered-by-tag {
 }
 
 .blog-wrapper {
-  background: linear-gradient(90deg, rgb(0 255 43 / 10%), rgb(0 0 0 / 23%)), url("./assets/backs/terms-cover.svg");
+  background: linear-gradient(90deg, rgb(0 255 43 / 10%), rgb(0 0 0 / 23%)),
+    url("./assets/backs/terms-cover.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   -webkit-background-size: cover;
@@ -462,7 +465,8 @@ section.filtered-by-tag {
 }
 
 .utl-wrapper {
-  background: linear-gradient(90deg, rgb(0 255 43 / 10%), rgb(0 0 0 / 23%)), url("./assets/backs/utl-cover.svg");
+  background: linear-gradient(90deg, rgb(0 255 43 / 10%), rgb(0 0 0 / 23%)),
+    url("./assets/backs/utl-cover.svg");
   min-height: 100vh;
   padding-bottom: 2rem;
   background-repeat: no-repeat;
@@ -507,7 +511,8 @@ a.privacy-policy-link {
 
 .contact-wrapper {
   padding-top: 2rem;
-  background: linear-gradient(184deg, rgb(65 255 97 / 10%), rgb(0 0 0 / 23%)), url("./assets/backs/contact-cover.svg");
+  background: linear-gradient(184deg, rgb(65 255 97 / 10%), rgb(0 0 0 / 23%)),
+    url("./assets/backs/contact-cover.svg");
   min-height: 120vh;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -569,7 +574,8 @@ blockquote p {
   font-size: 14pt;
   font-style: italic;
   line-height: 1.4;
-  font-family: "PT Serif", Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif;
+  font-family: "PT Serif", Cambria, "Hoefler Text", Utopia, "Liberation Serif",
+    "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif;
 }
 blockquote footer {
   margin-top: 0.5em;
@@ -1174,27 +1180,9 @@ blockquote:nth-of-type(even) footer:after {
   letter-spacing: 1px;
 }
 
-table {
-  border-collapse: collapse;
-  display: block;
-  width: 100%;
-  overflow-x: auto;
-}
-
-.table td,
-.table th {
-  border-top: 0;
-  letter-spacing: 1.5px;
-}
-
 .vulname {
   border-left: 3.4px solid #6b6b6b;
   width: 100%;
-}
-
-.table thead th {
-  padding-bottom: 1.5rem;
-  border-bottom: 3.4px solid #6b6b6b;
 }
 
 .vulcontainer {

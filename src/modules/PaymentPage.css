@@ -1,0 +1,11 @@
+.payment-th,
+.payment-td {
+  border: none !important;
+}
+
+.payment-head-title {
+  background: var(--lightGreen);
+  padding: 0.3rem 2rem;
+  height: 100%;
+  display: block;
+}
