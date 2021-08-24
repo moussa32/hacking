@@ -11,8 +11,9 @@ import ProgramPage from "./ProgramPage";
 import Settings from "./Dashboard/Settings.js";
 import { handleGetProgram } from "../actions";
 import ProtectedRoute from "../../../shared/components/ProtectedRoute";
+import ReportPage from "../../ReportPage";
 
-const Program = ({ location, dispatch }) => {
+const Program = ({ dispatch }) => {
   useEffect(() => {
     dispatch(handleGetProgram(localStorage.getItem("accessToken")));
   }, [dispatch]);
@@ -27,6 +28,7 @@ const Program = ({ location, dispatch }) => {
         <ProtectedRoute exact path="/program/dashboard/activity" component={Activity} />
         <ProtectedRoute exact path="/program/dashboard/settings" component={Settings} />
         <ProtectedRoute exact path="/program/dashboard/settings/:id" component={Settings} />
+        <ProtectedRoute path="/program/dashboard/report" component={ReportPage} />
         <Route exact path="/program/:id/:slug" component={ProgramPage} />
         <Redirect to="/notfound" />
       </Switch>
