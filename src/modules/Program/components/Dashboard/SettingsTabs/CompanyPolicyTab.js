@@ -7,8 +7,13 @@ import { Editor } from "react-draft-wysiwyg";
 import JoditEditor from "jodit-react";
 import { Markup } from "interweave";
 import draftToHtml from "draftjs-to-html";
+import { Autosave, useAutosave } from "react-autosave";
 import { CustomContentStateConverter } from "../../../../../shared/utils/CustomContentStateConverter";
-import { getCompanyPolicy, putCompanyPolicy, postCompanyPolicyImage } from "../../../../../api/ProgramAPI/ProgramSettingsApi";
+import {
+  getCompanyPolicy,
+  putCompanyPolicy,
+  postCompanyPolicyImage,
+} from "../../../../../api/ProgramAPI/ProgramSettingsApi";
 import { getNewTokens } from "../../../../../api/RefreshTokenApi";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./CompanyPoliceTab.css";
@@ -41,7 +46,10 @@ const CompanyPolicyTab = () => {
         const htmlFromApi = res.data.policy;
 
         const blocksFromHTML = convertFromHTML(htmlFromApi);
-        const initContent = ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap);
+        const initContent = ContentState.createFromBlockArray(
+          blocksFromHTML.contentBlocks,
+          blocksFromHTML.entityMap
+        );
         setEditorState(EditorState.createWithContent(CustomContentStateConverter(initContent)));
       })
       .catch(error => {
@@ -68,6 +76,8 @@ const CompanyPolicyTab = () => {
         }
       });
   };
+
+  const updatePolicy = currentPolicy => putCompanyPolicy(token, { policy: content });
 
   const handleUploadPolicyImage = image => {
     return new Promise((resolve, reject) => {
@@ -110,6 +120,7 @@ const CompanyPolicyTab = () => {
               onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
               onChange={newContent => {}}
             />
+            <Autosave data={content} onSave={updatePolicy} />
             {/* <CKEditor editor={ClassicEditor} data={content} onChange={handleCkeditorState} /> */}
             {/* <Editor
               editorState={editorState}
@@ -131,7 +142,10 @@ const CompanyPolicyTab = () => {
             </div>
             {/* <textarea disabled value={content} onChange={e => setContent(e.target.value)} className="form-control p-3 custom-input border-0" id="summary" rows="6" name="summary"></textarea> */}
           </div>
-          <button className="btn btn-lightgreen w-50 btn-block mx-auto my-4" onClick={handlePutCompanyPolicy}>
+          <button
+            className="btn btn-lightgreen w-50 btn-block mx-auto my-4"
+            onClick={handlePutCompanyPolicy}
+          >
             إضافة
           </button>
           {isLoadding ? (
