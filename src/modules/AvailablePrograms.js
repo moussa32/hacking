@@ -2,7 +2,11 @@ import React, { useEffect, useState, useMemo } from "react";
 import { FaDollarSign } from "react-icons/fa";
 import Spinner from "../shared/components/Spinner";
 import Swiper from "react-id-swiper";
-import { getAvailableProgramAds, getAvailablePrograms, getAvailableProgramsByPram } from "../api/AvailableProgramsApi";
+import {
+  getAvailableProgramAds,
+  getAvailablePrograms,
+  getAvailableProgramsByPram,
+} from "../api/AvailableProgramsApi";
 import { getNewTokens } from "../api/RefreshTokenApi";
 import CustomSelect from "../shared/components/FormFields/CustomSelect";
 import Footer from "./Program/components/layout/Footer";
@@ -113,20 +117,28 @@ const AvailablePrograms = props => {
       <div className="component-wrapper h-100">
         {loadded ? (
           <div className="container-fluid home available-margin">
-            <div className="container bg-second p-4">
+            <div className="container bg-second avalibale-main-container">
               <div className="jumbotron jumbotron-fluid bg-black rounded py-1">
-                <div className="container p-4">
+                <div className="container avalibale-slider-container">
                   <Swiper {...params}>
                     {programAds && programAds.length > 0
                       ? programAds.map(ad => {
                           return (
                             <div key={ad.id}>
                               <img src={ad.image} className="d-block w-100" alt={ad.title} />
-                              <div className="carousel-caption d-none d-md-block">
+                              <div className="carousel-caption">
                                 <h4>{ad.title}</h4>
-                                <p className="lead">{ad.description.length > 150 ? ad.description.substring(0, 150) + " ......." : ad.description}</p>
+                                <p className="lead slider-caption">
+                                  {ad.description.length > 150
+                                    ? ad.description.substring(0, 150) + " ......."
+                                    : ad.description}
+                                </p>
                                 {ad.ad_link && (
-                                  <a href={ad.ad_link} target="_blank" className="btn btn-lightgreen">
+                                  <a
+                                    href={ad.ad_link}
+                                    target="_blank"
+                                    className="btn btn-lightgreen slider-button"
+                                  >
                                     قراءة المزيد
                                   </a>
                                 )}
@@ -185,12 +197,21 @@ const AvailablePrograms = props => {
                         {programs.map(program => {
                           return (
                             <div key={program.id} className="col-xl-4 col-md-4 p-3 rounded">
-                              <a href={`/program/${program.id}/${program.company_name}`} className="card bg-second border-0 program-card text-white text-decoration-none">
+                              <a
+                                href={`/program/${program.id}/${program.company_name}`}
+                                className="card bg-second border-0 program-card text-white text-decoration-none"
+                              >
                                 <div className="card-header program-card-header">
-                                  <img className="card-img-top program-logo p-0 d-block mx-auto" src={`${program.logo}`} alt={program.name} />
+                                  <img
+                                    className="card-img-top program-logo p-0 d-block mx-auto"
+                                    src={`${program.logo}`}
+                                    alt={program.name}
+                                  />
                                 </div>
                                 <div className="card-body d-flex flex-row-reverse justify-content-between align-items-center py-0">
-                                  <h3 className="card-title badge-name my-3 text-left text-capitalize">{program.company_name}</h3>
+                                  <h3 className="card-title badge-name my-3 text-left text-capitalize">
+                                    {program.company_name}
+                                  </h3>
                                   {program.status === "opened" ? (
                                     <span>
                                       <FaDollarSign size={"1.2rem"} color={"#009cde"} />

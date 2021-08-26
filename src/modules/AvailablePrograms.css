@@ -2,6 +2,11 @@
   margin-top: 5.2rem;
 }
 
+.avalibale-slider-container,
+.avalibale-main-container {
+  padding: 1.5rem;
+}
+
 .slider-image {
   width: 100%;
   object-fit: cover;
@@ -37,4 +42,24 @@
 
 .carousel-item {
   display: block;
+}
+
+@media screen and (max-width: 500px) {
+  .swiper-container {
+    height: auto;
+  }
+  .avalibale-slider-container,
+  .avalibale-main-container {
+    padding: 0;
+  }
+  .slider-caption {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .slider-caption,
+  .slider-button {
+    font-size: 0.8rem;
+  }
 }
